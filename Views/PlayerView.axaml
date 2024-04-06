@@ -1,0 +1,51 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AudioPlayer.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AudioPlayer.Views.PlayerView"
+             x:DataType="vm:PlayerViewModel">
+  
+    <Panel Orientation="Horizontal" Width="1000">
+    <Image Source="{Binding coverImage}" Width="50" Height="50"/>
+      <!-- player menu-->
+      <StackPanel VerticalAlignment="Center">
+        <!-- manipulate-->
+        <StackPanel>
+        <CheckBox Command="{Binding LoopAudio}"/>
+        <Button Command="{Binding PrevSong}" Content="Prev" Width="20" Height="20"/>
+        <ToggleButton IsChecked="True" Command="{Binding Play}">
+          <Panel>
+            <PathIcon Classes="play" Data="{StaticResource play}"/>
+            <PathIcon Classes="pause" Data="{StaticResource pause}"/>
+          </Panel>
+        </ToggleButton>
+        <Button Command="{Binding NextSong}" Content="Next"/>
+        <CheckBox Command="{Binding Shuffle}"/>
+        <ProgressBar Margin="0 10" Height="10" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
+        </StackPanel>
+        <!-- track progress-->
+        <StackPanel Orientation="Horizontal">
+          <TextBlock Text="{Binding Position}"/>
+          <ProgressBar Margin="0 10" Height="10" Minimum="0" Maximum="{Binding TotalTime}" Value="{Binding Position}" Foreground="Blue"/>
+          <TextBlock Text="{Binding TotalTime}"/>
+        </StackPanel>
+      </StackPanel>
+    </Panel>
+
+  <!-- <UserControl.Styles> -->
+  <!--   <Style Selector="ToggleButton PathIcon.play"> -->
+  <!--     <Setter Property="IsVisible" Value="False"/> -->
+  <!--     </Style> -->
+  <!--   <Style Selector="ToggleButton:checked PathIcon.play"> -->
+  <!--     <Setter Property="IsVisible" Value="True"/> -->
+  <!--     </Style> -->
+  <!--   <Style Selector="ToggleButton PathIcon.pause"> -->
+  <!--     <Setter Property="IsVisible" Value="True"/> -->
+  <!--     </Style> -->
+  <!--   <Style Selector="ToggleButton:checked PathIcon.pause"> -->
+  <!--     <Setter Property="IsVisible" Value="False"/> -->
+  <!--     </Style> -->
+  <!-- </UserControl.Styles> -->
+</UserControl>
