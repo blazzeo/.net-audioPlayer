@@ -42,7 +42,7 @@ public class PlayListViewModel : ViewModelBase
         MemoryStream memory;
         Avalonia.Media.Imaging.Bitmap AvIrBitmap;
         var IT = new SongImageTemplate();
-        if (track != null)
+        if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
             memory = new MemoryStream(trackTag(track));
             AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);

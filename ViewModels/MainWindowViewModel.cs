@@ -12,10 +12,10 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        PlayList playlist = new("MF DOOM", "/Users/blazzeo/MF Doom - 2004 - Mm..Food/");
+        PlayList playlist = new("Orange", "/Users/blazzeo/Orange/");
         PlaylistVM = new(playlist);
         LibraryVM = new(playlist);
-        PlayerVM = new(new Track("/Users/blazzeo/MF Doom - 2004 - Mm..Food/08 - MF Doom - Gumbo.mp3"));
+        PlayerVM = new(new Track("/Users/blazzeo/Orange/Pink Matters - Frank Ocean.wav"));
         ContentVM = PlaylistVM;
     }
 

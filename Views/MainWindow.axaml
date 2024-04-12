@@ -22,7 +22,7 @@
     </StackPanel>
     <DockPanel>
 
-      <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="60"/>
+      <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="75"/>
       <!-- <views:PlaylistView DataContext="{Binding PlaylistVM}"/> -->
       <views:PlaylistView DataContext="{Binding PlaylistVM}" Height="500"/>
       <!-- <views:LibraryView DataContext="{Binding LibraryVM}" Height="500"/> -->

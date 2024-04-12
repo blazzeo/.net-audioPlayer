@@ -14,7 +14,7 @@ public partial class PlayerViewModel : ViewModelBase
     private List<Track> _trackList;
     private Track activeTrack;
     private bool looping;
-    public Bitmap coverImage{get;}
+    public Bitmap coverImage { get; }
 
     public PlayerViewModel()
     {
@@ -31,7 +31,7 @@ public partial class PlayerViewModel : ViewModelBase
         coverImage = GetImage(activeTrack);
         player = new();
         playList = new();
-        activeTrack = new();
+        activeTrack = track;
     }
 
     public void SetAlbum(string path)
@@ -86,8 +86,9 @@ public partial class PlayerViewModel : ViewModelBase
     private Bitmap GetImage(Track track)
     {
         MemoryStream memory;
-        if (track != null)
+        if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
+          Console.WriteLine(Path.GetExtension(track.Path));
             memory = new MemoryStream(trackTag(track));
             return new Avalonia.Media.Imaging.Bitmap(memory);
         }
