@@ -8,44 +8,44 @@
              x:DataType="vm:PlayerViewModel">
   
   <StackPanel Orientation="Horizontal" Width="1000">
-    <Image Source="{Binding coverImage}" Width="50" Height="50"/>
+    <Image Source="{Binding coverImage}" Width="50" Height="50" Margin="10 0"/>
     <!-- player menu-->
     <StackPanel VerticalAlignment="Center">
       <!-- manipulate-->
-      <StackPanel>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <CheckBox Command="{Binding LoopAudio}"/>
         <Button Command="{Binding PrevSong}" Content="Prev" Width="20" Height="20"/>
-        <ToggleButton IsChecked="True" Command="{Binding Play}">
-          <Panel>
+        <ToggleButton IsChecked="True" Command="{Binding Play}" Padding="0" Margin="20 0">
+          <StackPanel Orientation="Horizontal">
             <PathIcon Classes="play" Data="{StaticResource play}"/>
             <PathIcon Classes="pause" Data="{StaticResource pause}"/>
-            </Panel>
+            </StackPanel>
           </ToggleButton>
-        <Button Command="{Binding NextSong}" Content="Next"/>
+        <Button Command="{Binding NextSong}" Content="Next" Width="20" Height="20"/>
         <CheckBox Command="{Binding Shuffle}"/>
-        <ProgressBar  Margin="0 10" Height="10" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
-        </StackPanel>
+        <Slider Width="70" Height="35" Padding="0" Margin="10 0" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
+      </StackPanel>
       <!-- track progress-->
-      <StackPanel Orientation="Horizontal">
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
         <TextBlock Text="{Binding Position}"/>
-        <ProgressBar Width="700" Margin="0 10" Height="10" Minimum="0" Maximum="{Binding TotalTime}" Value="{Binding Position}" Foreground="Blue"/>
+        <Slider Width="700" Height="35" Padding="0" Margin="10 0" Minimum="0" Maximum="{Binding TotalTime}" Value="{Binding Position}" Foreground="Blue"/>
         <TextBlock Text="{Binding TotalTime}"/>
         </StackPanel>
       </StackPanel>
     </StackPanel>
 
-  <!-- <UserControl.Styles> -->
-  <!--   <Style Selector="ToggleButton PathIcon.play"> -->
-  <!--     <Setter Property="IsVisible" Value="False"/> -->
-  <!--     </Style> -->
-  <!--   <Style Selector="ToggleButton:checked PathIcon.play"> -->
-  <!--     <Setter Property="IsVisible" Value="True"/> -->
-  <!--     </Style> -->
-  <!--   <Style Selector="ToggleButton PathIcon.pause"> -->
-  <!--     <Setter Property="IsVisible" Value="True"/> -->
-  <!--     </Style> -->
-  <!--   <Style Selector="ToggleButton:checked PathIcon.pause"> -->
-  <!--     <Setter Property="IsVisible" Value="False"/> -->
-  <!--     </Style> -->
-  <!-- </UserControl.Styles> -->
+  <UserControl.Styles>
+    <Style Selector="ToggleButton PathIcon.play">
+      <Setter Property="IsVisible" Value="False"/>
+      </Style>
+    <Style Selector="ToggleButton:checked PathIcon.play">
+      <Setter Property="IsVisible" Value="True"/>
+      </Style>
+    <Style Selector="ToggleButton PathIcon.pause">
+      <Setter Property="IsVisible" Value="True"/>
+      </Style>
+    <Style Selector="ToggleButton:checked PathIcon.pause">
+      <Setter Property="IsVisible" Value="False"/>
+      </Style>
+  </UserControl.Styles>
 </UserControl>

@@ -22,6 +22,7 @@ public partial class PlayerViewModel : ViewModelBase
         player = new();
         playList = new();
         activeTrack = new();
+        coverImage = GetImage();
     }
 
     public PlayerViewModel(Track track)
@@ -83,7 +84,7 @@ public partial class PlayerViewModel : ViewModelBase
     public TimeSpan Position { get => player.Position; }
     public int CurrentVolume { get => player.Volume; }
 
-    private Bitmap GetImage(Track track)
+    private Bitmap GetImage(Track track = null!)
     {
         MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")

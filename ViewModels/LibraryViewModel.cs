@@ -1,10 +1,6 @@
-using Avalonia.Controls;
-using System.IO;
 using System;
-using AudioPlayer.Templates;
 using System.Collections.ObjectModel;
 using AudioPlayer.Models;
-using ATL;
 
 namespace AudioPlayer.ViewModels;
 

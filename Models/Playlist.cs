@@ -24,27 +24,27 @@ public class PlayList : INotifyPropertyChanged
     public PlayList()
     {
         _name = "null";
-        _cover = null;
+        _cover = GetImage();
         _tracklist = new();
     }
 
     public PlayList(List<Track> tracklist)
     {
-      _name = "undef";
-      _tracklist = new();
-      foreach (var track in tracklist)
-      {
-        _tracklist.Add(track);
-      }
-      _cover = GetImage(_tracklist[0]);
+        _name = "undef";
+        _tracklist = new();
+        foreach (var track in tracklist)
+        {
+            _tracklist.Add(track);
+        }
+        _cover = GetImage(_tracklist[0]);
     }
 
     public PlayList(string name, string folderpath)
     {
-        Name = name;
+        _name = name;
+        _cover = GetImage();
+        _tracklist = _tracklist ?? new();
         string[] filepathes = Directory.GetFiles(folderpath);
-
-        _tracklist = new();
 
         foreach (var file in filepathes)
         {
@@ -108,43 +108,43 @@ public class PlayList : INotifyPropertyChanged
 
     public List<Track> ToggleShuffle()
     {
-      if (shuffling)
-      {
-        shuffling = !shuffling;
-        return GetShufflePlaylist();
-      }
-      else
-      {
-        shuffling = !shuffling;
-        return new(_tracklist);
-      }
+        if (shuffling)
+        {
+            shuffling = !shuffling;
+            return GetShufflePlaylist();
+        }
+        else
+        {
+            shuffling = !shuffling;
+            return new(_tracklist);
+        }
     }
 
     private List<Track> GetShufflePlaylist()
     {
-      ObservableCollection<Track> tempList = new(_tracklist);
-      int n = tempList.Count;
-      Random random = new Random();
+        ObservableCollection<Track> tempList = new(_tracklist);
+        int n = tempList.Count;
+        Random random = new Random();
 
-      while (n > 1)
-      {
-        n--;
-        int k = random.Next(n + 1);
-        Track temp = tempList[k];
-        tempList[k] = tempList[n];
-        tempList[n] = temp;
-      }
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            Track temp = tempList[k];
+            tempList[k] = tempList[n];
+            tempList[n] = temp;
+        }
 
-      List<Track> shuffledList = new(tempList);
-      return shuffledList;
+        List<Track> shuffledList = new(tempList);
+        return shuffledList;
     }
 
     public int GetTrackID(Track track)
     {
-      return _tracklist.IndexOf(track);
+        return _tracklist.IndexOf(track);
     }
 
-    private Control GetImage(Track track)
+    private Control GetImage(Track track = null!)
     {
         MemoryStream memory;
         Avalonia.Media.Imaging.Bitmap AvIrBitmap;
@@ -154,7 +154,7 @@ public class PlayList : INotifyPropertyChanged
             memory = new MemoryStream(trackTag(track));
             AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
             return IT.Build(AvIrBitmap);
-       }
+        }
 
         memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
         AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);

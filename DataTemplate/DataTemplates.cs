@@ -34,7 +34,7 @@ public class ImageButtonTemplate : IDataTemplate
 {
     public Control Build(object? param)
     {
-        return new Button() { Content = param, };
+        return new Button() { Content = param, Padding = Avalonia.Thickness.Parse("0") };
     }
 
     public bool Match(object? data)

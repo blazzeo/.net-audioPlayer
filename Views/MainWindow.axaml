@@ -21,6 +21,7 @@
 
     </StackPanel>
     <DockPanel>
+      <!-- <views:SearchView DataContext="{Binding SearchVM}" DockPanel.Dock="Top" Height="50"/> -->
 
       <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="75"/>
       <!-- <views:PlaylistView DataContext="{Binding PlaylistVM}"/> -->

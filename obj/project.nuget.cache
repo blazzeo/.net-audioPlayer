@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "64u1jpcc0P3toaBsj5vryRsc3G3vqRjdUInkOJ0qGjHKifnU5SLWcRb7HUHru+B3hQvmvXoHXFeEABg/z4lP9A==",
+  "dgSpecHash": "HHh4aTi0lOZWnIyUZaG8AoQu8ICOQhbQzlVxN9mhJ3zFIT0fKXsYjAnpz/4pvrbsk/n8ZXY8jmdgBu1gq8e3Uw==",
   "success": true,
   "projectFilePath": "/Users/blazzeo/Programming/AudioPlayer/AudioPlayer.csproj",
   "expectedPackageFiles": [
@@ -86,16 +86,5 @@
     "/Users/blazzeo/.nuget/packages/ude.netstandard/1.2.0/ude.netstandard.1.2.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/z440.atl.core/5.21.0/z440.atl.core.5.21.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Пакет \"CSCore 1.2.1.2\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net8.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
-      "libraryId": "CSCore",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

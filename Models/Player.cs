@@ -15,7 +15,7 @@ public partial class Player
     private ISoundOut? outputDevice;
     private IWaveSource? audioFile;
 
-    public event EventHandler<PlaybackStoppedEventArgs> PlaybackStopped;
+    public event EventHandler<PlaybackStoppedEventArgs>? PlaybackStopped;
 
     public int Volume
     {
