@@ -80,8 +80,8 @@ public partial class PlayerViewModel : ViewModelBase
         playList.ToggleShuffle();
     }
 
-    public TimeSpan TotalTime { get => player.TotalTime; }
-    public TimeSpan Position { get => player.Position; }
+    public double TotalTime { get => player.TotalTime.TotalSeconds; }
+    public double Position { get => player.Position.Seconds; }
     public int CurrentVolume { get => player.Volume; }
 
     private Bitmap GetImage(Track track = null!)
@@ -89,7 +89,7 @@ public partial class PlayerViewModel : ViewModelBase
         MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
-          Console.WriteLine(Path.GetExtension(track.Path));
+            Console.WriteLine(Path.GetExtension(track.Path));
             memory = new MemoryStream(trackTag(track));
             return new Avalonia.Media.Imaging.Bitmap(memory);
         }
