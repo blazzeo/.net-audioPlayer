@@ -21,14 +21,17 @@
 
     </StackPanel>
     <DockPanel>
-      <!-- <views:SearchView DataContext="{Binding SearchVM}" DockPanel.Dock="Top" Height="50"/> -->
+      <views:SearchView DataContext="{Binding SearchVM}" DockPanel.Dock="Top" Height="50"/>
 
-      <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="75"/>
+      <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="85"/>
       <!-- <views:PlaylistView DataContext="{Binding PlaylistVM}"/> -->
-      <views:PlaylistView DataContext="{Binding PlaylistVM}" Height="500"/>
+      <views:PlaylistView DataContext="{Binding PlaylistVM}" Height="565"/>
       <!-- <views:LibraryView DataContext="{Binding LibraryVM}" Height="500"/> -->
 
     </DockPanel>
+    <!-- <StackPanel DockPanel.Dock="Right" Window="220"> -->
+    <!---->
+    <!-- </StackPanel> -->
   </DockPanel>
 
 </Window>

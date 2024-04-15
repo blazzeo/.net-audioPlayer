@@ -17,7 +17,7 @@ public class PlayList : INotifyPropertyChanged
     private ObservableCollection<Track> _tracklist;
 
     public bool Active { get; private set; }
-    public string? Name { get; set; }
+    public string? Name { get => _name; set => _name = value!; }
 
     public ObservableCollection<Track> TrackList { get => _tracklist; }
 

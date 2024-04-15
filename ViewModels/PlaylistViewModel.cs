@@ -13,11 +13,14 @@ namespace AudioPlayer.ViewModels;
 public class PlayListViewModel : ViewModelBase
 {
     private List<Track> trackList;
+    public String title { get; }
     public FlatTreeDataGridSource<Track> AudioSource { get; }
 
     public PlayListViewModel(PlayList playList)
     {
-      trackList = new(playList.TrackList);
+        trackList = new(playList.TrackList);
+
+        title = playList.Name!;
 
         AudioSource = new FlatTreeDataGridSource<Track>(trackList)
         {
@@ -33,8 +36,8 @@ public class PlayListViewModel : ViewModelBase
 
     private Control GetButton(Control img)
     {
-      var IT = new ImageButtonTemplate();
-      return IT.Build(img);
+        var IT = new ImageButtonTemplate();
+        return IT.Build(img);
     }
 
     private Control GetImage(Track track)

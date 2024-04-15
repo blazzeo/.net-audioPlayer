@@ -6,6 +6,7 @@ namespace AudioPlayer.ViewModels;
 public class MainWindowViewModel : ViewModelBase
 {
     public ViewModelBase ContentVM;
+    public SearchViewModel SearchVM { get; set; }
     public PlayerViewModel PlayerVM { get; set; }
     public LibraryViewModel LibraryVM { get; set; }
     public PlayListViewModel PlaylistVM { get; set; }

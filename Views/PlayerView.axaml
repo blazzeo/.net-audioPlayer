@@ -13,16 +13,24 @@
     <StackPanel VerticalAlignment="Center">
       <!-- manipulate-->
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <CheckBox Command="{Binding LoopAudio}"/>
-        <Button Command="{Binding PrevSong}" Content="Prev" Width="20" Height="20"/>
-        <ToggleButton IsChecked="True" Command="{Binding Play}" Padding="0" Margin="20 0">
+        <ToggleButton IsChecked="False" Command="{Binding LoopAudio}" Padding="0" Margin="15 0">
+          <PathIcon Data="{StaticResource loop}"/>
+        </ToggleButton>
+        <Button Command="{Binding PrevSong}" Width="20" Height="20" Margin="15 0">
+          <PathIcon Data="{StaticResource playPrev}"/>
+        </Button>
+        <ToggleButton IsChecked="True" Command="{Binding Play}" Padding="0" Margin="15 0">
           <StackPanel Orientation="Horizontal">
             <PathIcon Classes="play" Data="{StaticResource play}"/>
             <PathIcon Classes="pause" Data="{StaticResource pause}"/>
             </StackPanel>
           </ToggleButton>
-        <Button Command="{Binding NextSong}" Content="Next" Width="20" Height="20"/>
-        <CheckBox Command="{Binding Shuffle}"/>
+        <Button Command="{Binding NextSong}" Width="20" Height="20" Margin="15 0">
+          <PathIcon Data="{StaticResource playNext}"/>
+        </Button>
+        <ToggleButton IsChecked="False" Command="{Binding Shuffle}" Padding="0" Margin="15 0">
+          <PathIcon Data="{StaticResource shuffle}"/>
+        </ToggleButton>
         <Slider Width="70" Height="35" Padding="0" Margin="10 0" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
       </StackPanel>
       <!-- track progress-->
