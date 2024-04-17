@@ -89,7 +89,7 @@ public partial class PlayerViewModel : ViewModelBase
         MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
-            Console.WriteLine(Path.GetExtension(track.Path));
+            // Console.WriteLine(Path.GetExtension(track.Path));
             memory = new MemoryStream(trackTag(track));
             return new Avalonia.Media.Imaging.Bitmap(memory);
         }

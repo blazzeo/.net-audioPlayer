@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Icons.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/LibraryView.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/MainWindow.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/PlayerView.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/PlaylistView.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/PlaylistWindow.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/QueueView.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/SearchView.axaml" value="AudioPlayer.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

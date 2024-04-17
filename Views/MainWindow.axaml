@@ -4,34 +4,34 @@
         xmlns:views="clr-namespace:AudioPlayer.Views"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
         Width="1200" Height="700"
         x:CompileBindings="True"
         x:Class="AudioPlayer.Views.MainWindow"
-  x:DataType="vm:MainWindowViewModel"
-  Icon="/Assets/logo.ico"
-  Title="Player">
+        x:DataType="vm:MainWindowViewModel"
+        ExtendClientAreaToDecorationsHint="True"
+        Icon="/Assets/logo.ico"
+        Title="Player">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
   <DockPanel>
-    <StackPanel DockPanel.Dock="Left" Width="200" Background="Gray">
-
+    <StackPanel DockPanel.Dock="Left" Width="200" Margin="20 20 0 0">
+      <Button Command="{Binding ToPlaylists}" Content="Playlists" Padding="20 5" FontWeight="Bold" Margin="10 15"/>
+      <Button Command="{Binding ToLibrary}" Content="Library" Padding="20 5" FontWeight="Bold" Margin="10 15"/>
     </StackPanel>
+    
     <DockPanel>
       <views:SearchView DataContext="{Binding SearchVM}" DockPanel.Dock="Top" Height="50"/>
-
       <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="85"/>
-      <!-- <views:PlaylistView DataContext="{Binding PlaylistVM}"/> -->
-      <views:PlaylistView DataContext="{Binding PlaylistVM}" Height="565"/>
-      <!-- <views:LibraryView DataContext="{Binding LibraryVM}" Height="500"/> -->
-
+      <ContentControl Content="{Binding ContentVM}"/>
     </DockPanel>
-    <!-- <StackPanel DockPanel.Dock="Right" Window="220"> -->
-    <!---->
-    <!-- </StackPanel> -->
+    
+    <StackPanel DockPanel.Dock="Right" Width="250">
+      <views:QueueView DataContext="{Binding QueueVM}"/>
+    </StackPanel>
   </DockPanel>
 
 </Window>

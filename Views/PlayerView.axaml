@@ -3,57 +3,80 @@
              xmlns:vm="using:AudioPlayer.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="100"
              x:Class="AudioPlayer.Views.PlayerView"
              x:DataType="vm:PlayerViewModel">
   
-  <StackPanel Orientation="Horizontal" Width="1000">
+  <StackPanel Orientation="Horizontal" Width="700">
     <Image Source="{Binding coverImage}" Width="50" Height="50" Margin="10 0"/>
     <!-- player menu-->
-    <StackPanel VerticalAlignment="Center">
+    <DockPanel VerticalAlignment="Center">
+      
       <!-- manipulate-->
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <ToggleButton IsChecked="False" Command="{Binding LoopAudio}" Padding="0" Margin="15 0">
+      
+      <StackPanel DockPanel.Dock="Top" Height="43" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ToggleButton IsChecked="False" Command="{Binding LoopAudio}" Background="Transparent" Padding="0" Margin="15 0">
           <PathIcon Data="{StaticResource loop}"/>
         </ToggleButton>
-        <Button Command="{Binding PrevSong}" Width="20" Height="20" Margin="15 0">
+        <Button Command="{Binding PrevSong}" Background="Transparent" Width="20" Height="20" Margin="15 0">
           <PathIcon Data="{StaticResource playPrev}"/>
         </Button>
-        <ToggleButton IsChecked="True" Command="{Binding Play}" Padding="0" Margin="15 0">
+        <ToggleButton IsChecked="True" Foreground="Transparent" Command="{Binding Play}" Padding="0" Margin="15 0">
           <StackPanel Orientation="Horizontal">
             <PathIcon Classes="play" Data="{StaticResource play}"/>
             <PathIcon Classes="pause" Data="{StaticResource pause}"/>
             </StackPanel>
           </ToggleButton>
-        <Button Command="{Binding NextSong}" Width="20" Height="20" Margin="15 0">
+        <Button Command="{Binding NextSong}" Background="Transparent" Width="20" Height="20" Margin="15 0">
           <PathIcon Data="{StaticResource playNext}"/>
         </Button>
-        <ToggleButton IsChecked="False" Command="{Binding Shuffle}" Padding="0" Margin="15 0">
+        <ToggleButton IsChecked="False" Command="{Binding Shuffle}" Background="Transparent" Padding="0" Margin="15 0">
           <PathIcon Data="{StaticResource shuffle}"/>
         </ToggleButton>
-        <Slider Width="70" Height="35" Padding="0" Margin="10 0" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
+        <Slider Width="70" Padding="0 0" Margin="10 0" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
+        
       </StackPanel>
+      
       <!-- track progress-->
-      <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-        <TextBlock Text="{Binding Position}"/>
-        <Slider Width="700" Height="35" Padding="0" Margin="10 0" Minimum="0" Maximum="{Binding TotalTime}" Value="{Binding Position}" Foreground="Blue"/>
+      
+      <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="{Binding Position}" Padding="0" Margin="0" VerticalAlignment="Center"/>
+        <Slider Width="600" Padding="0" Margin="0" Minimum="0" Maximum="{Binding TotalTime}" Value="{Binding Position}" Foreground="Blue">
+          <Slider.Template>
+            <ControlTemplate>
+              <Grid>
+                <!-- Remove or modify the visual representation of the thumb -->
+                <Rectangle Width="0" Height="0" />
+                
+                <!-- Add or modify other elements of the Slider as needed -->
+                <Track x:Name="PART_Track">
+                  <!-- Track elements... -->
+                </Track>
+              </Grid>
+            </ControlTemplate>
+          </Slider.Template>
+        </Slider>
         <TextBlock Text="{Binding TotalTime}"/>
         </StackPanel>
-      </StackPanel>
+      </DockPanel>
     </StackPanel>
 
   <UserControl.Styles>
     <Style Selector="ToggleButton PathIcon.play">
       <Setter Property="IsVisible" Value="False"/>
-      </Style>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
     <Style Selector="ToggleButton:checked PathIcon.play">
       <Setter Property="IsVisible" Value="True"/>
+      <Setter Property="Background" Value="Transparent"/>
       </Style>
     <Style Selector="ToggleButton PathIcon.pause">
       <Setter Property="IsVisible" Value="True"/>
-      </Style>
+      <Setter Property="Background" Value="Transparent"/>
+    </Style>
     <Style Selector="ToggleButton:checked PathIcon.pause">
       <Setter Property="IsVisible" Value="False"/>
+      <Setter Property="Background" Value="Transparent"/>
       </Style>
   </UserControl.Styles>
 </UserControl>

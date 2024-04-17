@@ -138,6 +138,6 @@
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Drawing.Common.dll
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPlayer.dll
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPlayer.pdb
-/Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPlayer.csproj.CopyComplete
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPlayer.genruntimeconfig.cache
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/ref/AudioPlayer.dll
+/Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPla.B3F2207D.Up2Date

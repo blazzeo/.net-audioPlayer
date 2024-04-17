@@ -3,10 +3,12 @@
              xmlns:vm="using:AudioPlayer.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="100"
              x:DataType="vm:PlayListViewModel"
              x:Class="AudioPlayer.Views.SearchView">
 
-  <TextBox Width="550" Height="35" Margin="10 20 10 20">
-  </TextBox>
+    <RelativePanel HorizontalAlignment="Center" Height="35">
+        <TextBox Width="550" Height="35" Padding="30 7" ZIndex="1"  Watermark="Search" CornerRadius="20"/>
+        <PathIcon Data="{StaticResource search}" Margin="7" Opacity="0.3" ZIndex="0" HorizontalAlignment="Left"/>
+    </RelativePanel>
 </UserControl>

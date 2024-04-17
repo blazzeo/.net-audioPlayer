@@ -38,5 +38,11 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/Users/blazzeo/Programming/AudioPlayer/Views/PlaylistView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/Users/blazzeo/Programming/AudioPlayer/Views/PlaylistWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/blazzeo/Programming/AudioPlayer/Views/QueueView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/blazzeo/Programming/AudioPlayer/Views/SearchView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

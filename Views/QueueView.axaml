@@ -4,13 +4,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AudioPlayer.Views.PlayListView"
-             x:DataType="vm:PlayListViewModel">
+             x:Class="AudioPlayer.Views.QueueView"
+             x:DataType="vm:QueueListViewModel">
 
-  <ScrollViewer>
-    <StackPanel>
-      <TextBlock Text="{Binding title}" Margin="30 30 30 30" FontWeight="Bold" FontSize="30"/>
-      <TreeDataGrid Source="{Binding AudioSource}" Width="700" CanUserResizeColumns="False"/>
-    </StackPanel>
-  </ScrollViewer>
+  <TreeDataGrid Width="220" Source="{Binding ActiveTrackList}"/>
+  
 </UserControl>

@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace AudioPlayer.Views;
 
-public partial class PlayListView : UserControl
+public partial class QueueView : UserControl
 {
-    public PlayListView()
+    public QueueView()
     {
         InitializeComponent();
     }
