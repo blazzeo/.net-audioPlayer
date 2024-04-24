@@ -4,102 +4,121 @@ using Avalonia.Media.Imaging;
 using System;
 using System.IO;
 using ATL;
+using NAudio.Wave;
 
 namespace AudioPlayer.ViewModels;
 
-public partial class PlayerViewModel : ViewModelBase
+public class PlayerViewModel : ViewModelBase
 {
-    public Player player;
-    private PlayList playList;
+    private readonly Player _player;
+    private PlayList _playList;
     private List<Track> _trackList;
-    private Track activeTrack;
-    private bool looping;
-    public Bitmap coverImage { get; }
+    private Track _activeTrack;
+    private bool _looping;
+    public Bitmap CoverImage { get; }
 
     public PlayerViewModel()
     {
         _trackList = new();
-        player = new();
-        playList = new();
-        activeTrack = new();
-        coverImage = GetImage();
+        _player = new();
+        _player.TrackIsEnd += OnTrackEnd;
+        _playList = new();
+        _activeTrack = new();
+        CoverImage = GetImage();
+    }
+
+    private void OnTrackEnd(object sender, EventArgs e)
+    {
+        NextSong(_looping);
     }
 
     public PlayerViewModel(Track track)
     {
         _trackList = new();
-        activeTrack = track;
-        coverImage = GetImage(activeTrack);
-        player = new();
-        playList = new();
-        activeTrack = track;
+        _activeTrack = track;
+        CoverImage = GetImage(_activeTrack);
+        _player = new Player();
+        _player.TrackIsEnd += OnTrackEnd;
+        _playList = new PlayList();
+        _activeTrack = track;
     }
 
     public void SetAlbum(string path)
     {
-        playList = new("af", "/Users/blazzeo/MF Doom - 2004 - Mm..Food/");
+        _playList = new PlayList("af", path);
     }
 
     public void SetVolume(int value)
     {
-        player.Volume = value / 100;
+        _player.Volume = value / 100;
     }
 
-    public void Play(Track track = null!)
+    public void Play(Track track = null)
     {
         if (track != null)
-            activeTrack = track;
-        // player.Open(activeTrack);
-        player.Play();
+            _activeTrack = track;
+        _player.PlayFile();
     }
 
     public void LoopAudio()
     {
-        looping = !looping;
+        _looping = !_looping;
     }
 
-    public void NextSong()
+    public void NextSong(bool looping = false)
     {
         if (!looping)
         {
-            var nextSongId = (_trackList.IndexOf(activeTrack) != _trackList.Count) ?
-              _trackList.IndexOf(activeTrack) + 1 : 0;
-            activeTrack = _trackList[nextSongId];
+            var nextSongId = (_trackList.IndexOf(_activeTrack) != _trackList.Count) ?
+              _trackList.IndexOf(_activeTrack) + 1 : 0;
+            _activeTrack = _trackList[nextSongId];
+            _player.AudioFile = new AudioFileReader(_activeTrack.Path);
         }
-        Play(activeTrack);
+        Play(_activeTrack);
     }
 
     public void PrevSong()
     {
-        var prevSongId = (_trackList.IndexOf(activeTrack) != 0) ?
-          _trackList.IndexOf(activeTrack) - 1 : 0;
+        var prevSongId = (_trackList.IndexOf(_activeTrack) != 0) ?
+          _trackList.IndexOf(_activeTrack) - 1 : _trackList.Count;
+        _activeTrack = _trackList[prevSongId];
+        Play(_activeTrack);
     }
 
     public void Shuffle()
     {
-        playList.ToggleShuffle();
+        _playList.ToggleShuffle();
     }
 
-    public double TotalTime { get => player.TotalTime.TotalSeconds; }
-    public double Position { get => player.Position.Seconds; }
-    public int CurrentVolume { get => player.Volume; }
+    public double TotalTime
+    {
+        get => _player.AudioFile.TotalTime.TotalSeconds;
+    }
+    public double Position
+    {
+        get => _player.AudioFile.Position;
+    }
 
-    private Bitmap GetImage(Track track = null!)
+    public int CurrentVolume
+    {
+        get => _player.Volume;
+    }
+
+    private Bitmap GetImage(Track track = null)
     {
         MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
-            // Console.WriteLine(Path.GetExtension(track.Path));
-            memory = new MemoryStream(trackTag(track));
-            return new Avalonia.Media.Imaging.Bitmap(memory);
+            memory = new MemoryStream(TrackTag(track));
+            return new Bitmap(memory);
         }
         memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
-        return new Avalonia.Media.Imaging.Bitmap(memory);
+        return new Bitmap(memory);
     }
 
-    private byte[] trackTag(Track track)
+    private byte[] TrackTag(Track track)
     {
-        var imgs = TagLib.File.Create(track.Path).Tag.Pictures;
-        return imgs[0].Data.Data;
+        var images = TagLib.File.Create(track.Path).Tag.Pictures;
+        return images[0].Data.Data;
     }
 }

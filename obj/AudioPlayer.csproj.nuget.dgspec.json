@@ -81,6 +81,10 @@
               "target": "Package",
               "version": "[8.2.2, )"
             },
+            "NAudio": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
             "TagLibSharp": {
               "target": "Package",
               "version": "[2.3.0, )"

@@ -1,150 +1,104 @@
-using ATL;
 using System;
-using CSCore;
-using CSCore.Codecs;
-using CSCore.CoreAudioAPI;
-using CSCore.SoundOut;
-using CommunityToolkit.Mvvm.ComponentModel;
+using NAudio.Wave;
 
-namespace AudioPlayer.Models;
-
-[ObservableObject]
-public partial class Player
+namespace AudioPlayer.Models
 {
-    private Track? activeTrack;
-    private ISoundOut? outputDevice;
-    private IWaveSource? audioFile;
-
-    public event EventHandler<PlaybackStoppedEventArgs>? PlaybackStopped;
-
-    public int Volume
+    [Serializable]
+    public class Player
     {
-        get
+        [NonSerialized] private AudioFileReader _audioFile;
+
+        [NonSerialized] private WaveOutEvent _outputDevice = new WaveOutEvent();
+
+        private int _volume = 10; // min 0, max 100
+
+        public Player()
         {
-            if (outputDevice != null)
-                return Math.Min(100, Math.Max((int)(outputDevice.Volume * 100), 0));
-            return 100;
+            OutputDevice.PlaybackStopped += OnPlaybackStopped;
         }
-        set
+
+        public AudioFileReader AudioFile
         {
-            if (outputDevice != null)
+            get => _audioFile;
+            set
             {
-                outputDevice.Volume = Math.Min(1.0f, Math.Max(value / 100f, 0f));
+                _audioFile = value;
+                if (_audioFile != null)
+                {
+                    _audioFile.Volume = Volume / 100f;
+                    if (OutputDevice == null)
+                    {
+                        OutputDevice = new WaveOutEvent();
+                        OutputDevice.PlaybackStopped += OnPlaybackStopped;
+                    }
+                }
             }
         }
-    }
 
-    public void Open(Track track, MMDevice device)
-    {
-        CleanupPlayback();
-
-        activeTrack = track;
-
-        audioFile =
-            CodecFactory.Instance.GetCodec(track.Path)
-                .ToSampleSource()
-                .ToMono()
-                .ToWaveSource();
-        outputDevice = new WasapiOut() { Latency = 100, Device = device };
-        outputDevice.Initialize(audioFile);
-        if (PlaybackStopped != null) outputDevice.Stopped += PlaybackStopped;
-    }
-
-    public TimeSpan TotalTime
-    {
-        get => audioFile.GetLength();
-    }
-
-    public TimeSpan Position
-    {
-        get
+        public WaveOutEvent OutputDevice
         {
-            if (audioFile != null)
-                return audioFile.GetPosition();
-            return TimeSpan.Zero;
+            get => _outputDevice;
+            set => _outputDevice = value;
         }
-        set
-        {
-            if (audioFile != null)
-                audioFile.SetPosition(value);
-        }
-    }
 
-    public PlaybackState PlaybackState
-    {
-        get
+        public int Volume
         {
-            if (outputDevice != null)
-                return outputDevice.PlaybackState;
-            return PlaybackState.Stopped;
+            get => _volume;
+            set
+            {
+                _volume = value;
+                if (AudioFile != null)
+                    AudioFile.Volume = value / 100f;
+            }
         }
-    }
+        
+        public event EventHandler<EventArgs> TrackIsEnd;
 
-    private bool IsPaused()
-    {
-        if (outputDevice != null)
+        public void PlayFile()
         {
-            return outputDevice.PlaybackState == PlaybackState.Paused;
+            if (AudioFile != null)
+            {
+                if (OutputDevice.PlaybackState == PlaybackState.Stopped)
+                    OutputDevice.Init(AudioFile);
+                OutputDevice.Play();
+            }
         }
-        return false;
-    }
 
-    private bool IsPlaying()
-    {
-        if (outputDevice != null)
+        public void StopFile()
         {
-            return outputDevice.PlaybackState == PlaybackState.Playing;
+            //OutputDevice?.Stop();
+            OnPlaybackStopped(this, new StoppedEventArgs());
         }
-        return false;
-    }
 
-    public void Play()
-    {
-        if (outputDevice != null)
-            outputDevice.Play();
-    }
-
-    public void TogglePlay()
-    {
-        if (outputDevice != null && IsPaused())
+        public void PauseFile()
         {
-            outputDevice.Play();
+            OutputDevice?.Pause();
         }
-        else if (outputDevice != null && IsPlaying())
+
+        public void SetPositionFile(long pos)
         {
-            outputDevice.Pause();
+            if (AudioFile != null)
+                AudioFile.Position = pos;
+        }
+
+        private void OnPlaybackStopped(object sender, StoppedEventArgs args)
+        {
+            if (AudioFile != null && AudioFile.FileName != string.Empty)
+                if (sender is Player)
+                {
+                    OutputDevice?.Dispose();
+                    OutputDevice = null;
+                    AudioFile?.Dispose();
+                    AudioFile = null;
+                }
+                else if ((int) (AudioFile.CurrentTime.TotalSeconds + 0.026) == (int) AudioFile.TotalTime.TotalSeconds)
+                {
+                    OutputDevice?.Dispose();
+                    OutputDevice = null;
+                    AudioFile?.Dispose();
+                    AudioFile = null;
+                    TrackIsEnd.Invoke(sender, args);
+                }
         }
     }
-
-    public void Pause()
-    {
-        if (outputDevice != null)
-            outputDevice.Pause();
-    }
-
-    public void Stop()
-    {
-        if (outputDevice != null)
-            outputDevice.Stop();
-    }
-
-    private void CleanupPlayback()
-    {
-        if (outputDevice != null)
-        {
-            outputDevice.Dispose();
-            outputDevice = null;
-        }
-        if (audioFile != null)
-        {
-            audioFile.Dispose();
-            audioFile = null;
-        }
-    }
-
-    // protected override void Dispose(bool disposing)
-    // {
-    //     base.Dispose(disposing);
-    //     CleanupPlayback();
-    // }
 }

@@ -4,22 +4,22 @@ namespace AudioPlayer.Models;
 
 public class Library
 {
-  private ObservableCollection<PlayList> playlistCollection;
+  private ObservableCollection<PlayList> _playlistCollection;
 
   public Library(ObservableCollection<PlayList>? playLists = null)
   {
-    playlistCollection = (playLists == null ? new() : playLists);
+    _playlistCollection = (playLists == null ? new() : playLists);
   }
 
-  public ObservableCollection<PlayList> Playlists { get => playlistCollection; }
+  public ObservableCollection<PlayList> Playlists { get => _playlistCollection; }
 
   public void Add(PlayList playList)
   {
-    playlistCollection.Add(playList);
+    _playlistCollection.Add(playList);
   }
 
   public void Remove(PlayList playList)
   {
-    playlistCollection.Remove(playList);
+    _playlistCollection.Remove(playList);
   }
 }

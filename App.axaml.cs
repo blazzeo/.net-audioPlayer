@@ -25,4 +25,6 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
+    
+    public new static App? Current => Application.Current as App;
 }

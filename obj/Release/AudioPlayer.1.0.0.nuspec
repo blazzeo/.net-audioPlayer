@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>AudioPlayer</id>
+    <version>1.0.0</version>
+    <authors>AudioPlayer</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="33efe32f14320b2ac8c0806977b6ff3d3b3e1719" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Avalonia" version="11.0.6" exclude="Build,Analyzers" />
+        <dependency id="Avalonia.Controls.DataGrid" version="11.0.6" exclude="Build,Analyzers" />
+        <dependency id="Avalonia.Controls.TreeDataGrid" version="11.0.2" exclude="Build,Analyzers" />
+        <dependency id="Avalonia.Desktop" version="11.0.6" exclude="Build,Analyzers" />
+        <dependency id="Avalonia.Fonts.Inter" version="11.0.6" exclude="Build,Analyzers" />
+        <dependency id="Avalonia.ReactiveUI" version="11.0.6" exclude="Build,Analyzers" />
+        <dependency id="Avalonia.Themes.Fluent" version="11.0.6" exclude="Build,Analyzers" />
+        <dependency id="CSCore" version="1.2.1.2" exclude="Build,Analyzers" />
+        <dependency id="CommunityToolkit.Mvvm" version="8.2.2" exclude="Build,Analyzers" />
+        <dependency id="TagLibSharp" version="2.3.0" exclude="Build,Analyzers" />
+        <dependency id="z440.atl.core" version="5.21.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="/Users/blazzeo/Programming/AudioPlayer/bin/Release/net8.0/AudioPlayer.runtimeconfig.json" target="lib/net8.0/AudioPlayer.runtimeconfig.json" />
+    <file src="/Users/blazzeo/Programming/AudioPlayer/bin/Release/net8.0/AudioPlayer.dll" target="lib/net8.0/AudioPlayer.dll" />
+  </files>
+</package>

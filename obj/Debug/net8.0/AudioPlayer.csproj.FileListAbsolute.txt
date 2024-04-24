@@ -141,3 +141,9 @@
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPlayer.genruntimeconfig.cache
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/ref/AudioPlayer.dll
 /Users/blazzeo/Programming/AudioPlayer/obj/Debug/net8.0/AudioPla.B3F2207D.Up2Date
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.dll
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Asio.dll
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Core.dll
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Midi.dll
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Wasapi.dll
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.WinMM.dll
