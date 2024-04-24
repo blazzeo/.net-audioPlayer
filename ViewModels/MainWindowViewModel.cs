@@ -1,16 +1,9 @@
 ﻿using AudioPlayer.Models;
 using ReactiveUI;
 
-using Avalonia.Platform.Storage;
-using System.Threading.Tasks;
-using System;
-using System.IO;
-using System.Threading;
-using Avalonia.Controls;
-
 namespace AudioPlayer.ViewModels;
 
-public class MainWindowViewModel : ViewModelBase
+public partial class MainWindowViewModel : ViewModelBase
 {
     private ViewModelBase _content;
 
@@ -30,7 +23,7 @@ public class MainWindowViewModel : ViewModelBase
     {
         PlayList playlist = new("Orange", "/Users/blazzeo/MF Doom - 2004 - Mm..Food/");
         PlaylistVM = new PlayListViewModel(playlist);
-        LibraryVM = new LibraryViewModel(playlist);
+        LibraryVM = new LibraryViewModel(playlist, this);
         QueueVM = new QueueListViewModel(playlist.TrackList);
         PlayerVM = new PlayerViewModel();
         ContentVM = PlaylistVM;

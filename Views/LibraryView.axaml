@@ -6,11 +6,13 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AudioPlayer.Views.LibraryView"
              x:DataType="vm:LibraryViewModel">
-
-  <DataGrid Margin="10" ItemsSource="{Binding libs}"
-    AutoGenerateColumns="True" IsReadOnly="True" 
-    GridLinesVisibility="All"
-    BorderThickness="1" BorderBrush="Gray">
+<StackPanel>
+    <Button Content="Add" Command="{Binding AddNewPlaylist}"/>
+    <DataGrid Margin="10" ItemsSource="{Binding Libs}"
+              AutoGenerateColumns="True" IsReadOnly="True" 
+              GridLinesVisibility="All"
+              BorderThickness="1" BorderBrush="Gray">
   </DataGrid>
+</StackPanel>
 
 </UserControl>

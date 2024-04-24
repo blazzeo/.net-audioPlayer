@@ -9,7 +9,7 @@
 
   <ScrollViewer>
     <StackPanel>
-      <TextBlock Text="{Binding title}" Margin="30 30 30 30" FontWeight="Bold" FontSize="30"/>
+      <TextBlock Text="{Binding Title}" Margin="30 30 30 30" FontWeight="Bold" FontSize="30"/>
       <TreeDataGrid Source="{Binding AudioSource}" Width="700" CanUserResizeColumns="False"/>
     </StackPanel>
   </ScrollViewer>

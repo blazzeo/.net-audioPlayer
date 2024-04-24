@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
-        Width="1200" Height="700"
+        Width="1000" Height="700"
         x:CompileBindings="True"
         x:Class="AudioPlayer.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -18,15 +18,14 @@
     </Design.DataContext>
 
   <DockPanel>
-    <StackPanel DockPanel.Dock="Left" Width="200" Margin="20 20 0 0">
-      <Button Command="{Binding ToPlaylists}" Content="Playlists" Padding="20 5" FontWeight="Bold" Margin="10 15"/>
-      <Button Command="{Binding ToLibrary}" Content="Library" Padding="20 5" FontWeight="Bold" Margin="10 15"/>
-    </StackPanel>
+    <!-- <Button Command="{Binding OpenFileCommand}" Content="Open"/> -->
+    <Button Command="{Binding ToPlaylists}" Content="Playlists" Padding="20 5" FontWeight="Bold" Margin="10 15"/>
+    <Button Command="{Binding ToLibrary}" Content="Library" Padding="20 5" FontWeight="Bold" Margin="10 15"/>
     
     <DockPanel>
       <views:SearchView DataContext="{Binding SearchVM}" DockPanel.Dock="Top" Height="50"/>
       <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="85"/>
-      <ContentControl Content="{Binding ContentVM}"/>
+      <ContentControl Content="{Binding ContentVM}" Padding="20 0"/>
     </DockPanel>
     
     <StackPanel DockPanel.Dock="Right" Width="250">

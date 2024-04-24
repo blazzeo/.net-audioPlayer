@@ -13,6 +13,7 @@ public class QueueListViewModel : ViewModelBase
 {
     private ObservableCollection<Track>? _activeTracklist;
     public FlatTreeDataGridSource<Track> ActiveTrackList { get; }
+    public string PlaylistName { get; private set; } = "123";
 
     public QueueListViewModel()
     {

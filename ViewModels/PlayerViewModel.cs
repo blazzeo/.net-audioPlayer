@@ -1,21 +1,40 @@
 using AudioPlayer.Models;
 using System.Collections.Generic;
 using Avalonia.Media.Imaging;
+using System.ComponentModel;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using ATL;
 using NAudio.Wave;
 
 namespace AudioPlayer.ViewModels;
 
-public class PlayerViewModel : ViewModelBase
+public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
 {
     private readonly Player _player;
     private PlayList _playList;
     private List<Track> _trackList;
     private Track _activeTrack;
     private bool _looping;
-    public Bitmap CoverImage { get; }
+    private Bitmap _coverImage;
+    
+    public new event PropertyChangedEventHandler? PropertyChanged;
+    
+    public Bitmap CoverImage { 
+        get => _coverImage;
+        private set
+        {
+            if (Equals(_coverImage, value)) return;
+            _coverImage = value;
+            RaisePropertyChanged();
+        }
+    }
+    
+    private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
     public PlayerViewModel()
     {
@@ -27,11 +46,6 @@ public class PlayerViewModel : ViewModelBase
         CoverImage = GetImage();
     }
 
-    private void OnTrackEnd(object sender, EventArgs e)
-    {
-        NextSong(_looping);
-    }
-
     public PlayerViewModel(Track track)
     {
         _trackList = new();
@@ -41,6 +55,11 @@ public class PlayerViewModel : ViewModelBase
         _player.TrackIsEnd += OnTrackEnd;
         _playList = new PlayList();
         _activeTrack = track;
+    }
+    
+    private void OnTrackEnd(object sender, EventArgs e)
+    {
+        NextSong(_looping);
     }
 
     public void SetAlbum(string path)
@@ -57,6 +76,7 @@ public class PlayerViewModel : ViewModelBase
     {
         if (track != null)
             _activeTrack = track;
+        CoverImage = GetImage(_activeTrack);
         _player.PlayFile();
     }
 

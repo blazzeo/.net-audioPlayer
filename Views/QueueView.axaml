@@ -3,10 +3,13 @@
              xmlns:vm="using:AudioPlayer.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="250"
              x:Class="AudioPlayer.Views.QueueView"
              x:DataType="vm:QueueListViewModel">
 
-  <TreeDataGrid Width="220" Source="{Binding ActiveTrackList}"/>
+    <StackPanel>
+        <TextBlock Text="{Binding PlaylistName}" FontWeight="Bold" FontSize="30" Padding="10 20"/>
+        <TreeDataGrid Width="250" Source="{Binding ActiveTrackList}"/>
+    </StackPanel>
   
 </UserControl>

@@ -1,0 +1,28 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:vm="using:AudioPlayer.ViewModels"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AudioPlayer.Views.CreatePlaylist"
+        x:DataType="vm:CreatePlaylistViewModel"
+        Title="New Playlist">
+    
+        <Design.DataContext>
+                <vm:CreatePlaylistViewModel/>
+        </Design.DataContext>
+        
+        <StackPanel>
+                <TextBlock FontWeight="Bold">Create new playlist!</TextBlock>
+                <TextBlock>Cover</TextBlock>
+                <!-- <Image Source={Binding CoverImage} /> -->
+                <StackPanel Orientation="Horizontal">
+                        <TextBlock>Playlist folder: </TextBlock>
+                        <!-- <TextBlock Text="{Binding Name}"/> -->
+                </StackPanel>
+                <!-- <Button Command="OpenDialog"/> -->
+                
+                <!-- <Button Content="Create" Command="{Binding Create}"/> -->
+        </StackPanel>
+        
+</Window>

@@ -3,8 +3,11 @@
   <component name="AvaloniaProject">
     <option name="projectPerEditor">
       <map>
+        <entry key="App.axaml" value="AudioPlayer.csproj" />
         <entry key="Icons.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/CreatePlaylist.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/LibraryView.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/MainView.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/MainWindow.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/PlayerView.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/PlaylistView.axaml" value="AudioPlayer.csproj" />

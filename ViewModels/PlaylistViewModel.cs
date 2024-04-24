@@ -13,14 +13,14 @@ namespace AudioPlayer.ViewModels;
 public class PlayListViewModel : ViewModelBase
 {
     private List<Track> trackList;
-    public String title { get; }
+    public String Title { get; }
     public FlatTreeDataGridSource<Track> AudioSource { get; }
 
     public PlayListViewModel(PlayList playList)
     {
         trackList = new(playList.TrackList);
 
-        title = playList.Name!;
+        Title = playList.Name!;
 
         AudioSource = new FlatTreeDataGridSource<Track>(trackList)
         {
