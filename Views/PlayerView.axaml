@@ -44,7 +44,7 @@
         <TextBlock Text="{Binding TotalTime}" Padding="0" Margin="0" VerticalAlignment="Center"/>
       </StackPanel>
     </DockPanel>
-    <Slider DockPanel.Dock="Right" Width="100" Padding="0 0" Margin="10 0 0 0" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
+    <Slider DockPanel.Dock="Right" HorizontalAlignment="Right" Width="100" Padding="0 0" Margin="10 0 0 0" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding CurrentVolume}" Foreground="Blue"/>
   </DockPanel>
 
   <UserControl.Styles>

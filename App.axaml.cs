@@ -1,8 +1,10 @@
+using System.Globalization;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AudioPlayer.ViewModels;
 using AudioPlayer.Views;
+using HarfBuzzSharp;
 
 namespace AudioPlayer;
 
@@ -15,6 +17,7 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow

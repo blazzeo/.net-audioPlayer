@@ -1,8 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Windows.Input;
 using AudioPlayer.Models;
 using ReactiveUI;
@@ -20,7 +20,7 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
         {
             if (Equals(value, _library)) return;
             _library = value;
-            RaisePropertyChanged();
+            this.RaiseAndSetIfChanged(ref _library, value);
             RaisePropertyChanged(nameof(Libs));
         }
     }
@@ -32,26 +32,21 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
     {
         _window = MainWindow;
         ShowDialog = new Interaction<CreatePlaylistViewModel, PlayList>();
-        // Check DB playlists;
-        // if () {
-        //
-        // } else {
+
+        CreateNewPlaylist = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var creator = new CreatePlaylistViewModel(this);
+            AddNewPlaylist(await ShowDialog.Handle(creator));
+        });
+        
         _library = new();
         _library.Add(playList);
         _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/"));
-        foreach (var lib in Libs)
-        {
-            //Console.WriteLine(lib.Name);
-        }
-        // }
+      
     }
     
-    public void AddNewPlaylist()
+    public void AddNewPlaylist(PlayList newPlaylist)
     {
-        CancellationToken token = new CancellationToken();
-        string res = OpenFile(token).Result;
-        
-        PlayList newPlaylist = new PlayList("123", res); //CreatePlaylist();
         if (newPlaylist != null)
         {
             var lib = Library;
@@ -85,7 +80,7 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
     //     AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
     //     return IT.Build(AvIrBitmap);
     // }
-    //
+    
     // public byte[] trackTag(Track track)
     // {
     //     var imgs = TagLib.File.Create(track.Path).Tag.Pictures;

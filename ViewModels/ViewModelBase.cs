@@ -11,8 +11,9 @@ namespace AudioPlayer.ViewModels;
 
 public partial class ViewModelBase : ReactiveObject
 {
+    
     [RelayCommand]
-    protected async Task<string> OpenFile(CancellationToken token)
+    public async Task<string> OpenFile(CancellationToken token)
     {
         try
         {
@@ -28,7 +29,7 @@ public partial class ViewModelBase : ReactiveObject
     }
 
     [RelayCommand]
-    protected async Task<string> OpenFolder(CancellationToken token)
+    public async Task<string> OpenFolder(CancellationToken token)
     {
         try
         {

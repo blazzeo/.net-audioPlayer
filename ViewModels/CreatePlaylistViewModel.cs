@@ -1,3 +1,4 @@
+using System.IO;
 using AudioPlayer.Models;
 using Avalonia.Media.Imaging;
 
@@ -12,6 +13,7 @@ public class CreatePlaylistViewModel : ViewModelBase
 
     public CreatePlaylistViewModel(LibraryViewModel Library)
     {
+        CoverImage = DefaultCover();
         _library = Library;
         _playList = new PlayList();
     }
@@ -23,11 +25,19 @@ public class CreatePlaylistViewModel : ViewModelBase
 
     private void OpenDialog()
     {
-        
+        // string str = OpenFile();
     }
 
     public void Create()
     {
+        
+    }
+
+    private Bitmap DefaultCover()
+    {
+        
+            MemoryStream memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
+            return new Bitmap(memory);
         
     }
 }

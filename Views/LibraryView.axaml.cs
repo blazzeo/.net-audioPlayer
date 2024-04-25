@@ -24,9 +24,9 @@ public partial class LibraryView : ReactiveUserControl<LibraryViewModel>
             DataContext = interaction.Input
         };
 
-        var window = Window.GetTopLevel(this);
+        var window = Window.GetTopLevel(this) as Window;
         
-        //var result = await dialog.Show<PlayList?>(window);
-        //interaction.SetOutput(result);
+        var result = await dialog.ShowDialog<PlayList?>(window);
+        interaction.SetOutput(result);
     }
 }

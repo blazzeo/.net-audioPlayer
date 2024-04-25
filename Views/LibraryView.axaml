@@ -7,8 +7,8 @@
              x:Class="AudioPlayer.Views.LibraryView"
              x:DataType="vm:LibraryViewModel">
 <StackPanel>
-    <Button Content="Add" Command="{Binding AddNewPlaylist}"/>
-    <DataGrid Margin="10" ItemsSource="{Binding Libs}"
+    <Button Content="{DynamicResource Library.Create}" Command="{Binding CreateNewPlaylist}"/>
+    <DataGrid ItemsSource="{Binding Libs}"
               AutoGenerateColumns="True" IsReadOnly="True" 
               GridLinesVisibility="All"
               BorderThickness="1" BorderBrush="Gray">

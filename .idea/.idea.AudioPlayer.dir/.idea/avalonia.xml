@@ -4,6 +4,8 @@
     <option name="projectPerEditor">
       <map>
         <entry key="App.axaml" value="AudioPlayer.csproj" />
+        <entry key="Assets/Lang/en-EN.axaml" value="AudioPlayer.csproj" />
+        <entry key="Assets/Lang/ru-RU.axaml" value="AudioPlayer.csproj" />
         <entry key="Icons.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/CreatePlaylist.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/LibraryView.axaml" value="AudioPlayer.csproj" />

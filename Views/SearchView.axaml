@@ -3,12 +3,37 @@
              xmlns:vm="using:AudioPlayer.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="100"
-             x:DataType="vm:PlayListViewModel"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="100"
+             x:DataType="vm:SearchViewModel"
              x:Class="AudioPlayer.Views.SearchView">
 
-    <RelativePanel HorizontalAlignment="Center" Height="35">
-        <TextBox Width="550" Height="35" Padding="30 7" ZIndex="1"  Watermark="Search" CornerRadius="20"/>
-        <PathIcon Data="{StaticResource search}" Margin="7" Opacity="0.3" ZIndex="0" HorizontalAlignment="Left"/>
-    </RelativePanel>
+    <DockPanel>
+        <Button Command="{Binding SwitchToPlaylists}" Content="{DynamicResource Search.Playlist}" Padding="5 5" FontWeight="Bold" Margin="10 15"/>
+        <Button Command="{Binding SwitchToLibrary}" Content="{DynamicResource Search.Library}" Padding="5 5" FontWeight="Bold" Margin="10 15"/>
+        <RelativePanel HorizontalAlignment="Center" Height="35">
+            <TextBox Width="400" Height="35" Padding="30 7" ZIndex="1"  Watermark="{DynamicResource Search.Prompt}" CornerRadius="20"/>
+            <PathIcon Data="{StaticResource search}" Margin="7" Opacity="0.3" ZIndex="0" HorizontalAlignment="Left"/>
+        </RelativePanel>
+        <ToggleButton DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="True" Foreground="Transparent" Command="{Binding SwitchLanguage}" Padding="0" Margin="15 0">
+            <StackPanel Orientation="Horizontal">
+                <Image Classes="en" Source="/Assets/en.png" Width="50" Height="30"/>
+                <Image Classes="ru" Source="/Assets/ru.png" Width="50" Height="30"/>
+            </StackPanel>
+        </ToggleButton>
+    </DockPanel>
+    
+    <UserControl.Styles>
+        <Style Selector="ToggleButton Image.en">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+        <Style Selector="ToggleButton:checked Image.en">
+            <Setter Property="IsVisible" Value="True"/>
+        </Style>
+        <Style Selector="ToggleButton Image.ru">
+            <Setter Property="IsVisible" Value="True"/>
+        </Style>
+        <Style Selector="ToggleButton:checked Image.ru">
+            <Setter Property="IsVisible" Value="False"/>
+        </Style>
+    </UserControl.Styles>
 </UserControl>

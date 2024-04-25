@@ -1,4 +1,3 @@
-# .net-audioPlayer
-.net AvaloniaUI Playback application
+# AudioPlayer .NET AvaloniaUI
 
-## Uses CSCore, ATL, TagLib-Sharp libraries
+## Uses NAudio, ATL, TagLib libraries

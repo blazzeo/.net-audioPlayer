@@ -3,26 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Width="400" Height="320"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="320"
         x:Class="AudioPlayer.Views.CreatePlaylist"
         x:DataType="vm:CreatePlaylistViewModel"
         Title="New Playlist">
-    
-        <Design.DataContext>
-                <vm:CreatePlaylistViewModel/>
-        </Design.DataContext>
         
-        <StackPanel>
-                <TextBlock FontWeight="Bold">Create new playlist!</TextBlock>
-                <TextBlock>Cover</TextBlock>
-                <!-- <Image Source={Binding CoverImage} /> -->
-                <StackPanel Orientation="Horizontal">
-                        <TextBlock>Playlist folder: </TextBlock>
-                        <!-- <TextBlock Text="{Binding Name}"/> -->
+        <StackPanel Margin="10 20">
+                <StackPanel>
+                        <TextBlock FontWeight="Bold" FontSize="30" Text="{DynamicResource Create.NewPlaylist}"/>
+                        <TextBlock FontWeight="Bold" FontSize="20" Text="{DynamicResource Create.Cover}"/>
+                        <Image HorizontalAlignment="Left" Width="100" Height="100" Source="{Binding CoverImage}"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 5">
+                                <TextBlock Text="{DynamicResource Create.EnterName}" FontSize="20" Margin="0 0 10 0"/>
+                                <TextBox Text="{Binding Name}" Height="20" Width="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 5">
+                                <TextBlock Text="{DynamicResource Create.OpenFolder}" FontSize="20" Margin="0 0 10 0"/>
+                                <Button Command="{Binding OpenFileCommand}" Content="{DynamicResource Create.OpenBtn}"/>
+                        </StackPanel>
+                        
                 </StackPanel>
-                <!-- <Button Command="OpenDialog"/> -->
                 
-                <!-- <Button Content="Create" Command="{Binding Create}"/> -->
+                <Button Content="{DynamicResource Create.Submit}" Command="{Binding Create}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
         </StackPanel>
         
 </Window>

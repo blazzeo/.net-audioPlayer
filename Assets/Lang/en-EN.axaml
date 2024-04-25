@@ -1,0 +1,14 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=System.Runtime">
+    <v:String x:Key="Search.Playlist">Playlist</v:String>
+    <v:String x:Key="Search.Library">Library</v:String>
+    <v:String x:Key="Search.Prompt">Search</v:String>
+    <v:String x:Key="Library.Create">Add</v:String>
+    <v:String x:Key="Create.NewPlaylist">New Playlist</v:String>
+    <v:String x:Key="Create.Cover">Cover</v:String>
+    <v:String x:Key="Create.EnterName">Enter name</v:String>
+    <v:String x:Key="Create.OpenBtn">Open</v:String>
+    <v:String x:Key="Create.Submit">Submit</v:String>
+    <v:String x:Key="Create.OpenFolder">Open audio folder</v:String>
+</ResourceDictionary>
