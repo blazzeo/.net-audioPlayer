@@ -11,7 +11,7 @@ public class SearchViewModel : ViewModelBase
   public SearchViewModel(MainWindowViewModel mainWindow)
   {
     _mainWindow = mainWindow;
-    _focusContent = mainWindow.LibraryVM;
+    _focusContent = mainWindow.LibraryVm;
   }
 
   public ViewModelBase SearchContent { get => _focusContent;

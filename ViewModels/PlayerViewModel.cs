@@ -14,8 +14,8 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
 {
     private readonly Player _player;
     private PlayList _playList;
-    private List<Track> _trackList;
-    private Track _activeTrack;
+    private List<TrackInfo> _trackList;
+    private TrackInfo _activeTrack;
     private bool _looping;
     private Bitmap _coverImage;
     
@@ -46,11 +46,11 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         CoverImage = GetImage();
     }
 
-    public PlayerViewModel(Track track)
+    public PlayerViewModel(TrackInfo track)
     {
         _trackList = new();
         _activeTrack = track;
-        CoverImage = GetImage(_activeTrack);
+        CoverImage = track.Image;
         _player = new Player();
         _player.TrackIsEnd += OnTrackEnd;
         _playList = new PlayList();
@@ -64,7 +64,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
 
     public void SetAlbum(string path)
     {
-        _playList = new PlayList("af", path);
+        _playList = new PlayList("af", path, "Assets/default-audio.png");
     }
 
     public void SetVolume(int value)
@@ -72,7 +72,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         _player.Volume = value / 100;
     }
 
-    public void Play(Track track = null)
+    public void Play(TrackInfo track = null)
     {
         if (track != null)
             _activeTrack = track;
@@ -116,7 +116,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
     }
     public double Position
     {
-        get => _player.AudioFile.Position;
+        get => _player.AudioFile.Position == null ? 0 : _player.AudioFile.Position;
     }
 
     public int CurrentVolume
@@ -124,7 +124,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         get => _player.Volume;
     }
 
-    private Bitmap GetImage(Track track = null)
+    private Bitmap GetImage(TrackInfo track = null)
     {
         MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")
@@ -136,7 +136,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         return new Bitmap(memory);
     }
 
-    private byte[] TrackTag(Track track)
+    private byte[] TrackTag(TrackInfo track)
     {
         var images = TagLib.File.Create(track.Path).Tag.Pictures;
         return images[0].Data.Data;

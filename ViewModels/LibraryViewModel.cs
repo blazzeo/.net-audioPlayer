@@ -41,7 +41,7 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
         
         _library = new();
         _library.Add(playList);
-        _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/"));
+        _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/", "Assets/default-audio.png"));
       
     }
     
@@ -63,27 +63,4 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
-    // public Control GetImage(Track track)
-    // {
-    //     MemoryStream memory;
-    //     Avalonia.Media.Imaging.Bitmap AvIrBitmap;
-    //     var IT = new ImageTemplate();
-    //     if (track != null)
-    //     {
-    //         memory = new MemoryStream(trackTag(track));
-    //         AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
-    //         return IT.Build(AvIrBitmap);
-    //     }
-    //
-    //     memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
-    //     AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
-    //     return IT.Build(AvIrBitmap);
-    // }
-    
-    // public byte[] trackTag(Track track)
-    // {
-    //     var imgs = TagLib.File.Create(track.Path).Tag.Pictures;
-    //     return imgs[0].Data.Data;
-    // }
 }

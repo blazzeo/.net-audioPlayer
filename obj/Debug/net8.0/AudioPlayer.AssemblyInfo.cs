@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AudioPlayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84e257a971ae51ad4ba690c792bb99ad9f2cf149")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3560e43f08aede9d6fa4db52401eb431b04c354d")]
 [assembly: System.Reflection.AssemblyProductAttribute("AudioPlayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AudioPlayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

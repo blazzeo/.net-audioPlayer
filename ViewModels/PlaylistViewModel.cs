@@ -2,64 +2,48 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Controls.Models.TreeDataGrid;
 using System.Collections.Generic;
-using System.IO;
 using AudioPlayer.Templates;
 using AudioPlayer.Models;
 using System;
-using ATL;
 
 namespace AudioPlayer.ViewModels;
 
 public class PlayListViewModel : ViewModelBase
 {
-    private List<Track> trackList;
-    public String Title { get; }
-    public FlatTreeDataGridSource<Track> AudioSource { get; }
+    private PlayList _playList;
+    private readonly List<TrackInfo> _trackList;
+    public string Title { get; }
+    public FlatTreeDataGridSource<TrackInfo> AudioSource { get; }
 
     public PlayListViewModel(PlayList playList)
     {
-        trackList = new(playList.TrackList);
+        _playList = playList;
+        _trackList = new(_playList.TrackList);
 
         Title = playList.Name!;
 
-        AudioSource = new FlatTreeDataGridSource<Track>(trackList)
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList)
         {
             Columns = {
-              new TemplateColumn<Track>("Cover", new FuncDataTemplate<Track>((a,e) => GetButton(GetImage(a)))),
-              new TextColumn<Track, string>("Title", x => x.Title),
-              new TextColumn<Track, string>("Artist", x => x.Artist),
-              new TextColumn<Track, string>("Album", x => x.Album),
-              new TextColumn<Track, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+              new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(GetImage(a)))),
+              new TextColumn<TrackInfo, string>("Title", x => x.Title),
+              new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
+              new TextColumn<TrackInfo, string>("Album", x => x.Album),
+              new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
           }
         };
     }
 
-    private Control GetButton(Control img)
+    private static Control GetButton(Control img)
     {
-        var IT = new ImageButtonTemplate();
-        return IT.Build(img);
+        var it = new ImageButtonTemplate();
+        return it.Build(img);
     }
 
-    private Control GetImage(Track track)
+    private static Control GetImage(TrackInfo track)
     {
-        MemoryStream memory;
-        Avalonia.Media.Imaging.Bitmap AvIrBitmap;
-        var IT = new SongImageTemplate();
-        if (track != null && Path.GetExtension(track.Path) != ".wav")
-        {
-            memory = new MemoryStream(trackTag(track));
-            AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
-            return IT.Build(AvIrBitmap);
-        }
-
-        memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
-        AvIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
-        return IT.Build(AvIrBitmap);
-    }
-
-    private byte[] trackTag(Track track)
-    {
-        var imgs = TagLib.File.Create(track.Path).Tag.Pictures;
-        return imgs[0].Data.Data;
+        var it = new SongImageTemplate();
+        //Console.WriteLine();
+        return it.Build(track.Image);
     }
 }

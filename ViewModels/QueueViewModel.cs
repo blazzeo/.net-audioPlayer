@@ -1,64 +1,30 @@
 using Avalonia.Controls;
-using Avalonia.Controls.Templates;
-using Avalonia.Controls.Models.TreeDataGrid;
-using System.IO;
 using AudioPlayer.Templates;
-using System;
+using AudioPlayer.Models;
 using System.Collections.ObjectModel;
-using ATL;
+using Avalonia.Controls.Chrome;
 
 namespace AudioPlayer.ViewModels;
 
 public class QueueListViewModel : ViewModelBase
 {
-    private ObservableCollection<Track>? _activeTracklist;
-    public FlatTreeDataGridSource<Track> ActiveTrackList { get; }
-    public string PlaylistName { get; private set; } = "123";
+    private MainWindowViewModel _mainWindow;
+    private PlayList _playList;
 
-    public QueueListViewModel()
+    public string Title{ get => _playList.Name ?? "Empty"; }
+    public ObservableCollection<TrackInfo>? ActiveTracklist { get; }
+
+    public QueueListViewModel(MainWindowViewModel window)
     {
-        _activeTracklist = new();
+        _mainWindow = window;
+        ActiveTracklist = new();
     }
 
-    public QueueListViewModel(ObservableCollection<Track> tracklist)
+    public QueueListViewModel(MainWindowViewModel window, PlayList playList, ObservableCollection<TrackInfo> tracklist)
     {
-        _activeTracklist = tracklist;
-
-        ActiveTrackList = new FlatTreeDataGridSource<Track>(_activeTracklist)
-        {
-            Columns = {
-              new TemplateColumn<Track>("Cover", new FuncDataTemplate<Track>((a,e) => GetButton(GetImage(a)))),
-              new TextColumn<Track, string>("Title", x => x.Title)
-          }
-        };
+        _mainWindow = window;
+        _playList = playList;
+        ActiveTracklist = tracklist;
     }
-
-    private Control GetButton(Control img)
-    {
-        var it = new ImageButtonTemplate();
-        return it.Build(img);
-    }
-
-    private Control GetImage(Track track)
-    {
-        MemoryStream memory;
-        Avalonia.Media.Imaging.Bitmap avIrBitmap;
-        var it = new SongImageTemplate();
-        if (track != null && Path.GetExtension(track.Path) != ".wav")
-        {
-            memory = new MemoryStream(trackTag(track));
-            avIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
-            return it.Build(avIrBitmap);
-        }
-
-        memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
-        avIrBitmap = new Avalonia.Media.Imaging.Bitmap(memory);
-        return it.Build(avIrBitmap);
-    }
-
-    private byte[] trackTag(Track track)
-    {
-        var imgs = TagLib.File.Create(track.Path).Tag.Pictures;
-        return imgs[0].Data.Data;
-    }
+    
 }

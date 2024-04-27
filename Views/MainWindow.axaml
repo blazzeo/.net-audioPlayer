@@ -19,14 +19,12 @@
 
   <DockPanel>
     <DockPanel>
-      <views:SearchView DataContext="{Binding SearchVM}" DockPanel.Dock="Top" Height="100"/>
-      <views:PlayerView DataContext="{Binding PlayerVM}" DockPanel.Dock="Bottom" Height="85"/>
-      <ContentControl Content="{Binding ContentVM}" Margin="20 0 0 0"/>
+      <views:SearchView DataContext="{Binding SearchVm}" DockPanel.Dock="Top" Height="100"/>
+      <views:PlayerView DataContext="{Binding PlayerVm}" DockPanel.Dock="Bottom" Height="85"/>
+      <ContentControl Content="{Binding ContentVm}" Margin="20 0 0 0"/>
     </DockPanel>
     
-    <StackPanel DockPanel.Dock="Right" Width="250">
-      <views:QueueView DataContext="{Binding QueueVM}"/>
-    </StackPanel>
+    <views:QueueView DataContext="{Binding QueueVm}" Width="250" DockPanel.Dock="Right"/>
   </DockPanel>
 
 </Window>
