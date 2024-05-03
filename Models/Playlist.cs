@@ -18,6 +18,7 @@ public class PlayList : INotifyPropertyChanged
 
     public bool Active { get; private set; }
     public string? Name { get => _name; set => _name = value!; }
+    public Bitmap Image { get => _cover; private set => _cover = value; }
 
     public ObservableCollection<TrackInfo> TrackList { get => _tracklist; }
 

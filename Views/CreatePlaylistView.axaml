@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="using:AudioPlayer.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AudioPlayer.Views.CreatePlaylistView"
+             x:DataType="vm:CreatePlaylistViewModel">
+    
+    <DockPanel Margin="10 20">
+        <StackPanel>
+            <TextBlock FontWeight="Bold" FontSize="30" Text="{DynamicResource Create.NewPlaylist}"/>
+            <TextBlock FontWeight="Bold" FontSize="20" Text="{DynamicResource Create.Cover}"/>
+            <Panel>
+                <Image HorizontalAlignment="Left" Width="200" Height="200" Source="{Binding CoverImage}"/>
+                <Button Command="{Binding OpenImage}" Width="200" Height="200"/>
+            </Panel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 5">
+                <TextBlock Text="{DynamicResource Create.EnterName}" FontSize="20" Margin="0 0 10 0"/>
+                <TextBox Text="{Binding Name}" Height="20" Width="200"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0 5">
+                <TextBlock Text="{DynamicResource Create.OpenFolder}" FontSize="20" Margin="0 0 10 0"/>
+                <Button Command="{Binding OpenFolder}" Content="{DynamicResource Create.OpenBtn}"/>
+            </StackPanel>
+            <TreeDataGrid Source="{Binding AudioSource}" CanUserResizeColumns="False" HorizontalAlignment="Stretch"/>
+                        
+        </StackPanel>
+                
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <Button Content="{DynamicResource Create.Submit}" Padding="20 10" Margin="20 0" Background="ForestGreen" Command="{Binding Create}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+            <Button Content="{DynamicResource Create.Cancel}" Padding="20 10" Margin="20 0" Background="OrangeRed" Command="{Binding Cancel}" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+        </StackPanel>
+    </DockPanel>
+    
+</UserControl>

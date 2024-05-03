@@ -7,7 +7,7 @@
              x:Class="AudioPlayer.Views.LibraryView"
              x:DataType="vm:LibraryViewModel">
 <StackPanel>
-    <Button Content="{DynamicResource Library.Create}" Command="{Binding CreateNewPlaylist}"/>
+    <Button Content="{DynamicResource Library.Create}" Command="{Binding CreateNew}"/>
     <ListBox ItemsSource="{Binding Libs}" SelectedItem="{Binding SelectedAlbum}"
               Background="Transparent" Margin="0 20">
         <ListBox.ItemsPanel>
@@ -20,12 +20,17 @@
                 <DockPanel>
                     <StackPanel Spacing="5" Width="200">
                         <Border CornerRadius="10" ClipToBounds="True">
-                            <Panel Background="#7FFF22DD">
-                                <Image Width="200" Stretch="Uniform" />
-                                <Panel Height="200">
-                                    <Image Source="/Assets/default-audio.png"/>
-                                </Panel>
-                            </Panel>
+                            <RelativePanel Background="#fff" Width="200" Height="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                
+                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).SetPlaylist}" CommandParameter="{Binding}" Content="Play" RelativePanel.AlignHorizontalCenterWithPanel="True" 
+                                        RelativePanel.AlignVerticalCenterWithPanel="True" ZIndex="2"/>
+                                <Button Command="{Binding}" RelativePanel.AlignTopWithPanel="True"
+                                        RelativePanel.AlignRightWithPanel="True" ZIndex="2"
+                                        Background="Beige">
+                                    <PathIcon Data="{StaticResource edit}" Background="Beige"/>
+                                </Button>
+                                <Image Source="{Binding Image}" ZIndex="1"/>
+                            </RelativePanel>
                         </Border>    
                     </StackPanel>
                 </DockPanel>

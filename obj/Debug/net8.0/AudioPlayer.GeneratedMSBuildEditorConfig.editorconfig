@@ -29,7 +29,7 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/Users/blazzeo/Programming/AudioPlayer/Icons.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/blazzeo/Programming/AudioPlayer/Views/CreatePlaylist.axaml]
+[/Users/blazzeo/Programming/AudioPlayer/Views/CreatePlaylistView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/Users/blazzeo/Programming/AudioPlayer/Views/LibraryView.axaml]

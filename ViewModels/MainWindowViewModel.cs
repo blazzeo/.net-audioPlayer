@@ -24,10 +24,10 @@ public class MainWindowViewModel : ViewModelBase
         }
     }
     
-    public SearchViewModel SearchVm { get; set; } 
+    public SearchViewModel SearchVm { get; set; }
     public PlayerViewModel PlayerVm { get; set; }
     public LibraryViewModel LibraryVm { get; set; }
-    public PlayListViewModel PlaylistVm { get; }
+    public PlayListViewModel PlaylistVm { get; set; }
     public QueueListViewModel QueueVm { get; set; }
     
     public MainWindowViewModel()
@@ -47,6 +47,12 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(ContentVm != PlaylistVm)
             ContentVm = PlaylistVm;
+    }
+
+    public void OpenCreateDialog()
+    {
+        if(ContentVm.GetType() != typeof(CreatePlaylistViewModel))
+            ContentVm = new CreatePlaylistViewModel(LibraryVm);
     }
 
     public void ToLibrary()

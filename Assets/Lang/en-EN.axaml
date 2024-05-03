@@ -11,5 +11,5 @@
     <v:String x:Key="Create.OpenBtn">Open</v:String>
     <v:String x:Key="Create.Submit">Submit</v:String>
     <v:String x:Key="Create.Cancel">Cancel</v:String>
-    <v:String x:Key="Create.OpenFolder">Open audio folder</v:String>
+    <v:String x:Key="Create.OpenFolder">Audio folder</v:String>
 </ResourceDictionary>

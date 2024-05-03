@@ -41,15 +41,15 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
         _window = MainWindow;
         ShowDialog = new Interaction<CreatePlaylistViewModel, PlayList>();
 
-        CreateNewPlaylist = ReactiveCommand.CreateFromTask(async () =>
-        {
-            var creator = new CreatePlaylistViewModel(this);
-            AddNewPlaylist(await ShowDialog.Handle(creator));
-        });
+        // CreateNewPlaylist = ReactiveCommand.CreateFromTask(async () =>
+        // {
+        //     var creator = new CreatePlaylistViewModel(this);
+        //     AddNewPlaylist(await ShowDialog.Handle(creator));
+        // });
         
         _library = new();
         _library.Add(playList);
-        _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/", "Assets/default-audio.png"));
+        _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/", "Assets/soprano.jpeg"));
         _library.Add(new PlayList("1234", "/Users/blazzeo/Downloads/Orange/", "Assets/default-audio.png"));
     }
     
@@ -62,8 +62,30 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
             Library = lib;
         }
     }
+
+    public void SetPlaylist(PlayList playList)
+    {
+        // Console.WriteLine(1231);
+        _window.PlaylistVm = new PlayListViewModel(playList);
+    }
+
+    public void Cancel()
+    {
+        _window.ToLibrary();
+    }
     
-    public ICommand CreateNewPlaylist { get; }
+    public void SubmitPlaylist(PlayList playList)
+    {
+        _library.Playlists.Add(playList);
+        _window.ToLibrary();
+    }
+    
+    public void CreateNew()
+    {
+        _window.OpenCreateDialog();
+    }
+    
+    // public ICommand CreateNewPlaylist { get; }
     
     public new event PropertyChangedEventHandler? PropertyChanged;
     
