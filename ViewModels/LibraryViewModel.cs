@@ -12,6 +12,7 @@ namespace AudioPlayer.ViewModels;
 public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
 {
     private MainWindowViewModel _window;
+    private PlayList? _selectedAlbum;
     private Library _library;
     private Library Library
     {
@@ -24,6 +25,13 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
             RaisePropertyChanged(nameof(Libs));
         }
     }
+    
+    public PlayList? SelectedAlbum
+    {
+        get => _selectedAlbum;
+        set => this.RaiseAndSetIfChanged(ref _selectedAlbum, value);
+    }
+    
     public ObservableCollection<PlayList> Libs => _library.Playlists;
     
     public Interaction<CreatePlaylistViewModel, PlayList> ShowDialog { get; }
@@ -42,7 +50,7 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
         _library = new();
         _library.Add(playList);
         _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/", "Assets/default-audio.png"));
-      
+        _library.Add(new PlayList("1234", "/Users/blazzeo/Downloads/Orange/", "Assets/default-audio.png"));
     }
     
     public void AddNewPlaylist(PlayList newPlaylist)

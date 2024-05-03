@@ -8,11 +8,30 @@
              x:DataType="vm:LibraryViewModel">
 <StackPanel>
     <Button Content="{DynamicResource Library.Create}" Command="{Binding CreateNewPlaylist}"/>
-    <DataGrid ItemsSource="{Binding Libs}"
-              AutoGenerateColumns="True" IsReadOnly="True" 
-              GridLinesVisibility="All"
-              BorderThickness="1" BorderBrush="Gray">
-  </DataGrid>
+    <ListBox ItemsSource="{Binding Libs}" SelectedItem="{Binding SelectedAlbum}"
+              Background="Transparent" Margin="0 20">
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel/>
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <DockPanel>
+                    <StackPanel Spacing="5" Width="200">
+                        <Border CornerRadius="10" ClipToBounds="True">
+                            <Panel Background="#7FFF22DD">
+                                <Image Width="200" Stretch="Uniform" />
+                                <Panel Height="200">
+                                    <Image Source="/Assets/default-audio.png"/>
+                                </Panel>
+                            </Panel>
+                        </Border>    
+                    </StackPanel>
+                </DockPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </StackPanel>
 
 </UserControl>

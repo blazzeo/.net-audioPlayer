@@ -110,13 +110,40 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         _playList.ToggleShuffle();
     }
 
+    public string TotalTimeStr
+    {
+        get
+        {
+            // Console.WriteLine(_player.AudioFile.TotalTime.ToString(@"mm\:ss"));
+            if (_player.AudioFile == null)
+            {
+                return "0:00";
+            }
+            return _player.AudioFile.TotalTime.ToString(@"mm\:ss");
+        }
+    }
+
     public double TotalTime
     {
         get => _player.AudioFile.TotalTime.TotalSeconds;
     }
+
     public double Position
     {
-        get => _player.AudioFile.Position == null ? 0 : _player.AudioFile.Position;
+        get => _player.AudioFile.CurrentTime.TotalSeconds;
+        set => _player.SetPositionFile(value);
+    }
+
+    public string PositionStr
+    {
+        get
+        {
+            if (_player.AudioFile == null)
+            {
+                return "0:00";
+            }
+            return _player.AudioFile.CurrentTime.ToString(@"mm\:ss");
+        }
     }
 
     public int CurrentVolume

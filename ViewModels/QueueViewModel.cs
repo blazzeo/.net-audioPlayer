@@ -3,6 +3,7 @@ using AudioPlayer.Templates;
 using AudioPlayer.Models;
 using System.Collections.ObjectModel;
 using Avalonia.Controls.Chrome;
+using Avalonia.Interactivity;
 
 namespace AudioPlayer.ViewModels;
 
@@ -25,6 +26,13 @@ public class QueueListViewModel : ViewModelBase
         _mainWindow = window;
         _playList = playList;
         ActiveTracklist = tracklist;
+    }
+
+    public void PlayNow(object sender, RoutedEventArgs args)
+    {
+        var obj = (DockPanel)sender;
+        
+        _mainWindow.PlayerVm = new PlayerViewModel();
     }
     
 }

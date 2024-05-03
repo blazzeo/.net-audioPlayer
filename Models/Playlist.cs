@@ -41,7 +41,7 @@ public class PlayList : INotifyPropertyChanged
         _cover = new Bitmap(new MemoryStream(File.ReadAllBytes(imagePath)));
         _tracklist = _tracklist ?? new();
         var files = Directory.GetFiles(folder);
-
+        
         foreach (var file in files)
         {
             if (!IsAudioFile(file)) continue;

@@ -69,5 +69,8 @@ public class TrackInfo
 
         Path = Title = Album = Artist = null;
         Duration = 0;
+        MemoryStream imageData;
+        imageData = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
+        Image = new Bitmap(imageData);
     }
 }

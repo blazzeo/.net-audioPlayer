@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using AudioPlayer.Templates;
 using AudioPlayer.Models;
 using System;
+using System.IO;
+using ATL;
+using Avalonia.Media.Imaging;
+using TagLib;
 
 namespace AudioPlayer.ViewModels;
 
@@ -37,13 +41,17 @@ public class PlayListViewModel : ViewModelBase
     private static Control GetButton(Control img)
     {
         var it = new ImageButtonTemplate();
+        
         return it.Build(img);
     }
 
     private static Control GetImage(TrackInfo track)
     {
         var it = new SongImageTemplate();
-        //Console.WriteLine();
+        if (track == null)
+        {
+            return it.Build(new Bitmap(new MemoryStream(System.IO.File.ReadAllBytes("Assets/default-audio.png"))));
+        } else
         return it.Build(track.Image);
     }
 }

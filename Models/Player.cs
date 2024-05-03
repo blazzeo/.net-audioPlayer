@@ -16,6 +16,12 @@ namespace AudioPlayer.Models
         {
             OutputDevice.PlaybackStopped += OnPlaybackStopped;
         }
+        
+        public Player(TrackInfo track)
+        {
+            OutputDevice.PlaybackStopped += OnPlaybackStopped;
+            AudioFile = new AudioFileReader(track.Path);
+        }
 
         public AudioFileReader AudioFile
         {
@@ -75,10 +81,10 @@ namespace AudioPlayer.Models
             OutputDevice?.Pause();
         }
 
-        public void SetPositionFile(long pos)
+        public void SetPositionFile(double pos)
         {
             if (AudioFile != null)
-                AudioFile.Position = pos;
+                AudioFile.Position = Convert.ToInt64(pos);
         }
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs args)

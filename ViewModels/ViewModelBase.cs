@@ -5,13 +5,13 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ReactiveUI;
 
 namespace AudioPlayer.ViewModels;
 
 public partial class ViewModelBase : ReactiveObject
 {
-    
     [RelayCommand]
     public async Task<string> OpenFile(CancellationToken token)
     {
