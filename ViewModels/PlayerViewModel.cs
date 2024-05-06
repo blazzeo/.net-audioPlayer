@@ -5,7 +5,6 @@ using System.ComponentModel;
 using System;
 using System.IO;
 using System.Runtime.CompilerServices;
-using ATL;
 using NAudio.Wave;
 
 namespace AudioPlayer.ViewModels;
@@ -17,6 +16,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
     private List<TrackInfo> _trackList;
     private TrackInfo _activeTrack;
     private bool _looping;
+    private bool _shuffled;
     private Bitmap _coverImage;
     
     public new event PropertyChangedEventHandler? PropertyChanged;
@@ -46,15 +46,14 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         CoverImage = GetImage();
     }
 
-    public PlayerViewModel(TrackInfo track)
+    public PlayerViewModel(PlayList playlist)
     {
-        _trackList = new();
-        _activeTrack = track;
-        CoverImage = track.Image;
+        _playList = playlist;
+        _trackList = playlist.GetTracklist();
+        _activeTrack = _trackList[0];
+        CoverImage = _activeTrack.Image;
         _player = new Player();
         _player.TrackIsEnd += OnTrackEnd;
-        _playList = new PlayList();
-        _activeTrack = track;
     }
     
     private void OnTrackEnd(object sender, EventArgs e)
@@ -62,9 +61,9 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         NextSong(_looping);
     }
 
-    public void SetAlbum(string path)
+    public void SetPlaylist(PlayList playlist)
     {
-        _playList = new PlayList("af", path, "Assets/default-audio.png");
+        _playList = playlist;
     }
 
     public void SetVolume(int value)
@@ -80,7 +79,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         _player.PlayFile();
     }
 
-    public void LoopAudio()
+    public void Loop()
     {
         _looping = !_looping;
     }
@@ -95,6 +94,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
             _player.AudioFile = new AudioFileReader(_activeTrack.Path);
         }
         Play(_activeTrack);
+        RaisePropertyChanged();
     }
 
     public void PrevSong()
@@ -103,35 +103,48 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
           _trackList.IndexOf(_activeTrack) - 1 : _trackList.Count;
         _activeTrack = _trackList[prevSongId];
         Play(_activeTrack);
+        RaisePropertyChanged();
     }
 
     public void Shuffle()
     {
-        _playList.ToggleShuffle();
+        _shuffled = !_shuffled;
+        if (_shuffled)
+        {
+            List<TrackInfo> shuffledList = [.._trackList];
+            var n = shuffledList.Count;
+            Random random = new Random();
+
+            while (n > 1)
+            {
+                n--;
+                var k = random.Next(n + 1);
+                (shuffledList[k], shuffledList[n]) = (shuffledList[n], shuffledList[k]);
+            }
+        
+            _trackList = [..shuffledList];
+        }
+        else
+        {
+            _trackList = _playList.GetTracklist();
+        }
     }
 
     public string TotalTimeStr
     {
-        get
-        {
-            // Console.WriteLine(_player.AudioFile.TotalTime.ToString(@"mm\:ss"));
-            if (_player.AudioFile == null)
-            {
-                return "0:00";
-            }
-            return _player.AudioFile.TotalTime.ToString(@"mm\:ss");
-        }
+        get => (_player.AudioFile == null) ? "00:00" : _player.AudioFile.TotalTime.ToString(@"mm\:ss");
     }
 
-    public double TotalTime
-    {
-        get => _player.AudioFile.TotalTime.TotalSeconds;
-    }
+    public double TotalTime => _player.AudioFile.TotalTime.TotalSeconds;
 
     public double Position
     {
         get => _player.AudioFile.CurrentTime.TotalSeconds;
-        set => _player.SetPositionFile(value);
+        set
+        {
+            _player.SetPositionFile(value);
+            RaisePropertyChanged();
+        }
     }
 
     public string PositionStr
@@ -146,9 +159,14 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         }
     }
 
-    public int CurrentVolume
+    public int Volume
     {
         get => _player.Volume;
+        set
+        {
+            _player.Volume = value;
+            RaisePropertyChanged();
+        }
     }
 
     private Bitmap GetImage(TrackInfo track = null)

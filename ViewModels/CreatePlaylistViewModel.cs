@@ -1,34 +1,67 @@
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Threading;
-using System.Xml;
 using AudioPlayer.Models;
 using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
-using Avalonia.Input;
 using Avalonia.Media.Imaging;
-using CommunityToolkit.Mvvm.Input;
+using ReactiveUI;
 
 namespace AudioPlayer.ViewModels;
 
 public class CreatePlaylistViewModel : ViewModelBase
 {
     private PlayList _playList;
-    private LibraryViewModel _library;
+    
+    private readonly LibraryViewModel _library;
     private string pathFolder;
     private string pathImage;
-    public string Name { get; }
-    public Bitmap CoverImage { get; private set; }
-    public FlatTreeDataGridSource<TrackInfo> AudioSource { get; }
-    
-    public new event PropertyChangedEventHandler? PropertyChanged;
+    private string _name;
+    public string Name { get => _name; set => this.RaiseAndSetIfChanged(ref _name, value); }
 
-    public CreatePlaylistViewModel(LibraryViewModel Library)
+    private Bitmap _coverImage;
+    public Bitmap CoverImage
     {
-        CoverImage = DefaultCover();
-        _library = Library;
+        get => _coverImage;
+        private set => this.RaiseAndSetIfChanged(ref _coverImage, value);
+    }
+
+    private FlatTreeDataGridSource<TrackInfo> _audioSorce;
+    public FlatTreeDataGridSource<TrackInfo> AudioSource
+    {
+        get => _audioSorce;
+        private set => this.RaiseAndSetIfChanged(ref _audioSorce, value);
+    }
+
+    public CreatePlaylistViewModel(LibraryViewModel library)
+    {
+        _coverImage = DefaultCover();
+        _library = library;
         _playList = new PlayList();
+        _audioSorce = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList);
+    }
+
+    public CreatePlaylistViewModel(LibraryViewModel library, PlayList playList)
+    {
+        _coverImage = playList.Image;
+        _library = library;
+        _playList = playList;
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(playList.TrackList)
+        {
+            Columns = {
+                new TextColumn<TrackInfo, string>("Title", x => x.Title),
+                new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
+                new TextColumn<TrackInfo, string>("Album", x => x.Album),
+                new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+            }
+        };
+    }
+
+    public async void OpenFolder()
+    {
+        pathFolder = await OpenFolder(CancellationToken.None);
+        _playList = new PlayList(Name, pathFolder, CoverImage);
+        Console.WriteLine(_playList.TrackList.Count);
         AudioSource = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList)
         {
             Columns = {
@@ -38,26 +71,23 @@ public class CreatePlaylistViewModel : ViewModelBase
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
             }
         };
-        // this.CloseWindowCommand = new RelayCommand<ICloseable>(this.CloseWindow);
     }
 
-    public async void OpenFolder()
+    public async void OpenImage()
     {
-        pathFolder = OpenFolder(CancellationToken.None).Result;
-        Console.WriteLine(11);
-    }
-
-    private async void OpenImage()
-    {
-        pathImage = OpenFile(CancellationToken.None).Result;
-        Console.WriteLine(pathImage);
-        CoverImage = new Bitmap(new MemoryStream(File.ReadAllBytes(pathImage)));
+        pathImage = await OpenFile(CancellationToken.None);
+        CoverImage = new Bitmap(new MemoryStream(await File.ReadAllBytesAsync(pathImage)));
     }
 
     public void Create()
     {
-        var newPlaylist = new PlayList(Name, pathFolder, pathImage);
+        var newPlaylist = new PlayList(Name, pathFolder, CoverImage);
         _library.AddNewPlaylist(newPlaylist);
+    }
+
+    public void Save()
+    {
+        
     }
     
     public void Cancel()
@@ -65,11 +95,9 @@ public class CreatePlaylistViewModel : ViewModelBase
         _library.Cancel();
     }
 
-    private Bitmap DefaultCover()
+    private static Bitmap DefaultCover()
     {
-        
-            MemoryStream memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
+            var memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
             return new Bitmap(memory);
-        
     }
 }

@@ -9,6 +9,7 @@
         <entry key="Icons.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/AlbumView.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/CreatePlaylist.axaml" value="AudioPlayer.csproj" />
+        <entry key="Views/CreatePlaylistView.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/LibraryView.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/MainView.axaml" value="AudioPlayer.csproj" />
         <entry key="Views/MainWindow.axaml" value="AudioPlayer.csproj" />

@@ -39,7 +39,7 @@ public class MainWindowViewModel : ViewModelBase
         PlaylistVm = new PlayListViewModel(playlist);
         LibraryVm = new LibraryViewModel(playlist, this);
         QueueVm = new QueueListViewModel(this, playlist, playlist.TrackList);
-        PlayerVm = new PlayerViewModel(playlist.TrackList[0]);
+        PlayerVm = new PlayerViewModel(playlist);
         ContentVm = PlaylistVm;
     }
 

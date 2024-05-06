@@ -1,15 +1,12 @@
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using AudioPlayer.Models;
 using ReactiveUI;
 
 namespace AudioPlayer.ViewModels;
 
-public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
+public class LibraryViewModel : ViewModelBase
 {
     private MainWindowViewModel _window;
     private PlayList? _selectedAlbum;
@@ -33,24 +30,13 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
     }
     
     public ObservableCollection<PlayList> Libs => _library.Playlists;
-    
-    public Interaction<CreatePlaylistViewModel, PlayList> ShowDialog { get; }
 
-    public LibraryViewModel(PlayList playList, MainWindowViewModel MainWindow)
+    public LibraryViewModel(PlayList playList, MainWindowViewModel mainWindow)
     {
-        _window = MainWindow;
-        ShowDialog = new Interaction<CreatePlaylistViewModel, PlayList>();
-
-        // CreateNewPlaylist = ReactiveCommand.CreateFromTask(async () =>
-        // {
-        //     var creator = new CreatePlaylistViewModel(this);
-        //     AddNewPlaylist(await ShowDialog.Handle(creator));
-        // });
+        _window = mainWindow;
         
         _library = new();
         _library.Add(playList);
-        _library.Add(new PlayList("a", "/Users/blazzeo/Downloads/Orange/", "Assets/soprano.jpeg"));
-        _library.Add(new PlayList("1234", "/Users/blazzeo/Downloads/Orange/", "Assets/default-audio.png"));
     }
     
     public void AddNewPlaylist(PlayList newPlaylist)
@@ -61,32 +47,41 @@ public class LibraryViewModel : ViewModelBase, INotifyPropertyChanged
             lib.Add(newPlaylist);
             Library = lib;
         }
+
+        _window.ToLibrary();
+    }
+
+    public void EditPlaylist(PlayList editedPlaylist)
+    {
+        if ()
+        {
+            Library.
+            _window.ToLibrary();
+        }
+    }
+
+    public void DeletePlaylist(PlayList playList)
+    {
+        Library.Remove(playList);
+        _window.ToLibrary();
     }
 
     public void SetPlaylist(PlayList playList)
     {
-        // Console.WriteLine(1231);
         _window.PlaylistVm = new PlayListViewModel(playList);
+        _window.ToPlaylists();
     }
 
     public void Cancel()
     {
         _window.ToLibrary();
     }
-    
-    public void SubmitPlaylist(PlayList playList)
-    {
-        _library.Playlists.Add(playList);
-        _window.ToLibrary();
-    }
-    
+
     public void CreateNew()
     {
         _window.OpenCreateDialog();
     }
-    
-    // public ICommand CreateNewPlaylist { get; }
-    
+
     public new event PropertyChangedEventHandler? PropertyChanged;
     
     private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)

@@ -15,11 +15,20 @@ public class Library
 
   public void Add(PlayList playList)
   {
-    _playlistCollection.Add(playList);
+      _playlistCollection.Add(playList);
   }
 
   public void Remove(PlayList playList)
   {
-    _playlistCollection.Remove(playList);
+      _playlistCollection.Remove(playList);
   }
+
+  public void Edit(PlayList playList, int id)
+  {
+      if (_playlistCollection[id] != null)
+      {
+          _playlistCollection[id] = playList;
+      }
+  }
+  
 }

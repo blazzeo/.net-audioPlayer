@@ -5,6 +5,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
+using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ReactiveUI;
 
@@ -18,7 +19,7 @@ public partial class ViewModelBase : ReactiveObject
         try
         {
             var file = await DoOpenFilePickerAsync();
-            return file is null ? null : file.Path.ToString();
+            return file is null ? null : file.Path.ToString().Split("://")[1];
         }
         catch (Exception e)
         {
@@ -34,7 +35,7 @@ public partial class ViewModelBase : ReactiveObject
         try
         {
             var folder = await DoOpenFolderPickerAsync();
-            return folder is null ? null : folder.Path.ToString();
+            return folder is null ? null : folder.Path.ToString().Split("://")[1];
         }
         catch (Exception e)
         {
