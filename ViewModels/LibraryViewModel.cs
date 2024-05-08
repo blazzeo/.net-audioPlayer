@@ -1,6 +1,10 @@
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using AudioPlayer.Models;
 using ReactiveUI;
 
@@ -8,38 +12,34 @@ namespace AudioPlayer.ViewModels;
 
 public class LibraryViewModel : ViewModelBase
 {
-    private MainWindowViewModel _window;
-    private PlayList? _selectedAlbum;
+    private readonly MainWindowViewModel _window;
     private Library _library;
-    private Library Library
+    public Library Library
     {
         get => _library;
         set
         {
             if (Equals(value, _library)) return;
-            _library = value;
             this.RaiseAndSetIfChanged(ref _library, value);
-            RaisePropertyChanged(nameof(Libs));
+            this.RaisePropertyChanged(nameof(Libs));
         }
     }
-    
-    public PlayList? SelectedAlbum
+
+    public ObservableCollection<PlayList> Libs
     {
-        get => _selectedAlbum;
-        set => this.RaiseAndSetIfChanged(ref _selectedAlbum, value);
+        get => _library.Playlists;
+        set => _library.Playlists = value;
     }
-    
-    public ObservableCollection<PlayList> Libs => _library.Playlists;
 
     public LibraryViewModel(PlayList playList, MainWindowViewModel mainWindow)
     {
+        _library = new Library();
         _window = mainWindow;
         
-        _library = new();
-        _library.Add(playList);
+        Library.Add(playList);
     }
     
-    public void AddNewPlaylist(PlayList newPlaylist)
+    public void AddNewPlaylist(PlayList? newPlaylist)
     {
         if (newPlaylist != null)
         {
@@ -51,13 +51,17 @@ public class LibraryViewModel : ViewModelBase
         _window.ToLibrary();
     }
 
-    public void EditPlaylist(PlayList editedPlaylist)
+    private int _id;
+    
+    public void Edit(PlayList editedPlaylist)
     {
-        if ()
-        {
-            Library.
-            _window.ToLibrary();
-        }
+        _id = Library.IndexOf(editedPlaylist);
+        _window.OpenEditDialog(editedPlaylist);
+    }
+
+    public void UpdatePlaylist(PlayList newPlaylist)
+    {
+        Library.Playlists[_id] = newPlaylist;
     }
 
     public void DeletePlaylist(PlayList playList)
@@ -82,10 +86,17 @@ public class LibraryViewModel : ViewModelBase
         _window.OpenCreateDialog();
     }
 
-    public new event PropertyChangedEventHandler? PropertyChanged;
+    // public new event PropertyChangedEventHandler? PropertyChanged;
+    //
+    // private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+    // {
+    //     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    // }
     
-    private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+    public async Task<IEnumerable<PlayList>> SearchAsync(string? query)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        return Library.Playlists.Where(playlist =>
+                playlist.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
+            .ToList();
     }
 }

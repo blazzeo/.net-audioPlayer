@@ -8,7 +8,7 @@
              x:DataType="vm:LibraryViewModel">
 <StackPanel>
     <Button Content="{DynamicResource Library.Create}" Command="{Binding CreateNew}"/>
-    <ListBox ItemsSource="{Binding Libs}" SelectedItem="{Binding SelectedAlbum}"
+    <ListBox ItemsSource="{Binding Libs}"
               Background="Transparent" Margin="0 20">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
@@ -24,7 +24,9 @@
                                 
                                 <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).SetPlaylist}" CommandParameter="{Binding}" Content="Play" RelativePanel.AlignHorizontalCenterWithPanel="True" 
                                         RelativePanel.AlignVerticalCenterWithPanel="True" ZIndex="2"/>
-                                <Button Command="{Binding}" RelativePanel.AlignTopWithPanel="True"
+                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).Edit}"
+                                        CommandParameter="{Binding}"
+                                        RelativePanel.AlignTopWithPanel="True"
                                         RelativePanel.AlignRightWithPanel="True" ZIndex="2"
                                         Background="Beige">
                                     <PathIcon Data="{StaticResource edit}" Background="Beige"/>
