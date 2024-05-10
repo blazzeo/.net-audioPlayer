@@ -9,11 +9,7 @@
 
   <ScrollViewer>
     <StackPanel>
-      <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0 20">
-        <Image Source="{Binding Image}" Width="100"/>
-        <TextBlock Text="{Binding Title}" Margin="10 0 0 0" FontWeight="Bold" VerticalAlignment="Bottom" FontSize="50"/>  
-      </StackPanel>
-      
+      <TextBlock Text="{Binding Title}" Margin="10 0 0 20" FontWeight="Bold" FontSize="30"/>
       <TreeDataGrid Source="{Binding AudioSource}" CanUserResizeColumns="False" HorizontalAlignment="Stretch"/>
     </StackPanel>
   </ScrollViewer>

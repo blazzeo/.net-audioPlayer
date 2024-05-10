@@ -18,7 +18,7 @@
     </Design.DataContext>
 
   <DockPanel Margin="0 20 0 0">
-    <views:QueueView DataContext="{Binding PlayerVm}" Width="280" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
+    <views:QueueView DataContext="{Binding QueueVm}" Width="280" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
     <DockPanel>
       <views:SearchView DataContext="{Binding SearchVm}" DockPanel.Dock="Top" HorizontalAlignment="Center"/>
       <views:PlayerView DataContext="{Binding PlayerVm}" DockPanel.Dock="Bottom" Height="85"/>

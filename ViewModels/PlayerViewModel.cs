@@ -14,12 +14,10 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
     private readonly Player _player;
     private PlayList _playList;
     private List<TrackInfo> _trackList;
-    public List<TrackInfo> TrackList { get; set; }
     private TrackInfo _activeTrack;
     private bool _looping;
     private bool _shuffled;
     private Bitmap _coverImage;
-    public string Title{ get => _playList.Name ?? "Empty"; }
     
     public new event PropertyChangedEventHandler? PropertyChanged;
     
@@ -40,7 +38,7 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
 
     public PlayerViewModel()
     {
-        TrackList = new();
+        _trackList = new();
         _player = new();
         _player.TrackIsEnd += OnTrackEnd;
         _playList = new();
@@ -51,8 +49,8 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
     public PlayerViewModel(PlayList playlist)
     {
         _playList = playlist;
-        TrackList = playlist.GetTracklist();
-        _activeTrack = TrackList[0];
+        _trackList = playlist.GetTracklist();
+        _activeTrack = _trackList[0];
         CoverImage = _activeTrack.Image;
         _player = new Player();
         _player.TrackIsEnd += OnTrackEnd;
@@ -90,9 +88,9 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
     {
         if (!looping)
         {
-            var nextSongId = (TrackList.IndexOf(_activeTrack) != TrackList.Count) ?
-              TrackList.IndexOf(_activeTrack) + 1 : 0;
-            _activeTrack = TrackList[nextSongId];
+            var nextSongId = (_trackList.IndexOf(_activeTrack) != _trackList.Count) ?
+              _trackList.IndexOf(_activeTrack) + 1 : 0;
+            _activeTrack = _trackList[nextSongId];
             _player.AudioFile = new AudioFileReader(_activeTrack.Path);
         }
         Play(_activeTrack);
@@ -101,9 +99,9 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
 
     public void PrevSong()
     {
-        var prevSongId = (TrackList.IndexOf(_activeTrack) != 0) ?
-          TrackList.IndexOf(_activeTrack) - 1 : TrackList.Count;
-        _activeTrack = TrackList[prevSongId];
+        var prevSongId = (_trackList.IndexOf(_activeTrack) != 0) ?
+          _trackList.IndexOf(_activeTrack) - 1 : _trackList.Count;
+        _activeTrack = _trackList[prevSongId];
         Play(_activeTrack);
         RaisePropertyChanged();
     }
@@ -113,9 +111,9 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
         _shuffled = !_shuffled;
         if (_shuffled)
         {
-            List<TrackInfo> shuffledList = [..TrackList];
+            List<TrackInfo> shuffledList = [.._trackList];
             var n = shuffledList.Count;
-            var random = new Random();
+            Random random = new Random();
 
             while (n > 1)
             {
@@ -124,11 +122,11 @@ public class PlayerViewModel : ViewModelBase, INotifyPropertyChanged
                 (shuffledList[k], shuffledList[n]) = (shuffledList[n], shuffledList[k]);
             }
         
-            TrackList = [..shuffledList];
+            _trackList = [..shuffledList];
         }
         else
         {
-            TrackList = _playList.GetTracklist();
+            _trackList = _playList.GetTracklist();
         }
     }
 

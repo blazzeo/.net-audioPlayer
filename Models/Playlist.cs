@@ -5,8 +5,6 @@ using Avalonia.Controls;
 using AudioPlayer.Templates;
 using System.IO;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Avalonia.Media.Imaging;
 
 namespace AudioPlayer.Models;
@@ -18,7 +16,7 @@ public class PlayList : INotifyPropertyChanged
 
     public string? Name { get => _name; set => _name = value!; }
     public Bitmap Image { get => _cover; private set => _cover = value; }
-    
+
     public ObservableCollection<TrackInfo> TrackList { get; private set; }
 
     public PlayList()
@@ -95,13 +93,5 @@ public class PlayList : INotifyPropertyChanged
     public int GetTrackID(TrackInfo track)
     {
         return TrackList.IndexOf(track);
-    }
-
-    public async Task<IEnumerable<TrackInfo>> SearchAsync(string? query)
-    {
-        return TrackList.Where(track =>
-                track.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
-                track.Artist.Contains(query, StringComparison.OrdinalIgnoreCase))
-            .ToList();
     }
 }

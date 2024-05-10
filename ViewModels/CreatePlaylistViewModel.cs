@@ -12,9 +12,10 @@ namespace AudioPlayer.ViewModels;
 public class CreatePlaylistViewModel : ViewModelBase
 {
     private PlayList _playList;
+    
     private readonly LibraryViewModel _library;
-    private string _pathFolder;
-    private string _pathImage;
+    private string pathFolder;
+    private string pathImage;
     private string _name;
     public string Name { get => _name; set => this.RaiseAndSetIfChanged(ref _name, value); }
 
@@ -25,11 +26,11 @@ public class CreatePlaylistViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref _coverImage, value);
     }
 
-    private FlatTreeDataGridSource<TrackInfo> _audioSource;
+    private FlatTreeDataGridSource<TrackInfo> _audioSorce;
     public FlatTreeDataGridSource<TrackInfo> AudioSource
     {
-        get => _audioSource;
-        private set => this.RaiseAndSetIfChanged(ref _audioSource, value);
+        get => _audioSorce;
+        private set => this.RaiseAndSetIfChanged(ref _audioSorce, value);
     }
 
     public CreatePlaylistViewModel(LibraryViewModel library)
@@ -37,7 +38,7 @@ public class CreatePlaylistViewModel : ViewModelBase
         _coverImage = DefaultCover();
         _library = library;
         _playList = new PlayList();
-        _audioSource = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList);
+        _audioSorce = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList);
     }
 
     public CreatePlaylistViewModel(LibraryViewModel library, PlayList playList)
@@ -58,8 +59,8 @@ public class CreatePlaylistViewModel : ViewModelBase
 
     public async void OpenFolder()
     {
-        _pathFolder = await OpenFolder(CancellationToken.None);
-        _playList = new PlayList(Name, _pathFolder, CoverImage);
+        pathFolder = await OpenFolder(CancellationToken.None);
+        _playList = new PlayList(Name, pathFolder, CoverImage);
         Console.WriteLine(_playList.TrackList.Count);
         AudioSource = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList)
         {
@@ -74,13 +75,13 @@ public class CreatePlaylistViewModel : ViewModelBase
 
     public async void OpenImage()
     {
-        _pathImage = await OpenFile(CancellationToken.None);
-        CoverImage = new Bitmap(new MemoryStream(await File.ReadAllBytesAsync(_pathImage)));
+        pathImage = await OpenFile(CancellationToken.None);
+        CoverImage = new Bitmap(new MemoryStream(await File.ReadAllBytesAsync(pathImage)));
     }
 
     public void Create()
     {
-        var newPlaylist = new PlayList(Name, _pathFolder, CoverImage);
+        var newPlaylist = new PlayList(Name, pathFolder, CoverImage);
         _library.AddNewPlaylist(newPlaylist);
     }
 

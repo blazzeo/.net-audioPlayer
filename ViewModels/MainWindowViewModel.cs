@@ -28,7 +28,7 @@ public class MainWindowViewModel : ViewModelBase
     public PlayerViewModel PlayerVm { get; set; }
     public LibraryViewModel LibraryVm { get; set; }
     public PlayListViewModel PlaylistVm { get; set; }
-    //public QueueListViewModel QueueVm { get; set; }
+    public QueueListViewModel QueueVm { get; set; }
     
     public MainWindowViewModel()
     {
@@ -38,7 +38,7 @@ public class MainWindowViewModel : ViewModelBase
         SearchVm = new SearchViewModel(this);
         PlaylistVm = new PlayListViewModel(playlist);
         LibraryVm = new LibraryViewModel(playlist, this);
-        //QueueVm = new QueueListViewModel(this, playlist, playlist.TrackList);
+        QueueVm = new QueueListViewModel(this, playlist, playlist.TrackList);
         PlayerVm = new PlayerViewModel(playlist);
         ContentVm = PlaylistVm;
     }
@@ -49,12 +49,6 @@ public class MainWindowViewModel : ViewModelBase
             ContentVm = PlaylistVm;
     }
 
-    public void OpenEditDialog(PlayList playList)
-    {
-        if(ContentVm.GetType() != typeof(CreatePlaylistViewModel))
-            ContentVm = new CreatePlaylistViewModel(LibraryVm, playList);
-    }
-    
     public void OpenCreateDialog()
     {
         if(ContentVm.GetType() != typeof(CreatePlaylistViewModel))
@@ -72,8 +66,8 @@ public class MainWindowViewModel : ViewModelBase
         LocaleEn = !LocaleEn;
         _Locale(lang);
     }
-
-    private static void _Locale(string locale) {
+    
+    static void _Locale(string locale) {
         var translations = App.Current?.Resources
             .MergedDictionaries.OfType<ResourceInclude>()
             .FirstOrDefault(x => x.Source?.OriginalString.Contains("/Lang/") ?? false);
