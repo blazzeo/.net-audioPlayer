@@ -22,6 +22,7 @@ public class PlayerViewModel : ViewModelBase
     private Bitmap _coverImage;
     private DispatcherTimer _timer;
     private double _position;
+    public PlayList CurrentPlaylist { get => _playList; } 
     
     public new event PropertyChangedEventHandler? PropertyChanged;
     

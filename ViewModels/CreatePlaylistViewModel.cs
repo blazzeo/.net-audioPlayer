@@ -45,7 +45,7 @@ public class CreatePlaylistViewModel : ViewModelBase
         _playList = new PlayList();
         _audioSorce = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList);
     }
-
+    
     public CreatePlaylistViewModel(LibraryViewModel library, PlayList playList)
     {
         _idInLibrary = library.Libs.IndexOf(playList);
@@ -54,23 +54,23 @@ public class CreatePlaylistViewModel : ViewModelBase
         _coverImage = playList.Image;
         _library = library;
         _playList = playList;
-        AudioSource = new FlatTreeDataGridSource<TrackInfo>(playList.TrackList)
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList)
         {
             Columns = {
                 new TextColumn<TrackInfo, string>("Title", x => x.Title),
                 new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
                 new TextColumn<TrackInfo, string>("Album", x => x.Album),
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
-                new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton())),
+                new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
             }
         };
     }
     
-    private static Control GetButton()
+    private Control GetButton(TrackInfo track)
     {
-        var it = new ImageButtonTemplate();
-        
-        return it.Build(img);
+        var it = new CommandButton();
+        var tuple = new Tuple<TrackInfo, ObservableCollection<TrackInfo>>(track, _tracklist);
+        return it.Build(tuple);
     }
 
     public async void OpenFolder()
@@ -96,6 +96,7 @@ public class CreatePlaylistViewModel : ViewModelBase
                 new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
                 new TextColumn<TrackInfo, string>("Album", x => x.Album),
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+                new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
             }
         };
 
@@ -121,9 +122,6 @@ public class CreatePlaylistViewModel : ViewModelBase
             if (PlayList.IsAudioFile(path))
                 _tracklist?.Add(new TrackInfo(path));
         }
-        // if (string.IsNullOrWhiteSpace(pathTrack)) return;
-        // if (PlayList.IsAudioFile(pathTrack))
-        //     _tracklist?.Add(new TrackInfo(pathTrack));
         
         AudioSource = new FlatTreeDataGridSource<TrackInfo>(_tracklist)
         {
@@ -132,6 +130,7 @@ public class CreatePlaylistViewModel : ViewModelBase
                 new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
                 new TextColumn<TrackInfo, string>("Album", x => x.Album),
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+                new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
             }
         };
     }

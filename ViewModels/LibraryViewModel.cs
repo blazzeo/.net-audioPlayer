@@ -78,7 +78,7 @@ public class LibraryViewModel : ViewModelBase
 
     public void SetPlaylist(PlayList playList)
     {
-        _window.PlaylistVm = new PlayListViewModel(playList);
+        _window.PlaylistVm = new PlayListViewModel(playList, _window);
         _window.ToPlaylists();
     }
 

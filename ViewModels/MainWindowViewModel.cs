@@ -36,8 +36,8 @@ public class MainWindowViewModel : ViewModelBase
         LocaleEn = false;
         PlayList playlist = new("Orange", "/Users/blazzeo/MF Doom - 2004 - Mm..Food/", "Assets/default-audio.png");
         SearchVm = new SearchViewModel(this);
-        PlaylistVm = new PlayListViewModel();
-        LibraryVm = new LibraryViewModel(this);
+        PlaylistVm = new PlayListViewModel(this);
+        LibraryVm = new LibraryViewModel(playlist, this);
         QueueVm = new QueueListViewModel(this);
         PlayerVm = new PlayerViewModel();
         PlayerVm.SetPlaylist(playlist);
