@@ -7,8 +7,10 @@ namespace AudioPlayer.Models
     public class Player
     {
         [NonSerialized] private AudioFileReader _audioFile;
+        public bool IsActive;
 
-        [NonSerialized] private WaveOutEvent _outputDevice = new WaveOutEvent();
+        [NonSerialized] public WaveOutEvent _outputDevice = new WaveOutEvent();
+       
 
         private int _volume = 10; // min 0, max 100
 
@@ -19,8 +21,9 @@ namespace AudioPlayer.Models
         
         public Player(TrackInfo track)
         {
-            OutputDevice.PlaybackStopped += OnPlaybackStopped;
             AudioFile = new AudioFileReader(track.Path);
+            OutputDevice.PlaybackStopped += OnPlaybackStopped;
+            OutputDevice.Init(AudioFile);
         }
 
         public AudioFileReader AudioFile
@@ -67,24 +70,28 @@ namespace AudioPlayer.Models
                 if (OutputDevice.PlaybackState == PlaybackState.Stopped)
                     OutputDevice.Init(AudioFile);
                 OutputDevice.Play();
+                IsActive = true;
             }
         }
 
         public void StopFile()
         {
-            //OutputDevice?.Stop();
+            OutputDevice?.Stop();
             OnPlaybackStopped(this, new StoppedEventArgs());
+            IsActive = false;
         }
 
         public void PauseFile()
         {
             OutputDevice?.Pause();
+            IsActive = false;
         }
 
         public void SetPositionFile(double pos)
         {
+            TimeSpan secs = new(0, 0, (int)pos);
             if (AudioFile != null)
-                AudioFile.Position = Convert.ToInt64(pos);
+                AudioFile.CurrentTime = secs;
         }
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs args)

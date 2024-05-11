@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using AudioPlayer.Templates;
 using AudioPlayer.Models;
 using System.Collections.ObjectModel;
 using Avalonia.Controls.Chrome;

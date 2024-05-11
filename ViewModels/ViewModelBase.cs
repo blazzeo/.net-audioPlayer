@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AudioPlayer.Models;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.Input;
-using System.Linq;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Avalonia.Controls.Shapes;
+using DynamicData;
 using ReactiveUI;
 
 namespace AudioPlayer.ViewModels;
@@ -14,32 +17,48 @@ namespace AudioPlayer.ViewModels;
 public partial class ViewModelBase : ReactiveObject
 {
     [RelayCommand]
-    public async Task<string> OpenFile(CancellationToken token)
+    public async Task<string?> OpenFile(CancellationToken token)
     {
         try
         {
             var file = await DoOpenFilePickerAsync();
-            return file is null ? null : file.Path.ToString().Split("://")[1];
+            return file?.Path.ToString().Split("://")[1];
         }
         catch (Exception e)
         {
-            //Console.Error(e.Message);
+            Console.WriteLine(e.Message);
+        }
+
+        return null;
+    }
+    
+    [RelayCommand]
+    public async Task<List<string?>> OpenMultipleFiles(CancellationToken token)
+    {
+        try
+        {
+            var files = await DoOpenFilesPickerAsync();
+            return files.Select(file => file?.Path.ToString().Split("://")[1]).ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
         }
 
         return null;
     }
 
     [RelayCommand]
-    public async Task<string> OpenFolder(CancellationToken token)
+    public async Task<string?> OpenFolder(CancellationToken token)
     {
         try
         {
             var folder = await DoOpenFolderPickerAsync();
-            return folder is null ? null : folder.Path.ToString().Split("://")[1];
+            return folder?.Path.ToString().Split("://")[1];
         }
         catch (Exception e)
         {
-            
+            Console.WriteLine(e.Message);
         }
 
         return null;
@@ -53,11 +72,26 @@ public partial class ViewModelBase : ReactiveObject
 
         var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
         {
-            Title = "Open Text File",
+            Title = "Open File",
             AllowMultiple = false
         });
 
         return files?.Count >= 1 ? files[0] : null;
+    }
+    
+    private async Task<IStorageFile[]> DoOpenFilesPickerAsync()
+    {
+        if (Application.Current?.ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop ||
+            desktop.MainWindow?.StorageProvider is not { } provider)
+            throw new NullReferenceException("Missing StorageProvider instance.");
+
+        var files = await provider.OpenFilePickerAsync(new FilePickerOpenOptions()
+        {
+            Title = "Open File",
+            AllowMultiple = true
+        });
+
+        return files?.Count >= 1 ? files.ToArray() : null;
     }
     
     private async Task<IStorageFolder?> DoOpenFolderPickerAsync()
@@ -72,5 +106,19 @@ public partial class ViewModelBase : ReactiveObject
         });
 
         return files?.Count >= 1 ? files[0] : null;
+    }
+
+    public bool IsImageFile(string path)
+    {
+        HashSet<string> imageExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ".jpeg",
+            ".png",
+            ".jpg"
+        };
+
+        var extension = System.IO.Path.GetExtension(path);
+
+        return imageExtensions.Contains(extension);
     }
 }

@@ -27,6 +27,10 @@
                         <TextBlock Text="{DynamicResource Create.OpenFolder}" FontSize="20" Margin="0 0 10 0"/>
                         <Button Command="{Binding OpenFolder}" Content="{DynamicResource Create.OpenBtn}"/>
                     </StackPanel>
+                    <StackPanel Margin="20 0">
+                        <TextBlock Text="{DynamicResource Create.OpenTrack}" FontSize="20" Margin="0 0 10 0"/>
+                        <Button Command="{Binding OpenTrack}" Content="{DynamicResource Create.OpenBtn}"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
             

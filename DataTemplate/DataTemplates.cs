@@ -1,9 +1,9 @@
 using System.IO;
 using Avalonia.Controls;
-using Avalonia.Media.Imaging;
 using Avalonia.Controls.Templates;
+using Avalonia.Media.Imaging;
 
-namespace AudioPlayer.Templates;
+namespace AudioPlayer.DataTemplate;
 
 public class SongImageTemplate : IDataTemplate
 {
@@ -45,5 +45,21 @@ public class ImageButtonTemplate : IDataTemplate
     public bool Match(object? data)
     {
         return data is Image;
+    }
+}
+
+public class CommandButton : IDataTemplate
+{
+    public Control Build(object? param)
+    {
+        return new Button()
+        {
+            Command = param, CommandParameter = this, Content = "Delete", Padding = Avalonia.Thickness.Parse("1")
+        };
+    }
+
+    public bool Match(object? data)
+    {
+        return data is ();
     }
 }

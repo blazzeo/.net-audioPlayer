@@ -36,10 +36,11 @@ public class MainWindowViewModel : ViewModelBase
         LocaleEn = false;
         PlayList playlist = new("Orange", "/Users/blazzeo/MF Doom - 2004 - Mm..Food/", "Assets/default-audio.png");
         SearchVm = new SearchViewModel(this);
-        PlaylistVm = new PlayListViewModel(playlist);
-        LibraryVm = new LibraryViewModel(playlist, this);
-        QueueVm = new QueueListViewModel(this, playlist, playlist.TrackList);
-        PlayerVm = new PlayerViewModel(playlist);
+        PlaylistVm = new PlayListViewModel();
+        LibraryVm = new LibraryViewModel(this);
+        QueueVm = new QueueListViewModel(this);
+        PlayerVm = new PlayerViewModel();
+        PlayerVm.SetPlaylist(playlist);
         ContentVm = PlaylistVm;
     }
 
@@ -53,6 +54,12 @@ public class MainWindowViewModel : ViewModelBase
     {
         if(ContentVm.GetType() != typeof(CreatePlaylistViewModel))
             ContentVm = new CreatePlaylistViewModel(LibraryVm);
+    }
+
+    public void OpenEditDialog(PlayList playlistToEdit)
+    {
+        if(ContentVm.GetType() != typeof(CreatePlaylistViewModel))
+            ContentVm = new CreatePlaylistViewModel(LibraryVm, playlistToEdit);
     }
 
     public void ToLibrary()

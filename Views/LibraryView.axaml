@@ -22,12 +22,19 @@
                         <Border CornerRadius="10" ClipToBounds="True">
                             <RelativePanel Background="#fff" Width="200" Height="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 
-                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).SetPlaylist}" CommandParameter="{Binding}" Content="Play" RelativePanel.AlignHorizontalCenterWithPanel="True" 
-                                        RelativePanel.AlignVerticalCenterWithPanel="True" ZIndex="2"/>
-                                <Button Command="{Binding}" RelativePanel.AlignTopWithPanel="True"
-                                        RelativePanel.AlignRightWithPanel="True" ZIndex="2"
-                                        Background="Beige">
-                                    <PathIcon Data="{StaticResource edit}" Background="Beige"/>
+                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).SetPlaylist}" 
+                                        CommandParameter="{Binding}" 
+                                        Content="Play" 
+                                        RelativePanel.AlignHorizontalCenterWithPanel="True" 
+                                        RelativePanel.AlignVerticalCenterWithPanel="True" 
+                                        ZIndex="2"/>
+                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).EditPlaylist}"
+                                        CommandParameter="{Binding}"
+                                        RelativePanel.AlignTopWithPanel="True"
+                                        RelativePanel.AlignRightWithPanel="True" 
+                                        ZIndex="2"
+                                        Background="DarkGray">
+                                    <PathIcon Data="{StaticResource edit}" Background="DarkGray"/>
                                 </Button>
                                 <Image Source="{Binding Image}" ZIndex="1"/>
                             </RelativePanel>

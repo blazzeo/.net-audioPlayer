@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Avalonia.Controls;
-using AudioPlayer.Templates;
 using System.IO;
 using System;
 using Avalonia.Media.Imaging;
@@ -15,7 +14,7 @@ public class PlayList : INotifyPropertyChanged
     private Bitmap _cover;
 
     public string? Name { get => _name; set => _name = value!; }
-    public Bitmap Image { get => _cover; private set => _cover = value; }
+    public Bitmap Image { get => _cover; set => _cover = value; }
 
     public ObservableCollection<TrackInfo> TrackList { get; private set; }
 
@@ -30,7 +29,7 @@ public class PlayList : INotifyPropertyChanged
     {
         _name = name;
         _cover = new Bitmap(new MemoryStream(File.ReadAllBytes(imagePath)));
-        TrackList = TrackList ?? new();
+        TrackList = [];
         var files = Directory.GetFiles(folder);
         
         foreach (var file in files)
@@ -41,19 +40,11 @@ public class PlayList : INotifyPropertyChanged
         }
     }
     
-    public PlayList(string name, string folder, Bitmap image)
+    public PlayList(string name, ObservableCollection<TrackInfo> tracklist, Bitmap image)
     {
         _name = name;
         _cover = image;
-        TrackList = TrackList ?? new();
-        var files = Directory.GetFiles(folder);
-        
-        foreach (var file in files)
-        {
-            if (!IsAudioFile(file)) continue;
-            var track = new TrackInfo(file);
-            TrackList?.Add(track);
-        }
+        TrackList = new ObservableCollection<TrackInfo>(tracklist);
     }
 
     public void AddAudioFile(TrackInfo track)
@@ -68,7 +59,7 @@ public class PlayList : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    static bool IsAudioFile(string filePath)
+    public static bool IsAudioFile(string filePath)
     {
         HashSet<string> audioExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -90,7 +81,7 @@ public class PlayList : INotifyPropertyChanged
         return list;
     }
 
-    public int GetTrackID(TrackInfo track)
+    public int GetTrackId(TrackInfo track)
     {
         return TrackList.IndexOf(track);
     }

@@ -22,15 +22,13 @@ public class LibraryViewModel : ViewModelBase
             RaisePropertyChanged(nameof(Libs));
         }
     }
-    
-    public PlayList? SelectedAlbum
+
+    public LibraryViewModel(MainWindowViewModel mainWindow)
     {
-        get => _selectedAlbum;
-        set => this.RaiseAndSetIfChanged(ref _selectedAlbum, value);
+        _window = mainWindow;
+        _library = new();
     }
     
-    public ObservableCollection<PlayList> Libs => _library.Playlists;
-
     public LibraryViewModel(PlayList playList, MainWindowViewModel mainWindow)
     {
         _window = mainWindow;
@@ -39,6 +37,14 @@ public class LibraryViewModel : ViewModelBase
         _library.Add(playList);
     }
     
+    public ObservableCollection<PlayList> Libs => _library.Playlists;
+
+    public PlayList? SelectedAlbum
+    {
+        get => _selectedAlbum;
+        set => this.RaiseAndSetIfChanged(ref _selectedAlbum, value);
+    }
+
     public void AddNewPlaylist(PlayList newPlaylist)
     {
         if (newPlaylist != null)
@@ -51,13 +57,17 @@ public class LibraryViewModel : ViewModelBase
         _window.ToLibrary();
     }
 
-    public void EditPlaylist(PlayList editedPlaylist)
+    public void UpdatePlaylist(PlayList editedPlaylist, int id)
     {
-        if ()
+        if (editedPlaylist != null)
         {
-            Library.
-            _window.ToLibrary();
+            Library.Edit(editedPlaylist, id);
         }
+    }
+
+    public void EditPlaylist(PlayList playlistToEdit)
+    {
+        _window.OpenEditDialog(playlistToEdit);
     }
 
     public void DeletePlaylist(PlayList playList)

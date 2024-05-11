@@ -8,20 +8,20 @@
              x:DataType="vm:PlayerViewModel">
   
   <DockPanel Width="700">
-    <Image DockPanel.Dock="Left" Source="{Binding CoverImage}" Width="65" Height="65" Margin="10 0 10 0"/>
+    <Image DockPanel.Dock="Left" Source="{Binding CoverImage}" Width="65" Height="65" Margin="0 0 10 0"/>
     <!-- player menu-->
     <DockPanel VerticalAlignment="Center">
       
       <!-- manipulate-->
       
       <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <ToggleButton IsChecked="False" Command="{Binding Loop}" Background="Transparent" Padding="0" Margin="15 0">
+        <ToggleButton IsChecked="False" Command="{Binding LoopAudio}" Background="Transparent" Padding="0" Margin="15 0">
           <PathIcon Data="{StaticResource loop}"/>
         </ToggleButton>
         <Button Command="{Binding PrevSong}" Background="Transparent" Width="20" Height="20" Margin="15 0">
           <PathIcon Data="{StaticResource playPrev}"/>
         </Button>
-        <ToggleButton IsChecked="True" Foreground="Transparent" Command="{Binding Play}" Padding="0" Margin="15 0">
+        <ToggleButton IsChecked="True" Foreground="Transparent" Command="{Binding TogglePlay}" Padding="0" Margin="15 0">
           <StackPanel Orientation="Horizontal" Background="Transparent">
             <PathIcon Classes="play" Data="{StaticResource play}" Background="Transparent"/>
             <PathIcon Classes="pause" Data="{StaticResource pause}" Background="Transparent"/>
@@ -39,9 +39,9 @@
       <!-- track progress-->
       
       <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="{Binding PositionStr}" Padding="10 0" Margin="0" VerticalAlignment="Center"/>
-        <Slider Width="400" Padding="0" Margin="0" Minimum="0" Maximum="{Binding TotalTime}" Value="{Binding Position}" Foreground="Blue"/>
-        <TextBlock Text="{Binding TotalTimeStr}" Padding="10 0" Margin="0" VerticalAlignment="Center"/>
+	      <TextBlock Width="60" Text="{Binding CurrentTime, StringFormat='{}{0:mm\\:ss}'}" Padding="10 0" Margin="0" VerticalAlignment="Center"/>
+        <Slider Width="400" Padding="0" Margin="0" Minimum="0" Maximum="{Binding TotalTime.TotalSeconds}" Value="{Binding Position}" Foreground="Blue"/>
+        <TextBlock Width="60" Text="{Binding TotalTime, StringFormat='{}{0:mm\\:ss}'}" Padding="10 0" Margin="0" VerticalAlignment="Center"/>
       </StackPanel>
     </DockPanel>
     <Slider DockPanel.Dock="Right" HorizontalAlignment="Right" Width="100" Padding="0 0" Margin="10 0 0 0" VerticalAlignment="Center" Minimum="0" Maximum="100" Value="{Binding Volume}" Foreground="Blue"/>

@@ -2,11 +2,11 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using Avalonia.Controls.Models.TreeDataGrid;
 using System.Collections.Generic;
-using AudioPlayer.Templates;
 using AudioPlayer.Models;
 using System;
 using System.IO;
 using ATL;
+using AudioPlayer.DataTemplate;
 using Avalonia.Media.Imaging;
 using TagLib;
 
@@ -19,6 +19,14 @@ public class PlayListViewModel : ViewModelBase
     public string Title { get; }
     public FlatTreeDataGridSource<TrackInfo> AudioSource { get; }
 
+    public PlayListViewModel()
+    {
+        _playList = new();
+        _trackList = new List<TrackInfo>();
+        Title = "Empty";
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList);
+    }
+    
     public PlayListViewModel(PlayList playList)
     {
         _playList = playList;
