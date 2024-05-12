@@ -14,16 +14,22 @@ namespace AudioPlayer.ViewModels;
 public class PlayListViewModel : ViewModelBase
 {
     private MainWindowViewModel _window;
-    private PlayList _playList;
+    public PlayList _playList;
     private Bitmap _image;
     private readonly List<TrackInfo> _trackList;
     public string Title { get; }
+    private FlatTreeDataGridSource<TrackInfo> _audioSource;
     public Bitmap Image
     {
         get => _image;
         set => this.RaiseAndSetIfChanged(ref _image, value);
     }
-    public FlatTreeDataGridSource<TrackInfo> AudioSource { get; }
+
+    public FlatTreeDataGridSource<TrackInfo> AudioSource
+    {
+        get => _audioSource;
+        set => this.RaiseAndSetIfChanged(ref _audioSource, value);
+    }
 
     public PlayListViewModel(MainWindowViewModel window)
     {
@@ -46,7 +52,6 @@ public class PlayListViewModel : ViewModelBase
 
         AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList)
         {
-            
             Columns = {
               new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
               new TextColumn<TrackInfo, string>("Title", x => x.Title),
@@ -54,6 +59,20 @@ public class PlayListViewModel : ViewModelBase
               new TextColumn<TrackInfo, string>("Album", x => x.Album),
               new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
           }
+        };
+    }
+
+    public void ChangeGrid(List<TrackInfo> tracklist)
+    {
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(tracklist)
+        {
+            Columns = {
+                new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
+                new TextColumn<TrackInfo, string>("Title", x => x.Title),
+                new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
+                new TextColumn<TrackInfo, string>("Album", x => x.Album),
+                new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+            }
         };
     }
 

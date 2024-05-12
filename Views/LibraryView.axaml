@@ -23,16 +23,25 @@
                             <RelativePanel Background="#fff" Width="200" Height="200" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 
                                 <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).SetPlaylist}" 
-                                        CommandParameter="{Binding}" 
-                                        Content="Play" 
+                                        CommandParameter="{Binding}"
+                                        Width="200"
+                                        Height="200"
                                         RelativePanel.AlignHorizontalCenterWithPanel="True" 
                                         RelativePanel.AlignVerticalCenterWithPanel="True" 
                                         ZIndex="2"/>
-                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).EditPlaylist}"
+                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).DeletePlaylist}"
                                         CommandParameter="{Binding}"
                                         RelativePanel.AlignTopWithPanel="True"
                                         RelativePanel.AlignRightWithPanel="True" 
-                                        ZIndex="2"
+                                        ZIndex="3"
+                                        Background="DarkGray">
+                                    <PathIcon Data="{StaticResource delete}" Background="DarkGray"/>
+                                </Button>
+                                <Button Command="{Binding $parent[ListBox].((vm:LibraryViewModel)DataContext).EditPlaylist}"
+                                        CommandParameter="{Binding}"
+                                        RelativePanel.AlignBottomWithPanel="True"
+                                        RelativePanel.AlignLeftWithPanel="True" 
+                                        ZIndex="3"
                                         Background="DarkGray">
                                     <PathIcon Data="{StaticResource edit}" Background="DarkGray"/>
                                 </Button>

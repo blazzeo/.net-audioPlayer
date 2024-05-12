@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,8 +11,14 @@ public class LibraryViewModel : ViewModelBase
 {
     private MainWindowViewModel _window;
     private PlayList? _selectedAlbum;
+    private ObservableCollection<PlayList> _libs; 
+    public ObservableCollection<PlayList> Libs
+    {
+        get => _libs;
+        set => this.RaiseAndSetIfChanged(ref _libs, value);
+    }
     private Library _library;
-    private Library Library
+    public Library Library
     {
         get => _library;
         set
@@ -35,10 +42,9 @@ public class LibraryViewModel : ViewModelBase
 
         _library = new();
         _library.Add(playList);
+        _libs = _library.Playlists;
     }
-
-    public ObservableCollection<PlayList> Libs => _library.Playlists;
-
+    
     public PlayList? SelectedAlbum
     {
         get => _selectedAlbum;
@@ -72,6 +78,7 @@ public class LibraryViewModel : ViewModelBase
 
     public void DeletePlaylist(PlayList playList)
     {
+        Console.WriteLine("del");
         Library.Remove(playList);
         _window.ToLibrary();
     }

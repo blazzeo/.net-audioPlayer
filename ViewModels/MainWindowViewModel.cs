@@ -20,7 +20,7 @@ public class MainWindowViewModel : ViewModelBase
         private set
         {
             this.RaiseAndSetIfChanged(ref _content, value);
-            SearchVm.SearchContent = this;
+            SearchVm.SearchContent = ContentVm;
         }
     }
 
@@ -33,20 +33,14 @@ public class MainWindowViewModel : ViewModelBase
     {
         _Locale("ru-RU");
         LocaleEn = false;
-        PlayList playlist = new("Orange", "../Orange/", "Assets/default-audio.png");
+        PlayList playlist = new("Orange", "/Users/blazzeo/Orange/", "Assets/default-audio.png");
         SearchVm = new SearchViewModel(this);
         PlaylistVm = new PlayListViewModel(this);
         LibraryVm = new LibraryViewModel(playlist, this);
         PlayerVm = new PlayerViewModel();
-        ContentVm = PlaylistVm;
+        ContentVm = LibraryVm;
     }
-
-    public void ToPlaylists()
-    {
-        if (ContentVm != PlaylistVm)
-            ContentVm = PlaylistVm;
-    }
-
+    
     public void OpenCreateDialog()
     {
         if (ContentVm.GetType() != typeof(CreatePlaylistViewModel))
@@ -59,9 +53,13 @@ public class MainWindowViewModel : ViewModelBase
             ContentVm = new CreatePlaylistViewModel(LibraryVm, playlistToEdit);
     }
 
+    public void ToPlaylists()
+    {
+            ContentVm = PlaylistVm;
+    }
+    
     public void ToLibrary()
     {
-        if (ContentVm != LibraryVm)
             ContentVm = LibraryVm;
     }
 

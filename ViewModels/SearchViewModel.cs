@@ -1,42 +1,1 @@
-using System;
-using Avalonia.Controls.Primitives;
-
-namespace AudioPlayer.ViewModels;
-
-public class SearchViewModel : ViewModelBase
-{
-  private ViewModelBase _focusContent;
-  private MainWindowViewModel _mainWindow;
-
-  public SearchViewModel(MainWindowViewModel mainWindow)
-  {
-    _mainWindow = mainWindow;
-    _focusContent = mainWindow.LibraryVm;
-  }
-
-  public ViewModelBase SearchContent { get => _focusContent;
-    set => _focusContent = value;
-  }
-
-  public void SwitchToLibrary()
-  {
-    _mainWindow.ToLibrary();
-  }
-
-  public void SwitchToPlaylists()
-  {
-    _mainWindow.ToPlaylists();
-  }
-
-  public void SwitchLanguage()
-  {
-    if (_mainWindow.LocaleEn)
-    {
-     _mainWindow.SwitchLang("ru-RU"); 
-    }
-    else
-    {
-      _mainWindow.SwitchLang("en-EN");  
-    }
-  }
-}
+using System;using System.Collections.Generic;using System.Linq;using System.Reactive.Linq;using AudioPlayer.Models;using Avalonia.Controls.Primitives;using ReactiveUI;namespace AudioPlayer.ViewModels;public class SearchViewModel : ViewModelBase{  private ViewModelBase _focusContent;  private MainWindowViewModel _mainWindow;  private string? _searchQuery;  private delegate void DoSearch(string? s);  private DoSearch Search;    public string? SearchQuery  {    get => _searchQuery;    set    {      this.RaiseAndSetIfChanged(ref _searchQuery, value);      // UpdateContext();    }  }    public SearchViewModel(MainWindowViewModel mainWindow)  {    _mainWindow = mainWindow;    _focusContent = mainWindow.LibraryVm;    Search = DoSearchLibrary;        this.WhenAnyValue(x => x.SearchQuery)      .Throttle(TimeSpan.FromMilliseconds(400))      .ObserveOn(RxApp.MainThreadScheduler)      .Subscribe(s => Search(s));  }  private void DoSearchLibrary(string? s)  {    Console.WriteLine("lib");    var libraryVm = (LibraryViewModel)SearchContent;    List<PlayList> filteredList;    if (s != null)    {      filteredList = libraryVm.Library.Playlists.Where(        playlist => playlist.Name.IndexOf(SearchQuery, StringComparison.OrdinalIgnoreCase) >= 0).ToList();      }    else    {      filteredList = libraryVm.Library.Playlists.ToList();    }            libraryVm.Libs = new(filteredList);  }    private void DoSearchPlaylist(string? s)  {    Console.WriteLine("playlist");    var playListVm = (PlayListViewModel)SearchContent;    List<TrackInfo> filteredList;    if (s != null)    {      filteredList = playListVm._playList.TrackList.Where(        track => track.Title.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();       Console.WriteLine(filteredList.Count);    }    else filteredList = playListVm._playList.GetTracklist();    Console.WriteLine(filteredList.Count);    playListVm.ChangeGrid(filteredList);  }  public ViewModelBase SearchContent  {    get => _focusContent;    set    {      this.RaiseAndSetIfChanged(ref _focusContent, value);      Search = value switch      {        LibraryViewModel => DoSearchLibrary,        PlayListViewModel => DoSearchPlaylist,        _ => Search      };    }  }  public void SwitchToLibrary()  {    _mainWindow.ToLibrary();  }  public void SwitchToPlaylists()  {    _mainWindow.ToPlaylists();  }  public void SwitchLanguage()  {    if (_mainWindow.LocaleEn)    {     _mainWindow.SwitchLang("ru-RU");     }    else    {      _mainWindow.SwitchLang("en-EN");      }  }}

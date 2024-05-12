@@ -13,7 +13,7 @@
             <Button Command="{Binding SwitchToLibrary}" Content="{DynamicResource Search.Library}" Padding="5 5" FontWeight="Bold" Margin="10 0"/>
         </StackPanel>
         <RelativePanel HorizontalAlignment="Center" Height="35" VerticalAlignment="Center">
-            <TextBox Width="400" Height="35" Padding="30 7" ZIndex="1"  Watermark="{DynamicResource Search.Prompt}" CornerRadius="20"/>
+            <TextBox Text="{Binding SearchQuery}" Width="400" Height="35" Padding="30 7" ZIndex="1"  Watermark="{DynamicResource Search.Prompt}" CornerRadius="20"/>
             <PathIcon Data="{StaticResource search}" Margin="7" VerticalAlignment="Center" Opacity="0.3" ZIndex="0" HorizontalAlignment="Left"/>
         </RelativePanel>
         <ToggleButton DockPanel.Dock="Right" HorizontalAlignment="Right" IsChecked="True" Foreground="Transparent" Command="{Binding SwitchLanguage}" Padding="0" Margin="15 0">
