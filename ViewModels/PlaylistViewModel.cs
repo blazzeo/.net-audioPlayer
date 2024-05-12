@@ -53,11 +53,11 @@ public class PlayListViewModel : ViewModelBase
         AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList)
         {
             Columns = {
-              new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
-              new TextColumn<TrackInfo, string>("Title", x => x.Title),
-              new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
-              new TextColumn<TrackInfo, string>("Album", x => x.Album),
-              new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+                new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
+                new TextColumn<TrackInfo, string>("Title", x => x.Title, GridLength.Parse("220")),
+                new TextColumn<TrackInfo, string>("Artist", x => x.Artist, GridLength.Parse("150")),
+                new TextColumn<TrackInfo, string>("Album", x => x.Album, GridLength.Parse("150")),
+                new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
           }
         };
     }
@@ -68,9 +68,9 @@ public class PlayListViewModel : ViewModelBase
         {
             Columns = {
                 new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
-                new TextColumn<TrackInfo, string>("Title", x => x.Title),
-                new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
-                new TextColumn<TrackInfo, string>("Album", x => x.Album),
+                new TextColumn<TrackInfo, string>("Title", x => x.Title, GridLength.Parse("220")),
+                new TextColumn<TrackInfo, string>("Artist", x => x.Artist, GridLength.Parse("150")),
+                new TextColumn<TrackInfo, string>("Album", x => x.Album, GridLength.Parse("150")),
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
             }
         };

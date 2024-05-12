@@ -11,7 +11,7 @@ public class LibraryViewModel : ViewModelBase
 {
     private MainWindowViewModel _window;
     private PlayList? _selectedAlbum;
-    private ObservableCollection<PlayList> _libs; 
+    private ObservableCollection<PlayList> _libs;
     public ObservableCollection<PlayList> Libs
     {
         get => _libs;
@@ -44,7 +44,7 @@ public class LibraryViewModel : ViewModelBase
         _library.Add(playList);
         _libs = _library.Playlists;
     }
-    
+
     public PlayList? SelectedAlbum
     {
         get => _selectedAlbum;
@@ -59,6 +59,7 @@ public class LibraryViewModel : ViewModelBase
             lib.Add(newPlaylist);
             Library = lib;
         }
+        Libs = Library.Playlists;
 
         _window.ToLibrary();
     }
@@ -69,6 +70,7 @@ public class LibraryViewModel : ViewModelBase
         {
             Library.Edit(editedPlaylist, id);
         }
+        Libs = Library.Playlists;
     }
 
     public void EditPlaylist(PlayList playlistToEdit)
@@ -80,6 +82,7 @@ public class LibraryViewModel : ViewModelBase
     {
         Console.WriteLine("del");
         Library.Remove(playList);
+        Libs = Library.Playlists;
         _window.ToLibrary();
     }
 

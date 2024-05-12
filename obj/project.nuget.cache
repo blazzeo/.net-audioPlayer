@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SK9+F+J2tldUzo6HpMGLoTWULoGbi+fulN5X9/k6WaMz3GfKl4WexULe51QIp7zjc2jCoZAFnExg35V2gZVwxQ==",
+  "dgSpecHash": "JbqQ/6WdpqoQ5B7KeVS1eECCGi05GGOKtQUthZZduZHnT9uWrPJSXJIgnEcdG+yh73wHRI/pzeEQUnj1SCYAlw==",
   "success": true,
   "projectFilePath": "/Users/blazzeo/Programming/AudioPlayer/AudioPlayer.csproj",
   "expectedPackageFiles": [
@@ -101,7 +101,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'Microsoft.Xaml.Behaviors.Wpf 1.1.77' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "message": "Пакет \"Microsoft.Xaml.Behaviors.Wpf 1.1.77\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net8.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
       "libraryId": "Microsoft.Xaml.Behaviors.Wpf",
       "targetGraphs": [
         "net8.0"
