@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using AudioPlayer.ViewModels;
 using Avalonia.VisualTree;
 using ReactiveUI;
+using Microsoft.Xaml.Behaviors;
 
 namespace AudioPlayer.Views;
 

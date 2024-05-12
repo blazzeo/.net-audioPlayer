@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eShlMW7hRLI1mk/8Mus6ZOe9dYPPlBoEgT9f7RZtQy2vOijEEzJxv1l3ZJRvRN9+/Fc/UvUe4xlMK7CrEMHEEg==",
+  "dgSpecHash": "SK9+F+J2tldUzo6HpMGLoTWULoGbi+fulN5X9/k6WaMz3GfKl4WexULe51QIp7zjc2jCoZAFnExg35V2gZVwxQ==",
   "success": true,
   "projectFilePath": "/Users/blazzeo/Programming/AudioPlayer/AudioPlayer.csproj",
   "expectedPackageFiles": [
@@ -41,6 +41,7 @@
     "/Users/blazzeo/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "/Users/blazzeo/.nuget/packages/microsoft.xaml.behaviors.wpf/1.1.77/microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/naudio/2.2.1/naudio.2.2.1.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/naudio.asio/2.2.1/naudio.asio.2.2.1.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/naudio.core/2.2.1/naudio.core.2.2.1.nupkg.sha512",
@@ -95,5 +96,16 @@
     "/Users/blazzeo/.nuget/packages/ude.netstandard/1.2.0/ude.netstandard.1.2.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/z440.atl.core/5.21.0/z440.atl.core.5.21.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.Xaml.Behaviors.Wpf 1.1.77' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1' instead of the project target framework 'net8.0'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.Xaml.Behaviors.Wpf",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

@@ -147,3 +147,4 @@
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Midi.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Wasapi.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.WinMM.dll
+/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/Microsoft.Xaml.Behaviors.dll

@@ -1,44 +1,67 @@
 using AudioPlayer.Models;
 using System.Collections.Generic;
 using Avalonia.Media.Imaging;
-using AudioPlayer.Models;
-using System.ComponentModel;
 using Avalonia.Threading;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using NAudio.Wave;
 using ReactiveUI;
-using NAudio.Utils;
 
 namespace AudioPlayer.ViewModels;
 
 public class PlayerViewModel : ViewModelBase
 {
-    private readonly Player _player;
+    private Player _player;
     private PlayList _playList;
     private List<TrackInfo> _trackList;
+    private ObservableCollection<TrackInfo> _queueList = [];
     private TrackInfo _activeTrack;
-    private bool _looping;
+    private bool _looping = false;
+    private bool _shuffled = false;
     private Bitmap _coverImage;
-    private DispatcherTimer _timer;
+    private readonly DispatcherTimer _timer;
     private double _position;
-    public PlayList CurrentPlaylist { get => _playList; } 
-    
-    public new event PropertyChangedEventHandler? PropertyChanged;
-    
-    public Bitmap CoverImage { 
+
+    public bool IsShuffled { get => _shuffled; }
+    public bool IsActive { get => !_player.IsActive; }
+    public TrackInfo ActiveTrack
+    {
+        get => _activeTrack;
+        set => this.RaiseAndSetIfChanged(ref _activeTrack, value);
+    }
+    public PlayList CurrentPlaylist { get => _playList; }
+    public string Title { get => _playList.Name ?? "Empty"; }
+    public ObservableCollection<TrackInfo>? QueueTracklist
+    {
+        get => _queueList;
+        set => this.RaiseAndSetIfChanged(ref _queueList, value);
+    }
+
+    public Bitmap CoverImage
+    {
         get => _coverImage;
         set => this.RaiseAndSetIfChanged(ref _coverImage, value);
     }
 
     public TimeSpan TotalTime
     {
-        get => _player.AudioFile.TotalTime;
+        get
+        {
+            if (_player.AudioFile != null)
+                return _player.AudioFile.TotalTime;
+            return TimeSpan.Zero;
+        }
     }
 
     public TimeSpan CurrentTime
     {
-        get => _player.AudioFile.CurrentTime;
+        get
+        {
+            if(_player.AudioFile != null)
+                return _player.AudioFile.CurrentTime;
+            return TimeSpan.Zero;
+        }
     }
 
     public double Position
@@ -54,24 +77,31 @@ public class PlayerViewModel : ViewModelBase
 
     public PlayerViewModel()
     {
+        _playList = new();
         _trackList = new();
         _player = new();
         _player.TrackIsEnd += OnTrackEnd;
-        _playList = new();
-        _activeTrack = new();
+        ActiveTrack = null;
         CoverImage = GetImage();
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(1)
+        };
+        _timer.Tick += Timer_tick;
     }
 
     public PlayerViewModel(PlayList playlist)
     {
         _playList = playlist;
         _trackList = playlist.GetTracklist();
-        _activeTrack = _trackList[0];
-        CoverImage = _activeTrack.Image;
-        _player = new Player(_activeTrack);
+        ActiveTrack = _trackList[0];
+        CoverImage = ActiveTrack.Image;
+        _player = new Player(ActiveTrack);
         _player.TrackIsEnd += OnTrackEnd;
-        _timer = new DispatcherTimer();
-        _timer.Interval = TimeSpan.FromSeconds(1);
+        _timer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(700.0)
+        };
         _timer.Tick += Timer_tick;
     }
 
@@ -84,15 +114,19 @@ public class PlayerViewModel : ViewModelBase
             this.RaisePropertyChanged(nameof(CurrentTime));
         }
     }
-    
+
     private void OnTrackEnd(object sender, EventArgs e)
     {
-        NextSong(_looping);
+        NextSong();
     }
 
-    public void SetPlaylist(PlayList playlist)
+    public void SetPlaylist(PlayList playlist, int id = -1)
     {
         _playList = playlist;
+        _trackList = _playList.GetTracklist();
+        QueueTracklist = playlist.TrackList;
+        this.RaisePropertyChanged(nameof(Title));
+        this.RaisePropertyChanged(nameof(QueueTracklist));
     }
 
     public void SetVolume(int value)
@@ -105,22 +139,30 @@ public class PlayerViewModel : ViewModelBase
         if (_player.IsActive)
         {
             _player.PauseFile();
+            this.RaisePropertyChanged(nameof(IsActive));
             _timer.Stop();
         }
         else
         {
-            Play();
-            _timer.Start();
+            Play();   
         }
     }
 
     public void Play(TrackInfo track = null)
     {
         if (track != null)
-            _activeTrack = track;
-        CoverImage = GetImage(_activeTrack);
-        Position = 0.0;
+        {
+            ActiveTrack = track;
+            _player.StopFile();
+            _player.AudioFile = new AudioFileReader(ActiveTrack.Path);
+            Position = 0.0;
+        }
+        _timer.Start();
+        this.RaisePropertyChanged(nameof(IsActive));
+
+        CoverImage = GetImage(ActiveTrack);
         _player.PlayFile();
+        this.RaisePropertyChanged(nameof(IsActive));
         this.RaisePropertyChanged(nameof(CurrentTime));
         this.RaisePropertyChanged(nameof(TotalTime));
         this.RaisePropertyChanged(nameof(Position));
@@ -132,28 +174,42 @@ public class PlayerViewModel : ViewModelBase
         _looping = !_looping;
     }
 
-    public void NextSong(bool looping = false)
+    public void NextSong()
     {
-        if (!looping)
+        if (ActiveTrack is null) return;
+        var nextTrack = ActiveTrack;
+        if (!_looping)
         {
-            var nextSongId = (_trackList.IndexOf(_activeTrack) != _trackList.Count) ?
-              _trackList.IndexOf(_activeTrack) + 1 : 0;
-            _activeTrack = _trackList[nextSongId];
-            _player.AudioFile = new AudioFileReader(_activeTrack.Path);
+            var curSongId = _trackList.IndexOf(ActiveTrack);
+            var nextSongId = (curSongId != _trackList.Count - 1) ?
+              curSongId + 1 : 0;
+            nextTrack = _trackList[nextSongId];
         }
-        Play(_activeTrack);
+        Play(nextTrack);
     }
 
     public void PrevSong()
     {
-        var prevSongId = (_trackList.IndexOf(_activeTrack) != 0) ?
-          _trackList.IndexOf(_activeTrack) - 1 : _trackList.Count;
-        _activeTrack = _trackList[prevSongId];
-        Play(_activeTrack);
+        if (ActiveTrack is null) return;
+        var curSongId = _trackList.IndexOf(ActiveTrack);
+        var prevSongId = (curSongId != 0) ?
+          curSongId - 1 : _trackList.Count - 1;
+        var nextTrack = _trackList[prevSongId];
+        Play(nextTrack);
     }
 
     public void Shuffle()
     {
+        if (_shuffled)
+        {
+            _trackList = _playList.GetTracklist();
+            _shuffled = false;
+            this.RaisePropertyChanged(nameof(IsShuffled));
+            return;
+        }
+
+        _shuffled = true;
+        this.RaisePropertyChanged(nameof(IsShuffled));
         List<TrackInfo> tempList = new(_trackList);
         int n = tempList.Count;
         Random random = new Random();
@@ -171,31 +227,6 @@ public class PlayerViewModel : ViewModelBase
         _trackList = shuffledList;
     }
 
-   /* public string TotalTimeStr
-    {
-        get
-        {
-            // Console.WriteLine(_player.AudioFile.TotalTime.ToString(@"mm\:ss"));
-            if (_player.AudioFile == null)
-            {
-                return "0:00";
-            }
-            return _player.AudioFile.TotalTime.ToString(@"mm\:ss");
-        }
-    }*/
-
-   /* public string PositionStr
-    {
-        get
-        {
-            if (_player.AudioFile == null)
-            {
-                return "0:00";
-            }
-            return _player.AudioFile.CurrentTime.ToString(@"mm\:ss");
-        }
-    }*/
-
     public int Volume
     {
         get => _player.Volume;
@@ -207,17 +238,9 @@ public class PlayerViewModel : ViewModelBase
         MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
-            memory = new MemoryStream(TrackTag(track));
-            return new Bitmap(memory);
+            return track.Image;
         }
         memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
         return new Bitmap(memory);
-    }
-
-    private byte[] TrackTag(TrackInfo track)
-    {
-        // hi there <3
-        var images = TagLib.File.Create(track.Path).Tag.Pictures;
-        return images[0].Data.Data;
     }
 }

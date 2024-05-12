@@ -38,11 +38,11 @@ public class TrackInfo
 
         Image = new Bitmap(imageData);
     }
-    
+
     public TrackInfo(string path)
     {
         Track track = new Track(path);
-        
+
         Path = track.Path;
         Title = track.Title;
         Artist = track.Artist;
@@ -52,7 +52,6 @@ public class TrackInfo
         MemoryStream imageData;
         if (System.IO.Path.GetExtension(track.Path) == ".mp3")
         {
-            
             imageData = new MemoryStream(track.EmbeddedPictures[0].PictureData);
         }
         else

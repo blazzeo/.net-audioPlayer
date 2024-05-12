@@ -5,24 +5,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="250"
              x:Class="AudioPlayer.Views.QueueView"
-             x:DataType="vm:QueueListViewModel">
+             x:DataType="vm:PlayerViewModel">
 
     <DockPanel VerticalAlignment="Stretch">
         <TextBlock DockPanel.Dock="Top" Text="{Binding Title}" FontWeight="Bold" FontSize="30" Padding="10 0"/>
-        <ListBox Name="ListOfTracks" Margin="0 10" ItemsSource="{Binding ActiveTracklist}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListBox Name="ListOfTracks" Margin="0 10" SelectedItem="{Binding ActiveTrack}" ItemsSource="{Binding QueueTracklist}" ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel>
-                        <Image Width="40" Height="40" Source="{Binding Image}" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
-                        <StackPanel Margin="5 0 0 0" VerticalAlignment="Center" Width="165">
-                            <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
-                            <TextBlock Text="{Binding Artist}" FontSize="15"/>
+                    <Button Command="{Binding $parent[ListBox].((vm:PlayerViewModel)DataContext).Play}"
+                            CommandParameter="{Binding}"
+                            Margin="0"
+                            Padding="0"
+                            Background="Transparent">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="40" Height="40" Source="{Binding Image}" DockPanel.Dock="Left" HorizontalAlignment="Left"/>
+
+                            <StackPanel Margin="5 0 0 0" VerticalAlignment="Center" Width="165">
+                                <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Artist}" FontSize="15"/>
+                            </StackPanel>
+                            <TextBlock Text="{Binding DurationTimeSpan}" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </StackPanel>
-                        <TextBlock Text="{Binding DurationTimeSpan}" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    </DockPanel>
+                    </Button>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
     </DockPanel>
-  
+
 </UserControl>

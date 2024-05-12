@@ -39,6 +39,7 @@
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/Microsoft.Win32.Primitives.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/Microsoft.Win32.Registry.dll
 /Users/blazzeo/.nuget/packages/microsoft.win32.systemevents/6.0.0/lib/net6.0/Microsoft.Win32.SystemEvents.dll
+/Users/blazzeo/.nuget/packages/microsoft.xaml.behaviors.wpf/1.1.77/lib/net462/Microsoft.Xaml.Behaviors.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/mscorlib.dll
 /Users/blazzeo/.nuget/packages/naudio.asio/2.2.1/lib/netstandard2.0/NAudio.Asio.dll
 /Users/blazzeo/.nuget/packages/naudio.core/2.2.1/lib/netstandard2.0/NAudio.Core.dll

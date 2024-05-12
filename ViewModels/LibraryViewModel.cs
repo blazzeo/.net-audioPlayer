@@ -28,15 +28,15 @@ public class LibraryViewModel : ViewModelBase
         _window = mainWindow;
         _library = new();
     }
-    
+
     public LibraryViewModel(PlayList playList, MainWindowViewModel mainWindow)
     {
         _window = mainWindow;
-        
+
         _library = new();
         _library.Add(playList);
     }
-    
+
     public ObservableCollection<PlayList> Libs => _library.Playlists;
 
     public PlayList? SelectedAlbum
@@ -93,7 +93,7 @@ public class LibraryViewModel : ViewModelBase
     }
 
     public new event PropertyChangedEventHandler? PropertyChanged;
-    
+
     private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -10,7 +10,7 @@ namespace AudioPlayer.Models
         public bool IsActive;
 
         [NonSerialized] public WaveOutEvent _outputDevice = new WaveOutEvent();
-       
+
 
         private int _volume = 10; // min 0, max 100
 
@@ -18,7 +18,7 @@ namespace AudioPlayer.Models
         {
             OutputDevice.PlaybackStopped += OnPlaybackStopped;
         }
-        
+
         public Player(TrackInfo track)
         {
             AudioFile = new AudioFileReader(track.Path);
@@ -60,7 +60,7 @@ namespace AudioPlayer.Models
                     AudioFile.Volume = value / 100f;
             }
         }
-        
+
         public event EventHandler<EventArgs> TrackIsEnd;
 
         public void PlayFile()
@@ -104,7 +104,7 @@ namespace AudioPlayer.Models
                     AudioFile?.Dispose();
                     AudioFile = null;
                 }
-                else if ((int) (AudioFile.CurrentTime.TotalSeconds + 0.026) == (int) AudioFile.TotalTime.TotalSeconds)
+                else if ((int)(AudioFile.CurrentTime.TotalSeconds + 0.026) == (int)AudioFile.TotalTime.TotalSeconds)
                 {
                     OutputDevice?.Dispose();
                     OutputDevice = null;
