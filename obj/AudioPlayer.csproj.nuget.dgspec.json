@@ -74,6 +74,14 @@
               "target": "Package",
               "version": "[8.2.2, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "MySql.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "NAudio": {
               "target": "Package",
               "version": "[2.2.1, )"

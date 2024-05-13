@@ -47,16 +47,6 @@ public partial class PlayList
         if (trackList != null) TrackList = new ObservableCollection<TrackInfo>(trackList);
     }
 
-    // public void AddAudioFile(TrackInfo track)
-    // {
-    //     TrackList?.Add(track);
-    // }
-    //
-    // public void RemoveAudioFile(TrackInfo track)
-    // {
-    //     TrackList?.Remove(track);
-    // }
-
     public static bool IsAudioFile(string? filePath)
     {
         HashSet<string> audioExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
