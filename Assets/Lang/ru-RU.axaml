@@ -4,13 +4,13 @@
     <v:String x:Key="Search.Playlist">Плейлист</v:String>
     <v:String x:Key="Search.Library">Библиотека</v:String>
     <v:String x:Key="Search.Prompt">Поиск</v:String>
-    <v:String x:Key="Library.Create">Добавить</v:String>
+    <v:String x:Key="Library.Create">Создать плейлист</v:String>
     <v:String x:Key="Create.NewPlaylist">Новый плейлист</v:String>
     <v:String x:Key="Create.Cover">Обложка</v:String>
     <v:String x:Key="Create.EnterName">Название</v:String>
     <v:String x:Key="Create.OpenBtn">Открыть</v:String>
     <v:String x:Key="Create.Submit">Сохранить</v:String>
-    <v:String x:Key="Create.Cancel">Отменить</v:String>
+    <v:String x:Key="Create.Cancel">Назад</v:String>
     <v:String x:Key="Create.OpenFolder">Папка с аудиофайлами</v:String>
     <v:String x:Key="Create.OpenTrack">Добавить аудио</v:String>
 </ResourceDictionary>

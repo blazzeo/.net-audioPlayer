@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using AudioPlayer.DataTemplate;
 using AudioPlayer.Models;
@@ -9,20 +9,17 @@ using Avalonia.Controls;
 using Avalonia.Controls.Models.TreeDataGrid;
 using Avalonia.Controls.Templates;
 using Avalonia.Media.Imaging;
-using DynamicData;
 using ReactiveUI;
 
 namespace AudioPlayer.ViewModels;
 
 public class CreatePlaylistViewModel : ViewModelBase
 {
-    private PlayList _playList;
-    
     private readonly LibraryViewModel _library;
     private string _name = "";
     public string Name { get => _name; set => this.RaiseAndSetIfChanged(ref _name, value); }
-    private ObservableCollection<TrackInfo> _tracklist;
-    private int _idInLibrary = -1;
+    private ObservableCollection<TrackInfo> _trackList;
+    private readonly int _idInLibrary = -1;
 
     private Bitmap _coverImage;
     public Bitmap CoverImage
@@ -31,51 +28,43 @@ public class CreatePlaylistViewModel : ViewModelBase
         private set => this.RaiseAndSetIfChanged(ref _coverImage, value);
     }
 
-    private FlatTreeDataGridSource<TrackInfo> _audioSorce;
+    private FlatTreeDataGridSource<TrackInfo> _audioSource;
     public FlatTreeDataGridSource<TrackInfo> AudioSource
     {
-        get => _audioSorce;
-        private set => this.RaiseAndSetIfChanged(ref _audioSorce, value);
+        get => _audioSource;
+        private set => this.RaiseAndSetIfChanged(ref _audioSource, value);
     }
 
     public CreatePlaylistViewModel(LibraryViewModel library)
     {
         _coverImage = DefaultCover();
         _library = library;
-        _playList = new PlayList();
-        _audioSorce = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList);
+        var playList = new PlayList();
+        _audioSource = new FlatTreeDataGridSource<TrackInfo>(playList.TrackList);
     }
     
     public CreatePlaylistViewModel(LibraryViewModel library, PlayList playList)
     {
         _idInLibrary = library.Libs.IndexOf(playList);
-        Name = playList.Name;
-        _tracklist = playList.TrackList;
+        Name = playList.Name!;
+        _trackList = playList.TrackList;
         _coverImage = playList.Image;
         _library = library;
-        _playList = playList;
-        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_playList.TrackList)
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(playList.TrackList)
         {
             Columns = {
-                new TextColumn<TrackInfo, string>("Title", x => x.Title),
-                new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
-                new TextColumn<TrackInfo, string>("Album", x => x.Album),
+                new TextColumn<TrackInfo, string>("Title", x => x.Title, GridLength.Parse("210")),
+                new TextColumn<TrackInfo, string>("Artist", x => x.Artist, GridLength.Parse("170")),
+                new TextColumn<TrackInfo, string>("Album", x => x.Album, GridLength.Parse("170")),
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
                 new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
             }
         };
     }
     
-    private Control GetButton(TrackInfo track)
-    {
-        var it = new CommandButton();
-        var tuple = new Tuple<TrackInfo, ObservableCollection<TrackInfo>>(track, _tracklist);
-        return it.Build(tuple);
-    }
-
     public async void OpenFolder()
     {
-        _tracklist = new ObservableCollection<TrackInfo>();
+        _trackList = new ObservableCollection<TrackInfo>();
         var pathFolder = await OpenFolder(CancellationToken.None);
 
         if (string.IsNullOrWhiteSpace(pathFolder)) return;
@@ -86,20 +75,19 @@ public class CreatePlaylistViewModel : ViewModelBase
         {
             if (!PlayList.IsAudioFile(file)) continue;
             var track = new TrackInfo(file);
-            _tracklist.Add(track);
+            _trackList.Add(track);
         }
         
-        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_tracklist)
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList)
         {
             Columns = {
-                new TextColumn<TrackInfo, string>("Title", x => x.Title),
-                new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
-                new TextColumn<TrackInfo, string>("Album", x => x.Album),
+                new TextColumn<TrackInfo, string>("Title", x => x.Title, GridLength.Parse("210")),
+                new TextColumn<TrackInfo, string>("Artist", x => x.Artist, GridLength.Parse("170")),
+                new TextColumn<TrackInfo, string>("Album", x => x.Album, GridLength.Parse("170")),
                 new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
                 new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
             }
         };
-
     }
 
     public async void OpenImage()
@@ -112,32 +100,32 @@ public class CreatePlaylistViewModel : ViewModelBase
 
     public async void OpenTrack()
     {
-        _tracklist ??= [];
-        var pathes = await OpenMultipleFiles(CancellationToken.None);
-        if (pathes is null) return;
-        
-        foreach (var path in pathes)
+        _trackList ??= [];
+        var paths = await OpenMultipleFiles(CancellationToken.None);
+
+        foreach (var path in paths.Where(path => !string.IsNullOrWhiteSpace(path)).Where(PlayList.IsAudioFile))
         {
-            if (string.IsNullOrWhiteSpace(path)) continue;
-            if (PlayList.IsAudioFile(path))
-                _tracklist?.Add(new TrackInfo(path));
+            _trackList?.Add(new TrackInfo(path));
         }
-        
-        AudioSource = new FlatTreeDataGridSource<TrackInfo>(_tracklist)
-        {
-            Columns = {
-                new TextColumn<TrackInfo, string>("Title", x => x.Title),
-                new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
-                new TextColumn<TrackInfo, string>("Album", x => x.Album),
-                new TextColumn<TrackInfo, string>("Duration", x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
-                new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
-            }
-        };
+
+        if (_trackList != null)
+            AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList)
+            {
+                Columns =
+                {
+                    new TextColumn<TrackInfo, string>("Title", x => x.Title),
+                    new TextColumn<TrackInfo, string>("Artist", x => x.Artist),
+                    new TextColumn<TrackInfo, string>("Album", x => x.Album),
+                    new TextColumn<TrackInfo, string>("Duration",
+                        x => TimeSpan.FromSeconds(x.Duration).ToString(@"mm\:ss")),
+                    new TemplateColumn<TrackInfo>("", new FuncDataTemplate<TrackInfo>((a, e) => GetButton(a))),
+                }
+            };
     }
 
     public void Create()
     {
-        var newPlaylist = new PlayList(Name, _tracklist, CoverImage);
+        var newPlaylist = new PlayList(Name, _trackList, CoverImage);
         if (_idInLibrary != -1)
         {
             _library.UpdatePlaylist(newPlaylist, _idInLibrary);
@@ -158,5 +146,12 @@ public class CreatePlaylistViewModel : ViewModelBase
     {
         var memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
         return new Bitmap(memory);
+    }
+    
+    private Control GetButton(TrackInfo track)
+    {
+        var it = new CommandButton();
+        var tuple = new Tuple<TrackInfo, ObservableCollection<TrackInfo>>(track, _trackList);
+        return it.Build(tuple);
     }
 }

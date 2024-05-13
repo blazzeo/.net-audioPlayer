@@ -12,7 +12,7 @@ namespace AudioPlayer.ViewModels;
 
 public class PlayerViewModel : ViewModelBase
 {
-    private Player _player;
+    private readonly Player _player;
     private PlayList _playList;
     private List<TrackInfo> _trackList;
     private ObservableCollection<TrackInfo> _queueList = [];
@@ -23,16 +23,18 @@ public class PlayerViewModel : ViewModelBase
     private readonly DispatcherTimer _timer;
     private double _position;
 
-    public bool IsShuffled { get => _shuffled; }
-    public bool IsActive { get => !_player.IsActive; }
+    public bool IsShuffled => _shuffled;
+    public bool IsActive => !_player.IsActive;
+
     public TrackInfo ActiveTrack
     {
         get => _activeTrack;
         set => this.RaiseAndSetIfChanged(ref _activeTrack, value);
     }
-    public PlayList CurrentPlaylist { get => _playList; }
-    public string Title { get => _playList.Name ?? "Empty"; }
-    public ObservableCollection<TrackInfo>? QueueTracklist
+    public PlayList CurrentPlaylist => _playList;
+    public string Title => _playList.Name ?? "Empty";
+
+    public ObservableCollection<TrackInfo>? QueueTrackList
     {
         get => _queueList;
         set => this.RaiseAndSetIfChanged(ref _queueList, value);
@@ -44,25 +46,9 @@ public class PlayerViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _coverImage, value);
     }
 
-    public TimeSpan TotalTime
-    {
-        get
-        {
-            if (_player.AudioFile != null)
-                return _player.AudioFile.TotalTime;
-            return TimeSpan.Zero;
-        }
-    }
+    public TimeSpan TotalTime => _player.AudioFile != null ? _player.AudioFile.TotalTime : TimeSpan.Zero;
 
-    public TimeSpan CurrentTime
-    {
-        get
-        {
-            if(_player.AudioFile != null)
-                return _player.AudioFile.CurrentTime;
-            return TimeSpan.Zero;
-        }
-    }
+    public TimeSpan CurrentTime => _player.AudioFile != null ? _player.AudioFile.CurrentTime : TimeSpan.Zero;
 
     public double Position
     {
@@ -77,9 +63,9 @@ public class PlayerViewModel : ViewModelBase
 
     public PlayerViewModel()
     {
-        _playList = new();
-        _trackList = new();
-        _player = new();
+        _playList = new PlayList();
+        _trackList = [];
+        _player = new Player();
         _player.TrackIsEnd += OnTrackEnd;
         ActiveTrack = null;
         CoverImage = GetImage();
@@ -93,7 +79,7 @@ public class PlayerViewModel : ViewModelBase
     public PlayerViewModel(PlayList playlist)
     {
         _playList = playlist;
-        _trackList = playlist.GetTracklist();
+        _trackList = playlist.GetTrackList();
         ActiveTrack = _trackList[0];
         CoverImage = ActiveTrack.Image;
         _player = new Player(ActiveTrack);
@@ -107,12 +93,10 @@ public class PlayerViewModel : ViewModelBase
 
     private void Timer_tick(object sender, EventArgs e)
     {
-        if (_player != null && _player._outputDevice.PlaybackState == PlaybackState.Playing)
-        {
-            _position = _player.AudioFile.CurrentTime.TotalSeconds;
-            this.RaisePropertyChanged(nameof(Position));
-            this.RaisePropertyChanged(nameof(CurrentTime));
-        }
+        if (_player == null || _player.OutputDevice.PlaybackState != PlaybackState.Playing) return;
+        _position = _player.AudioFile.CurrentTime.TotalSeconds;
+        this.RaisePropertyChanged(nameof(Position));
+        this.RaisePropertyChanged(nameof(CurrentTime));
     }
 
     private void OnTrackEnd(object sender, EventArgs e)
@@ -123,10 +107,10 @@ public class PlayerViewModel : ViewModelBase
     public void SetPlaylist(PlayList playlist, int id = -1)
     {
         _playList = playlist;
-        _trackList = _playList.GetTracklist();
-        QueueTracklist = playlist.TrackList;
+        _trackList = _playList.GetTrackList();
+        QueueTrackList = playlist.TrackList;
         this.RaisePropertyChanged(nameof(Title));
-        this.RaisePropertyChanged(nameof(QueueTracklist));
+        this.RaisePropertyChanged(nameof(QueueTrackList));
     }
 
     public void SetVolume(int value)
@@ -202,7 +186,7 @@ public class PlayerViewModel : ViewModelBase
     {
         if (_shuffled)
         {
-            _trackList = _playList.GetTracklist();
+            _trackList = _playList.GetTrackList();
             _shuffled = false;
             this.RaisePropertyChanged(nameof(IsShuffled));
             return;
@@ -210,20 +194,18 @@ public class PlayerViewModel : ViewModelBase
 
         _shuffled = true;
         this.RaisePropertyChanged(nameof(IsShuffled));
-        List<TrackInfo> tempList = new(_trackList);
-        int n = tempList.Count;
-        Random random = new Random();
+        List<TrackInfo> tempList = [.._trackList];
+        var n = tempList.Count;
+        var random = new Random();
 
         while (n > 1)
         {
             n--;
             var k = random.Next(n + 1);
-            TrackInfo temp = tempList[k];
-            tempList[k] = tempList[n];
-            tempList[n] = temp;
+            (tempList[k], tempList[n]) = (tempList[n], tempList[k]);
         }
 
-        List<TrackInfo> shuffledList = new(tempList);
+        List<TrackInfo> shuffledList = [..tempList];
         _trackList = shuffledList;
     }
 
@@ -233,14 +215,13 @@ public class PlayerViewModel : ViewModelBase
         set => _player.Volume = value;
     }
 
-    private Bitmap GetImage(TrackInfo track = null)
+    private static Bitmap GetImage(TrackInfo track = null)
     {
-        MemoryStream memory;
         if (track != null && Path.GetExtension(track.Path) != ".wav")
         {
             return track.Image;
         }
-        memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
+        var memory = new MemoryStream(File.ReadAllBytes("Assets/default-audio.png"));
         return new Bitmap(memory);
     }
 }

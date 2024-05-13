@@ -4,13 +4,13 @@
     <v:String x:Key="Search.Playlist">Playlist</v:String>
     <v:String x:Key="Search.Library">Library</v:String>
     <v:String x:Key="Search.Prompt">Search</v:String>
-    <v:String x:Key="Library.Create">Add</v:String>
+    <v:String x:Key="Library.Create">Create playlist</v:String>
     <v:String x:Key="Create.NewPlaylist">New Playlist</v:String>
     <v:String x:Key="Create.Cover">Cover</v:String>
     <v:String x:Key="Create.EnterName">Enter name</v:String>
     <v:String x:Key="Create.OpenBtn">Open</v:String>
     <v:String x:Key="Create.Submit">Save</v:String>
-    <v:String x:Key="Create.Cancel">Cancel</v:String>
+    <v:String x:Key="Create.Cancel">Back</v:String>
     <v:String x:Key="Create.OpenFolder">Audio folder</v:String>
     <v:String x:Key="Create.OpenTrack">Add an audio</v:String>
 </ResourceDictionary>

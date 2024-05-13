@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using AudioPlayer.Models;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml.Styling;
 using ReactiveUI;
 
@@ -9,7 +8,6 @@ namespace AudioPlayer.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    public static IResourceDictionary LocaleDict { get; set; }
     public bool LocaleEn { get; private set; }
 
     private ViewModelBase _content = new();
@@ -26,14 +24,14 @@ public class MainWindowViewModel : ViewModelBase
 
     public SearchViewModel SearchVm { get; set; }
     public PlayerViewModel PlayerVm { get; set; }
-    public LibraryViewModel LibraryVm { get; set; }
+    public LibraryViewModel LibraryVm { get; }
     public PlayListViewModel PlaylistVm { get; set; }
 
     public MainWindowViewModel()
     {
         _Locale("ru-RU");
         LocaleEn = false;
-        PlayList playlist = new("Orange", "/Users/blazzeo/Orange/", "Assets/default-audio.png");
+        PlayList playlist = new("Orange", "/Users/blazzeo/Orange/", "/Users/blazzeo/Downloads/soprano.jpeg");
         SearchVm = new SearchViewModel(this);
         PlaylistVm = new PlayListViewModel(this);
         LibraryVm = new LibraryViewModel(playlist, this);
@@ -83,7 +81,5 @@ public class MainWindowViewModel : ViewModelBase
             Source = new Uri($"avares://AudioPlayer/Assets/Lang/{locale}.axaml")
         };
         App.Current?.Resources.MergedDictionaries.Add(newDictionary);
-
-        LocaleDict = newDictionary.Loaded;
     }
 }

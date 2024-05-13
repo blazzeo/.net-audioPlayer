@@ -9,9 +9,8 @@ namespace AudioPlayer.Models
         [NonSerialized] private AudioFileReader _audioFile;
         public bool IsActive;
 
-        [NonSerialized] public WaveOutEvent _outputDevice = new WaveOutEvent();
-
-
+        [NonSerialized] private WaveOutEvent _outputDevice = new WaveOutEvent();
+        
         private int _volume = 10; // min 0, max 100
 
         public Player()
@@ -35,11 +34,9 @@ namespace AudioPlayer.Models
                 if (_audioFile != null)
                 {
                     _audioFile.Volume = Volume / 100f;
-                    if (OutputDevice == null)
-                    {
-                        OutputDevice = new WaveOutEvent();
-                        OutputDevice.PlaybackStopped += OnPlaybackStopped;
-                    }
+                    if (OutputDevice != null) return;
+                    OutputDevice = new WaveOutEvent();
+                    OutputDevice.PlaybackStopped += OnPlaybackStopped;
                 }
             }
         }
@@ -65,13 +62,11 @@ namespace AudioPlayer.Models
 
         public void PlayFile()
         {
-            if (AudioFile != null)
-            {
-                if (OutputDevice.PlaybackState == PlaybackState.Stopped)
-                    OutputDevice.Init(AudioFile);
-                OutputDevice.Play();
-                IsActive = true;
-            }
+            if (AudioFile == null) return;
+            if (OutputDevice.PlaybackState == PlaybackState.Stopped)
+                OutputDevice.Init(AudioFile);
+            OutputDevice.Play();
+            IsActive = true;
         }
 
         public void StopFile()
@@ -96,22 +91,22 @@ namespace AudioPlayer.Models
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs args)
         {
-            if (AudioFile != null && AudioFile.FileName != string.Empty)
-                if (sender is Player)
-                {
-                    OutputDevice?.Dispose();
-                    OutputDevice = null;
-                    AudioFile?.Dispose();
-                    AudioFile = null;
-                }
-                else if ((int)(AudioFile.CurrentTime.TotalSeconds + 0.026) == (int)AudioFile.TotalTime.TotalSeconds)
-                {
-                    OutputDevice?.Dispose();
-                    OutputDevice = null;
-                    AudioFile?.Dispose();
-                    AudioFile = null;
-                    TrackIsEnd.Invoke(sender, args);
-                }
+            if (AudioFile == null || AudioFile.FileName == string.Empty) return;
+            if (sender is Player)
+            {
+                OutputDevice?.Dispose();
+                OutputDevice = null;
+                AudioFile?.Dispose();
+                AudioFile = null;
+            }
+            else if ((int)(AudioFile.CurrentTime.TotalSeconds + 0.026) == (int)AudioFile.TotalTime.TotalSeconds)
+            {
+                OutputDevice?.Dispose();
+                OutputDevice = null;
+                AudioFile?.Dispose();
+                AudioFile = null;
+                TrackIsEnd.Invoke(sender, args);
+            }
         }
     }
 }

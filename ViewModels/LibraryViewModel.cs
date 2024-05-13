@@ -1,7 +1,4 @@
-using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using AudioPlayer.Models;
 using ReactiveUI;
 
@@ -9,7 +6,7 @@ namespace AudioPlayer.ViewModels;
 
 public class LibraryViewModel : ViewModelBase
 {
-    private MainWindowViewModel _window;
+    private readonly MainWindowViewModel _window;
     private PlayList? _selectedAlbum;
     private ObservableCollection<PlayList> _libs;
     public ObservableCollection<PlayList> Libs
@@ -21,12 +18,12 @@ public class LibraryViewModel : ViewModelBase
     public Library Library
     {
         get => _library;
-        set
+        private set
         {
             if (Equals(value, _library)) return;
             _library = value;
             this.RaiseAndSetIfChanged(ref _library, value);
-            RaisePropertyChanged(nameof(Libs));
+            this.RaisePropertyChanged(nameof(Libs));
         }
     }
 
@@ -80,7 +77,6 @@ public class LibraryViewModel : ViewModelBase
 
     public void DeletePlaylist(PlayList playList)
     {
-        Console.WriteLine("del");
         Library.Remove(playList);
         Libs = Library.Playlists;
         _window.ToLibrary();
@@ -100,12 +96,5 @@ public class LibraryViewModel : ViewModelBase
     public void CreateNew()
     {
         _window.OpenCreateDialog();
-    }
-
-    public new event PropertyChangedEventHandler? PropertyChanged;
-
-    private void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

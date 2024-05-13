@@ -32,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -75,28 +70,13 @@
               "target": "Package",
               "version": "[11.0.6, )"
             },
-            "CSCore": {
-              "target": "Package",
-              "version": "[1.2.1.2, )",
-              "noWarn": [
-                "NU1701"
-              ]
-            },
             "CommunityToolkit.Mvvm": {
               "target": "Package",
               "version": "[8.2.2, )"
             },
-            "Microsoft.Xaml.Behaviors.Wpf": {
-              "target": "Package",
-              "version": "[1.1.77, )"
-            },
             "NAudio": {
               "target": "Package",
               "version": "[2.2.1, )"
-            },
-            "TagLibSharp": {
-              "target": "Package",
-              "version": "[2.3.0, )"
             },
             "z440.atl.core": {
               "target": "Package",

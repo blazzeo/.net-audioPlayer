@@ -383,19 +383,6 @@
           "buildTransitive/netstandard2.1/CommunityToolkit.Mvvm.targets": {}
         }
       },
-      "CSCore/1.2.1.2": {
-        "type": "package",
-        "compile": {
-          "lib/net35-client/CSCore.dll": {
-            "related": ".XML"
-          }
-        },
-        "runtime": {
-          "lib/net35-client/CSCore.dll": {
-            "related": ".XML"
-          }
-        }
-      },
       "DynamicData/7.9.5": {
         "type": "package",
         "dependencies": {
@@ -855,19 +842,6 @@
           "runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll": {
             "assetType": "runtime",
             "rid": "win"
-          }
-        }
-      },
-      "Microsoft.Xaml.Behaviors.Wpf/1.1.77": {
-        "type": "package",
-        "compile": {
-          "lib/net462/Microsoft.Xaml.Behaviors.dll": {
-            "related": ".pdb;.xml"
-          }
-        },
-        "runtime": {
-          "lib/net462/Microsoft.Xaml.Behaviors.dll": {
-            "related": ".pdb;.xml"
           }
         }
       },
@@ -1662,19 +1636,6 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
-      "TagLibSharp/2.3.0": {
-        "type": "package",
-        "compile": {
-          "lib/netstandard2.0/TagLibSharp.dll": {
-            "related": ".pdb"
-          }
-        },
-        "runtime": {
-          "lib/netstandard2.0/TagLibSharp.dll": {
-            "related": ".pdb"
-          }
-        }
-      },
       "Tmds.DBus.Protocol/0.15.0": {
         "type": "package",
         "dependencies": {
@@ -2207,19 +2168,6 @@
         "lib/netstandard2.1/CommunityToolkit.Mvvm.dll",
         "lib/netstandard2.1/CommunityToolkit.Mvvm.pdb",
         "lib/netstandard2.1/CommunityToolkit.Mvvm.xml"
-      ]
-    },
-    "CSCore/1.2.1.2": {
-      "sha512": "DoQKUcdZLQawo3mOg8CvujJD9YkvTt6NtEu7S+OCo8+ySl8eCeUw4LFyL2E1OcAkPU918HZM6sUNcvIMcXWg6g==",
-      "type": "package",
-      "path": "cscore/1.2.1.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "cscore.1.2.1.2.nupkg.sha512",
-        "cscore.nuspec",
-        "lib/net35-client/CSCore.XML",
-        "lib/net35-client/CSCore.dll"
       ]
     },
     "DynamicData/7.9.5": {
@@ -2873,28 +2821,6 @@
         "runtimes/win/lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.dll",
         "runtimes/win/lib/netcoreapp3.1/Microsoft.Win32.SystemEvents.xml",
         "useSharedDesignerContext.txt"
-      ]
-    },
-    "Microsoft.Xaml.Behaviors.Wpf/1.1.77": {
-      "sha512": "MCu674ZETgU18EbxfwIlRpUPJ02YbZenLsMCXTkpeA7KUBpXfFaOUDlEO+7UWu5AFnUoydg+aQENJkuaZPheMQ==",
-      "type": "package",
-      "path": "microsoft.xaml.behaviors.wpf/1.1.77",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net462/Design/Microsoft.Xaml.Behaviors.Design.dll",
-        "lib/net462/Design/Microsoft.Xaml.Behaviors.DesignTools.dll",
-        "lib/net462/Microsoft.Xaml.Behaviors.dll",
-        "lib/net462/Microsoft.Xaml.Behaviors.pdb",
-        "lib/net462/Microsoft.Xaml.Behaviors.xml",
-        "lib/net6.0-windows7.0/Design/Microsoft.Xaml.Behaviors.DesignTools.dll",
-        "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.dll",
-        "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.pdb",
-        "lib/net6.0-windows7.0/Microsoft.Xaml.Behaviors.xml",
-        "microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512",
-        "microsoft.xaml.behaviors.wpf.nuspec",
-        "tools/Install.ps1"
       ]
     },
     "NAudio/2.2.1": {
@@ -5258,23 +5184,6 @@
         "version.txt"
       ]
     },
-    "TagLibSharp/2.3.0": {
-      "sha512": "Qo4z6ZjnIfbR3Us1Za5M2vQ97OWZPmODvVmepxZ8XW0UIVLGdO2T63/N3b23kCcyiwuIe0TQvMEQG8wUCCD1mA==",
-      "type": "package",
-      "path": "taglibsharp/2.3.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net462/TagLibSharp.dll",
-        "lib/net462/TagLibSharp.pdb",
-        "lib/net462/TaglibSharp.xml",
-        "lib/netstandard2.0/TagLibSharp.dll",
-        "lib/netstandard2.0/TagLibSharp.pdb",
-        "lib/netstandard2.0/TaglibSharp.xml",
-        "taglibsharp.2.3.0.nupkg.sha512",
-        "taglibsharp.nuspec"
-      ]
-    },
     "Tmds.DBus.Protocol/0.15.0": {
       "sha512": "QVo/Y39nTYcCKBqrZuwHjXdwaky0yTQPIT3qUTEEK2MZfDtZWrJ2XyZ59zH8LBgB2fL5cWaTuP2pBTpGz/GeDQ==",
       "type": "package",
@@ -5334,11 +5243,8 @@
       "Avalonia.Fonts.Inter >= 11.0.6",
       "Avalonia.ReactiveUI >= 11.0.6",
       "Avalonia.Themes.Fluent >= 11.0.6",
-      "CSCore >= 1.2.1.2",
       "CommunityToolkit.Mvvm >= 8.2.2",
-      "Microsoft.Xaml.Behaviors.Wpf >= 1.1.77",
       "NAudio >= 2.2.1",
-      "TagLibSharp >= 2.3.0",
       "z440.atl.core >= 5.21.0"
     ]
   },
@@ -5373,11 +5279,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -5416,28 +5317,13 @@
             "target": "Package",
             "version": "[11.0.6, )"
           },
-          "CSCore": {
-            "target": "Package",
-            "version": "[1.2.1.2, )",
-            "noWarn": [
-              "NU1701"
-            ]
-          },
           "CommunityToolkit.Mvvm": {
             "target": "Package",
             "version": "[8.2.2, )"
           },
-          "Microsoft.Xaml.Behaviors.Wpf": {
-            "target": "Package",
-            "version": "[1.1.77, )"
-          },
           "NAudio": {
             "target": "Package",
             "version": "[2.2.1, )"
-          },
-          "TagLibSharp": {
-            "target": "Package",
-            "version": "[2.3.0, )"
           },
           "z440.atl.core": {
             "target": "Package",
@@ -5463,17 +5349,5 @@
         "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Пакет \"Microsoft.Xaml.Behaviors.Wpf 1.1.77\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net8.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
-      "libraryId": "Microsoft.Xaml.Behaviors.Wpf",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "JbqQ/6WdpqoQ5B7KeVS1eECCGi05GGOKtQUthZZduZHnT9uWrPJSXJIgnEcdG+yh73wHRI/pzeEQUnj1SCYAlw==",
+  "dgSpecHash": "He777gL2BEF97NZcZJJ0UyWCiXEuiJN8EXGrCjQVn4zAWQ5KAnsqHup2kzbxZ7cw1JX5yd8O7M87cjQkIHthFg==",
   "success": true,
   "projectFilePath": "/Users/blazzeo/Programming/AudioPlayer/AudioPlayer.csproj",
   "expectedPackageFiles": [
@@ -23,7 +23,6 @@
     "/Users/blazzeo/.nuget/packages/avalonia.win32/11.0.6/avalonia.win32.11.0.6.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/avalonia.x11/11.0.6/avalonia.x11.11.0.6.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/communitytoolkit.mvvm/8.2.2/communitytoolkit.mvvm.8.2.2.nupkg.sha512",
-    "/Users/blazzeo/.nuget/packages/cscore/1.2.1.2/cscore.1.2.1.2.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/dynamicdata/7.9.5/dynamicdata.7.9.5.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/harfbuzzsharp/7.3.0/harfbuzzsharp.7.3.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/harfbuzzsharp.nativeassets.linux/7.3.0/harfbuzzsharp.nativeassets.linux.7.3.0.nupkg.sha512",
@@ -41,7 +40,6 @@
     "/Users/blazzeo/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "/Users/blazzeo/.nuget/packages/microsoft.xaml.behaviors.wpf/1.1.77/microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/naudio/2.2.1/naudio.2.2.1.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/naudio.asio/2.2.1/naudio.asio.2.2.1.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/naudio.core/2.2.1/naudio.core.2.2.1.nupkg.sha512",
@@ -91,21 +89,9 @@
     "/Users/blazzeo/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "/Users/blazzeo/.nuget/packages/taglibsharp/2.3.0/taglibsharp.2.3.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/tmds.dbus.protocol/0.15.0/tmds.dbus.protocol.0.15.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/ude.netstandard/1.2.0/ude.netstandard.1.2.0.nupkg.sha512",
     "/Users/blazzeo/.nuget/packages/z440.atl.core/5.21.0/z440.atl.core.5.21.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Пакет \"Microsoft.Xaml.Behaviors.Wpf 1.1.77\" был восстановлен с помощью \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1\", а не целевой платформы проекта \"net8.0\". Этот пакет может быть не полностью совместим с вашим проектом.",
-      "libraryId": "Microsoft.Xaml.Behaviors.Wpf",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

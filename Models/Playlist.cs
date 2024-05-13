@@ -1,34 +1,34 @@
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.ComponentModel;
-using Avalonia.Controls;
 using System.IO;
 using System;
 using Avalonia.Media.Imaging;
 
 namespace AudioPlayer.Models;
 
-public class PlayList : INotifyPropertyChanged
+public partial class PlayList
 {
     private string _name;
-    private Bitmap _cover;
 
     public string? Name { get => _name; set => _name = value!; }
-    public Bitmap Image { get => _cover; set => _cover = value; }
+    public Bitmap Image { get; set; }
 
     public ObservableCollection<TrackInfo> TrackList { get; private set; }
+}
 
+public partial class PlayList
+{
     public PlayList()
     {
-        _name = "null";
-        _cover = new Bitmap(new MemoryStream(File.ReadAllBytes("Assets/default-audio.png")));
-        TrackList = new();
+        _name = "No Playlist";
+        Image = new Bitmap(new MemoryStream(File.ReadAllBytes("Assets/default-audio.png")));
+        TrackList = [];
     }
 
     public PlayList(string name, string folder, string imagePath)
     {
         _name = name;
-        _cover = new Bitmap(new MemoryStream(File.ReadAllBytes(imagePath)));
+        Image = new Bitmap(new MemoryStream(File.ReadAllBytes(imagePath)));
         TrackList = [];
         var files = Directory.GetFiles(folder);
         
@@ -40,26 +40,24 @@ public class PlayList : INotifyPropertyChanged
         }
     }
     
-    public PlayList(string name, ObservableCollection<TrackInfo> tracklist, Bitmap image)
+    public PlayList(string name, IEnumerable<TrackInfo>? trackList, Bitmap image)
     {
         _name = name;
-        _cover = image;
-        TrackList = new ObservableCollection<TrackInfo>(tracklist);
+        Image = image;
+        if (trackList != null) TrackList = new ObservableCollection<TrackInfo>(trackList);
     }
 
-    public void AddAudioFile(TrackInfo track)
-    {
-        TrackList?.Add(track);
-    }
+    // public void AddAudioFile(TrackInfo track)
+    // {
+    //     TrackList?.Add(track);
+    // }
+    //
+    // public void RemoveAudioFile(TrackInfo track)
+    // {
+    //     TrackList?.Remove(track);
+    // }
 
-    public void RemoveAudioFile(TrackInfo track)
-    {
-        TrackList?.Remove(track);
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    public static bool IsAudioFile(string filePath)
+    public static bool IsAudioFile(string? filePath)
     {
         HashSet<string> audioExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -72,10 +70,10 @@ public class PlayList : INotifyPropertyChanged
 
         var extension = Path.GetExtension(filePath);
 
-        return extension != null && audioExtensions.Contains(extension);
+        return audioExtensions.Contains(extension);
     }
 
-    public List<TrackInfo> GetTracklist()
+    public List<TrackInfo> GetTrackList()
     {
         List<TrackInfo> list = [.. TrackList];
         return list;

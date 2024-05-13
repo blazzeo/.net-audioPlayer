@@ -25,7 +25,6 @@
 /Users/blazzeo/.nuget/packages/avalonia.win32/11.0.6/lib/net6.0/Avalonia.Win32.dll
 /Users/blazzeo/.nuget/packages/avalonia.x11/11.0.6/lib/net6.0/Avalonia.X11.dll
 /Users/blazzeo/.nuget/packages/communitytoolkit.mvvm/8.2.2/lib/net6.0/CommunityToolkit.Mvvm.dll
-/Users/blazzeo/.nuget/packages/cscore/1.2.1.2/lib/net35-client/CSCore.dll
 /Users/blazzeo/.nuget/packages/dynamicdata/7.9.5/lib/net6.0/DynamicData.dll
 /Users/blazzeo/.nuget/packages/harfbuzzsharp/7.3.0/lib/net6.0/HarfBuzzSharp.dll
 /Users/blazzeo/.nuget/packages/microcom.runtime/0.11.0/lib/net5.0/MicroCom.Runtime.dll
@@ -39,7 +38,6 @@
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/Microsoft.Win32.Primitives.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/Microsoft.Win32.Registry.dll
 /Users/blazzeo/.nuget/packages/microsoft.win32.systemevents/6.0.0/lib/net6.0/Microsoft.Win32.SystemEvents.dll
-/Users/blazzeo/.nuget/packages/microsoft.xaml.behaviors.wpf/1.1.77/lib/net462/Microsoft.Xaml.Behaviors.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/mscorlib.dll
 /Users/blazzeo/.nuget/packages/naudio.asio/2.2.1/lib/netstandard2.0/NAudio.Asio.dll
 /Users/blazzeo/.nuget/packages/naudio.core/2.2.1/lib/netstandard2.0/NAudio.Core.dll
@@ -209,7 +207,6 @@
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/System.Xml.XmlSerializer.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/System.Xml.XPath.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/System.Xml.XPath.XDocument.dll
-/Users/blazzeo/.nuget/packages/taglibsharp/2.3.0/lib/netstandard2.0/TagLibSharp.dll
 /Users/blazzeo/.nuget/packages/tmds.dbus.protocol/0.15.0/lib/net6.0/Tmds.DBus.Protocol.dll
 /Users/blazzeo/.nuget/packages/ude.netstandard/1.2.0/lib/netstandard2.0/Ude.NetStandard.dll
 /usr/local/share/dotnet/packs/Microsoft.NETCore.App.Ref/8.0.3/ref/net8.0/WindowsBase.dll

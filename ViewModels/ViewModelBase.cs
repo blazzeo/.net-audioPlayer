@@ -22,7 +22,7 @@ public partial class ViewModelBase : ReactiveObject
         try
         {
             var file = await DoOpenFilePickerAsync();
-            return file?.Path.ToString().Split("://")[1];
+            return file?.TryGetLocalPath();
         }
         catch (Exception e)
         {
@@ -38,7 +38,7 @@ public partial class ViewModelBase : ReactiveObject
         try
         {
             var files = await DoOpenFilesPickerAsync();
-            return files.Select(file => file?.Path.ToString().Split("://")[1]).ToList();
+            return files.Select(file => file?.TryGetLocalPath()).ToList();
         }
         catch (Exception e)
         {
@@ -54,7 +54,7 @@ public partial class ViewModelBase : ReactiveObject
         try
         {
             var folder = await DoOpenFolderPickerAsync();
-            return folder?.Path.ToString().Split("://")[1];
+            return folder?.TryGetLocalPath();
         }
         catch (Exception e)
         {

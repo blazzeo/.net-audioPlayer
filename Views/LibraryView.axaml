@@ -47,7 +47,8 @@
                                 </Button>
                                 <Image Source="{Binding Image}" ZIndex="1"/>
                             </RelativePanel>
-                        </Border>    
+                        </Border>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="20" TextAlignment="Center"/>
                     </StackPanel>
                 </DockPanel>
             </DataTemplate>

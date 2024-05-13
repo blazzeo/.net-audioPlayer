@@ -42,7 +42,6 @@
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/Avalonia.Win32.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/Avalonia.X11.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/CommunityToolkit.Mvvm.dll
-/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/CSCore.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/DynamicData.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/HarfBuzzSharp.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/MicroCom.Runtime.dll
@@ -57,7 +56,6 @@
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/System.Drawing.Common.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/System.IO.Pipelines.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/System.Reactive.dll
-/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/TagLibSharp.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/Tmds.DBus.Protocol.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/Ude.NetStandard.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/ATL.dll
@@ -147,4 +145,3 @@
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Midi.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.Wasapi.dll
 /Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/NAudio.WinMM.dll
-/Users/blazzeo/Programming/AudioPlayer/bin/Debug/net8.0/Microsoft.Xaml.Behaviors.dll

@@ -13,8 +13,8 @@ namespace AudioPlayer.ViewModels;
 
 public class PlayListViewModel : ViewModelBase
 {
-    private MainWindowViewModel _window;
-    public PlayList _playList;
+    private readonly MainWindowViewModel _window;
+    public readonly PlayList PlayList;
     private Bitmap _image;
     private readonly List<TrackInfo> _trackList;
     public string Title { get; }
@@ -34,9 +34,9 @@ public class PlayListViewModel : ViewModelBase
     public PlayListViewModel(MainWindowViewModel window)
     {
         _window = window;
-        _playList = new();
+        PlayList = new PlayList();
         _trackList = new List<TrackInfo>();
-        Image = new Bitmap(new MemoryStream(System.IO.File.ReadAllBytes("Assets/default-audio.png")));
+        Image = new Bitmap(new MemoryStream(File.ReadAllBytes("Assets/default-audio.png")));
         Title = "Empty";
         AudioSource = new FlatTreeDataGridSource<TrackInfo>(_trackList);
     }
@@ -44,8 +44,8 @@ public class PlayListViewModel : ViewModelBase
     public PlayListViewModel(PlayList playList, MainWindowViewModel window)
     {
         _window = window;
-        _playList = playList;
-        _trackList = new(_playList.TrackList);
+        PlayList = playList;
+        _trackList = (PlayList.TrackList == null ? [] : [..PlayList.TrackList]);
 
         Image = playList.Image;
         Title = playList.Name!;
@@ -62,9 +62,9 @@ public class PlayListViewModel : ViewModelBase
         };
     }
 
-    public void ChangeGrid(List<TrackInfo> tracklist)
+    public void ChangeGrid(IEnumerable<TrackInfo> trackList)
     {
-        AudioSource = new FlatTreeDataGridSource<TrackInfo>(tracklist)
+        AudioSource = new FlatTreeDataGridSource<TrackInfo>(trackList)
         {
             Columns = {
                 new TemplateColumn<TrackInfo>("Cover", new FuncDataTemplate<TrackInfo>((a,e) => GetButton(a))),
@@ -80,20 +80,15 @@ public class PlayListViewModel : ViewModelBase
     {
         var it = new ImageButtonCommand();
         var img = GetImage(track);
-        Tuple<PlayerViewModel, PlayList, TrackInfo, Control> tuple = new(_window.PlayerVm, _playList, track, img);
-
-        // Console.WriteLine(track.Title);
+        Tuple<PlayerViewModel, PlayList, TrackInfo, Control> tuple = new(_window.PlayerVm, PlayList, track, img);
         return it.Build(tuple);
     }
 
-    private Control GetImage(TrackInfo track)
+    private static Control GetImage(TrackInfo track)
     {
         var it = new SongImageTemplate();
-        if (track == null)
-        {
-            return it.Build(new Bitmap(new MemoryStream(System.IO.File.ReadAllBytes("Assets/default-audio.png"))));
-        }
-        else
-            return it.Build(track.Image);
+        return it.Build(track == null ? 
+            new Bitmap(new MemoryStream(System.IO.File.ReadAllBytes("Assets/default-audio.png"))) : 
+            track.Image);
     }
 }
